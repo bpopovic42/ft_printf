@@ -1,17 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/29 15:26:54 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/29 15:28:09 by bopopovi         ###   ########.fr       */
+/*   Created: 2018/05/29 16:05:25 by bopopovi          #+#    #+#             */
+/*   Updated: 2018/05/29 16:07:09 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		ft_printf(const char * restrict format, ...)
+int		main()
 {
+	char	*stest = "Hello";
+	int		dtest = 1234;
+	char	ctest = 'X';
+
+	ft_printf("sdc", stest, dtest, ctest);
+
+	return (0);
 }
