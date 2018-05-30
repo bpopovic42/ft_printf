@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:26:54 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/30 18:10:18 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/05/30 19:46:33 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int			ft_printf(const char * restrict format, ...)
 {
-	t_list		*args;
 	va_list		ap;
 	char		*line;
 	size_t		line_size;
@@ -22,74 +21,110 @@ int			ft_printf(const char * restrict format, ...)
 
 	ptr = (char*)format;
 	va_start(ap, format);
-	line_size = parse_input(&line, ap, ptr);
-	ft_putendl(line);
-	ft_putnbr(line_size);
-	ft_putchar('\n');
+	line_size = parse_format_string(&line, ap, ptr);
 	write(1, line, line_size);
-	//args = store_args(format, ap);
-	(void)args;
+
 	return (0);
 }
 
-size_t		parse_input(char **output, va_list ap, char *format)
-{
-	size_t	i_size;
-	size_t	out_size;
+/*
+** Reads from the format string (fmt)
+** Takes the address of a string for the treated input sections to be appended to
+** Returns the total size of final treated output
+*/
 
-	i_size = 0;
-	out_size = 0;
-	while (*format && format[i_size])
+size_t		parse_format_string(char **output, va_list ap, char *fmt)
+{
+	size_t	flen;
+	size_t	olen;
+
+	flen = 0;
+	olen = 0;
+	while (*fmt && fmt[flen])
 	{
-		if (format[i_size] == '%')
+		if (fmt[flen] == '%')
 		{
-			if ((fast_append(output, format, &out_size, i_size)) < 0)
+			if ((fast_append(output, &fmt, &olen, &flen)) < 0)
 				return 1; //ERROR
-			format += i_size;
-			i_size = 0;
 			ft_putendl(*output);
-			if ((parse_format(output, format, ap, &i_size, &out_size)) < 0)
+			if ((parse_format(output, &fmt, ap, &flen, &olen)) < 0)
 				return 1; //ERROR
-			format += i_size;
-			i_size = -1;
 			ft_putendl(*output);
 		}
-		i_size++;
+		flen++;
 	}
-	return (out_size);
+	return (olen);
 }
 
-int		parse_format(char **output, char *format, va_list ap, size_t *i_size, size_t *out_size)
+int		parse_format(char **output, char **format, va_list ap, size_t *in_len, size_t *out_len)
 {
 	(void)ap;
 	(void)format;
-	if ((fast_append(output, "#FORMAT#", out_size, 8)) < 0)
+	char		*arg;
+	size_t		format_len;
+	size_t		arg_len;
+
+	format_len = get_format_arg(*format, &arg, ap);
+	arg_len = ft_strlen(arg);
+	if ((fast_append(output, &arg, out_len, &arg_len)) < 0)
 		return (-1);
-	*i_size += 2;
+	*format += format_len;
 	return (0);
 }
 
-int		fast_append(char **dst, char *app, size_t *dlen, size_t alen)
+int		is_fspecif(int c)
+{
+	return (c == 's' || c == 'S' || c == 'p' || c == 'd' || c == 'D' || c == 'i'
+			|| c == 'o' || c == 'O' || c == 'u' || c == 'U' || c == 'x'
+				|| c == 'X' || c == 'c' || c == 'C');
+}
+
+int		get_format_arg(char *format, char **output, va_list ap)
+{
+	size_t	i;
+	int		format_len;
+	int		buff;
+
+	i = 1;
+	format_len = 0;
+	buff = 0;
+	while (!is_fspecif(format[i]))
+		i++;
+	format_len = (int)i;
+	if (format[format_len] == 'd')
+	{
+		buff = va_arg(ap, int);
+		*output = ft_itoa(buff);
+	}
+	else
+		*output = ft_strdup("#Unsupported specifier");
+	return (format_len + 1);
+}
+
+int		fast_append(char **dst, char **app, size_t *dlen, size_t *alen)
 {
 	char *new;
 
-	if (*dst == NULL && alen != 0)
-		*dst = ft_strndup(app, alen);
+	if (*dst == NULL && *alen != 0)
+		*dst = ft_strndup(*app, *alen);
 	else
 	{
-		if (!(new = ft_strnew(*dlen + alen)))
+		if (!(new = ft_strnew(*dlen + *alen)))
 			return (-1);
 		if (*dst != NULL && *dlen > 0)
 		{
 			new = ft_strncpy(new, *dst, *dlen);
-			ft_strdel(dst);
 		}
-		if (app != NULL && app > 0)
-			new = ft_strncat(new, app, alen);
+		if (app != NULL && *alen > 0)
+		{
+			new = ft_strncat(new, *app, *alen);
+			*app += *alen;
+		}
 		*dst = new;
 		new = NULL;
 	}
-	*dlen += alen;
+	*dlen += *alen;
+	*alen = 0;
 	return ((int)(*dlen));
 }
 
