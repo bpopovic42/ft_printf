@@ -79,6 +79,7 @@ SRCS		=	ft_islower.c \
 	ft_char_count.c \
 	ft_lstpush.c \
 	ft_strappend.c \
+	ft_strnappend.c \
 	ft_hashnew.c \
 	ft_hashpopkey.c \
 	ft_hashpush.c \
