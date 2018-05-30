@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 16:47:07 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/04/17 15:43:08 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/05/30 17:46:22 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@ char	*ft_strncpy(char *dst, const char *src, size_t len)
 	char *ptr;
 
 	ptr = dst;
+	if (dst == NULL || src == NULL)
+		return (NULL);
+	if (len > ft_strlen(src))
+		return (NULL);
 	while (*src != '\0' && len)
 	{
 		if (*src != '\0' && len > 0)
