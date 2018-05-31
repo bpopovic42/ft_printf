@@ -6,7 +6,7 @@
 #    By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/03 08:42:00 by bopopovi          #+#    #+#              #
-#*   Updated: 2018/05/31 17:00:32 by bopopovi         ###   ########.fr       *#
+#*   Updated: 2018/05/31 18:17:54 by bopopovi         ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -98,8 +98,9 @@ all			:	$(NAME)
 $(NAME)		:	$(OBJ)
 			@ar rcs $(NAME) $(OBJ)
 			@$(CLR)
+			@echo $(UP) $(CUT) $(UP)
 			@/bin/rm -f .cmp
-			@echo $(G)[SUCCESS] $(X)
+			@echo $(G)[$(B)LIBFT $(G)COMPILED]$(X)
 
 
 $(ODIR)/%.o	:	$(SDIR)/%.c $(LFT)
@@ -113,6 +114,8 @@ clean		:
 			@echo $(R)Cleaning $(X)the $(B)Libft $(X)files...
 			@/bin/rm -f $(OBJ)
 			@/bin/rm -rf $(ODIR)
+			@echo $(UP) $(CUT) $(UP)
+			@echo $(G)[$(B)LIBFT $(G)CLEANED]$(X)
 
 fclean		:	clean
 			@/bin/rm -f $(NAME)

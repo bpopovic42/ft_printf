@@ -29,33 +29,65 @@ INC			=	$(addprefix -I,$(IDIR) $(LDIR)$(IDIR))
 CFLAGS		=	-Wall -Wextra -Werror
 
 all			:	$(NAME)
+			@echo > /dev/null
 
 $(NAME)		:	$(OBJ)
-			@echo "Compiling..."
-			$(MAKE) -C libft
-			ar rc $(NAME) $(OBJ)
-			ranlib $(NAME)
-			@echo "[96mft_printf [92mCompiled[0m"
-
-$(OBJ)		:	| $(ODIR)
-
-$(ODIR)		:
-			mkdir objs
+			@$(CLR)
+			@echo $(UP) $(CUT)
+			@echo $(UP)$(G)[$(LB)PRINTF $(G)COMPILED]$(X)
+			@$(MAKE) -C libft
+			@ar rcs $(NAME) $(OBJ)
+			@/bin/rm -f .cmp
 
 $(ODIR)%.o	:	$(SDIR)%.c $(HEADER)
-			$(CC) $(CFLAGS) $(INC) -c $< -o $@
+			@$(CMP)
+			@$(MKODIR)
+			@$(CC) $(CFLAGS) $(INC) -c $< -o $@
+			@$(CLR)
+			@echo -n $@
 
 clean		:
 			$(MAKE) clean -C libft
-			@echo "Cleaning the [96mft_printf [0mfiles..."
-			rm -f $(OBJ)
-			rm -rf $(ODIR)
-			@echo "[92mDone[0m"
+			@echo $(R)Cleaning$(X) the $(LB)ft_printf $(X)files...
+			@/bin/rm -f $(OBJ)
+			@/bin/rm -rf $(ODIR)
+			@echo $(UP) $(CUT) $(UP)
+			@echo $(G)[$(LB)PRINTF $(G)CLEANED]$(X)
 
 fclean		:	clean
-			rm -f $(LDIR)libft.a
-			rm -f $(NAME)
+			@/bin/rm -f $(LDIR)libft.a
+			@/bin/rm -f $(NAME)
 
 re			:	fclean all
 
 .PHONY		: all, clean, fclean, re
+
+############################# FUN ##############################################
+
+LB			=	"\033[96m"
+BY			=	"\033[33;1m"
+BR			=	"\033[31;1m"
+BG			=	"\033[32;1m"
+BB			=	"\033[34;1m"
+BM			=	"\033[35;1m"
+BC			=	"\033[36;1m"
+BW			=	"\033[37;1m"
+Y			=	"\033[33m"
+R			=	"\033[31m"
+G			=	"\033[32m"
+B			=	"\033[34m"
+KW			=	"\033[37;5m"
+KR			=	"\033[31;5m"
+KG			=	"\033[32;5m"
+KB			=	"\033[34;5m"
+X			=	"\033[0m"
+UP			=	"\033[A"
+CUT			=	"\033[K"
+CLR			=	printf "\r%40c\r" " "
+
+MKODIR		=	if [ ! -d $(ODIR) ]; then \
+			/bin/mkdir -p $(ODIR); fi
+
+CMP			=	if [ ! -e .cmp ]; then \
+			echo $(Y)Compiling $(X)the $(LB)ft_printf $(X)files...$(X); \
+			touch .cmp; fi
