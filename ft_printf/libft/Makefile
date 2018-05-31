@@ -6,7 +6,7 @@
 #    By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/03 08:42:00 by bopopovi          #+#    #+#              #
-#*   Updated: 2018/05/31 16:00:24 by bopopovi         ###   ########.fr       *#
+#*   Updated: 2018/05/31 16:51:18 by bopopovi         ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,10 +56,19 @@ SRC_STR		=	ft_islower.c ft_isupper.c ft_isalpha.c ft_isdigit.c \
 
 SRC_HASH	=	ft_hashnew.c ft_hashpopkey.c ft_hashpush.c ft_hashdel.c
 
-
 ############################## VAR #############################################
 
-SRCS		=	$(SRC_IO) $(SRC_LST) $(SRC_MEM) $(SRC_STR) $(SRC_HASH)
+IO			=	$(addprefix ft_io/, $(SRC_IO))
+
+LST			=	$(addprefix ft_lst/, $(SRC_LST))
+
+MEM			=	$(addprefix ft_mem/, $(SRC_MEM))
+
+STR			=	$(addprefix ft_str/, $(SRC_STR))
+
+HASH		=	$(addprefix ft_hash/, $(SRC_HASH))
+
+SRCS		=	$(IO) $(LST) $(MEM) $(STR) $(HASH)
 
 OBJS		=	$(SRCS:.c=.o)
 
@@ -89,24 +98,24 @@ all			:	$(NAME)
 $(NAME)		:	$(OBJ)
 			@ar rcs $(NAME) $(OBJ)
 			@$(CLR)
-			@rm -f .cmp
+			@/bin/rm -f .cmp
 			@echo $(G)[SUCCESS] $(X)
 
 
 $(ODIR)/%.o	:	$(SDIR)/%.c $(LFT)
 			@$(CMP)
-			@mkdir -p $(@D)
+			@$(MKODIR)
 			@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 			@$(CLR)
 			@echo -n $@
 
 clean		:
 			@echo $(R)Cleaning $(X)the $(B)Libft $(X)files...
-			@rm -f $(OBJ)
-			@rm -rf $(ODIR)
+			@/bin/rm -f $(OBJ)
+			@/bin/rm -rf $(ODIR)
 
 fclean		:	clean
-			@rm -f $(NAME)
+			@/bin/rm -f $(NAME)
 
 re			:	fclean all
 
@@ -132,7 +141,16 @@ KB			=	"\033[34;5m"
 X			=	"\033[0m"
 UP			=	"\033[A"
 CUT			=	"\033[K"
-CLR			=	printf "\r                         \r"
+CLR			=	printf "\r                                     \r"
+
+MKODIR		=	if [ ! -d $(ODIR) ]; then \
+			/bin/mkdir -p $(ODIR); \
+			/bin/mkdir -p objs/ft_io; \
+			/bin/mkdir -p objs/ft_lst; \
+			/bin/mkdir -p objs/ft_mem; \
+			/bin/mkdir -p objs/ft_str; \
+			/bin/mkdir -p objs/ft_hash; fi
+
 CMP			=	if [ ! -e .cmp ]; then \
 			echo $(Y)Compiling $(X)the $(B)Libft $(X)files...$(Y); \
 			touch .cmp; fi

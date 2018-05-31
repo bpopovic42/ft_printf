@@ -1,21 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_del.c                                           :+:      :+:    :+:   */
+/*   ft_hashpopkey.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/22 16:20:19 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/23 22:06:25 by bopopovi         ###   ########.fr       */
+/*   Created: 2018/05/24 23:52:12 by bopopovi          #+#    #+#             */
+/*   Updated: 2018/05/31 16:40:17 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
-void	ft_del(void *content, size_t size)
+t_hash	*ft_hashpopkey(t_hash **list, int key)
 {
-	(void)size;
-	free(content);
-	content = NULL;
+	t_hash	*ptr;
+	t_hash	*node;
+
+	if (*list)
+	{
+		ptr = *list;
+		node = ptr;
+		while (ptr)
+		{
+			if (ptr->key == key)
+			{
+				if (ptr == *list)
+					*list = (*list)->next;
+				else
+				{
+					while (node->next != ptr)
+						node = node->next;
+					node->next = ptr->next;
+				}
+				return (ptr);
+			}
+			ptr = ptr->next;
+		}
+	}
+	return (NULL);
 }
