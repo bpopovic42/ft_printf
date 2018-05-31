@@ -6,7 +6,7 @@
 #    By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/03 08:42:00 by bopopovi          #+#    #+#              #
-#*   Updated: 2018/05/31 16:51:18 by bopopovi         ###   ########.fr       *#
+#*   Updated: 2018/05/31 17:00:32 by bopopovi         ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,11 @@ HASH		=	$(addprefix ft_hash/, $(SRC_HASH))
 
 SRCS		=	$(IO) $(LST) $(MEM) $(STR) $(HASH)
 
-OBJS		=	$(SRCS:.c=.o)
+INC			=	$(addprefix -I,$(IDIR)/)
+
+SRC			=	$(addprefix $(SDIR)/, $(SRCS))
+
+OBJ			=	$(addprefix $(ODIR)/, $(OBJS))
 
 IDIR		=	./includes
 
@@ -78,13 +82,9 @@ SDIR		=	./srcs
 
 ODIR		=	./objs
 
-INC			=	$(addprefix -I,$(IDIR)/)
-
-SRC			=	$(addprefix $(SDIR)/, $(SRCS))
-
-OBJ			=	$(addprefix $(ODIR)/, $(OBJS))
-
 LFT			=	$(IDIR)/libft.h
+
+OBJS		=	$(SRCS:.c=.o)
 
 CC			=	gcc
 
@@ -141,7 +141,7 @@ KB			=	"\033[34;5m"
 X			=	"\033[0m"
 UP			=	"\033[A"
 CUT			=	"\033[K"
-CLR			=	printf "\r                                     \r"
+CLR			=	printf "\r%40c\r" " "
 
 MKODIR		=	if [ ! -d $(ODIR) ]; then \
 			/bin/mkdir -p $(ODIR); \
