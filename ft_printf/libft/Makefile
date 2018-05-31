@@ -12,10 +12,7 @@
 
 NAME		=	libft.a
 
-CC			=	gcc
-
-
-##################################### SRCS #####################################
+############################## SRCS ############################################
 
 # **************************************************************************** #
 # Input/Output :
@@ -56,57 +53,80 @@ SRC_STR		=	ft_islower.c ft_isupper.c ft_isalpha.c ft_isdigit.c \
 
 SRC_HASH	=	ft_hashnew.c ft_hashpopkey.c ft_hashpush.c ft_hashdel.c
 
-# **************************************************************************** #
-# Headers :
 
-LFT			=	libft.h
-
-##################################### DIRS #####################################
+############################## VAR ############################################
 
 SRCS		=	$(SRC_IO) $(SRC_LST) $(SRC_MEM) $(SRC_STR) $(SRC_HASH)
 
 OBJS		=	$(SRCS:.c=.o)
 
-SDIR		=	./srcs/
+IDIR		=	./includes
 
-ODIR		=	./objs/
+SDIR		=	./srcs
 
-IDIR		=	./includes/
+ODIR		=	./objs
 
-HEADER		=	$(addprefix $(IDIR), $(HEADERS))
+INC			=	$(addprefix -I,$(IDIR)/)
 
-SRC			=	$(addprefix $(SDIR), $(SRCS))
+SRC			=	$(addprefix $(SDIR)/, $(SRCS))
 
-OBJ			=	$(addprefix $(ODIR), $(OBJS))
+OBJ			=	$(addprefix $(ODIR)/, $(OBJS))
 
-INC			=	$(addprefix -I,$(IDIR))
+LFT			=	$(IDIR)/libft.h
+
+CC			=	gcc
 
 CFLAGS		=	-Wall -Wextra -Werror
 
+############################## RULES ###########################################
+
 all			:	$(NAME)
-			@echo > /dev/null
+				@echo > /dev/null
 
 $(NAME)		:	$(OBJ)
-			@ar rc $(NAME) $(OBJ)
-			@ranlib $(NAME)
-			@echo "[96mLibft [92mCompiled[0m"
+				@ar rcs $(NAME) $(OBJ)
+				@$(CLR)
+				@echo $(G)[SUCCESS] $(X)
 
-$(OBJ)		:	| $(ODIR)
 
-$(ODIR)		:
-			@mkdir objs
-
-$(ODIR)%.o	:	$(SDIR)%.c $(HEADER)
-			@$(CC) $(CFLAGS) $(INC) -c $< -o $@
+$(ODIR)/%.o	:	$(SDIR)/%.c $(LFT)
+				@if [ ! -d $(@D) ]; then echo $(Y)Compiling $(X)the $(B)Libft $(X)files...$(Y); fi
+				@mkdir -p $(@D)
+				@$(CC) $(CFLAGS) $(INC) -c $< -o $@
+				@$(CLR)
+				@echo -n $@
 
 clean		:
-			@echo "Cleaning the [96mLibft[0m files..."
-			@rm -f $(OBJ)
-			@rm -rf $(ODIR)
+				@echo $(R)Cleaning $(X)the $(B)Libft $(X)files...
+				@rm -f $(OBJ)
+				@rm -rf $(ODIR)
 
 fclean		:	clean
-			@rm -f $(NAME)
+				@rm -f $(NAME)
 
 re			:	fclean all
 
-.PHONY		: all, clean, fclean, re
+.PHONY		:	all, clean, fclean, re
+
+############################## COLORS ##########################################
+
+BY			=	"\033[33;1m"
+BR			=	"\033[31;1m"
+BG			=	"\033[32;1m"
+BB			=	"\033[34;1m"
+BM			=	"\033[35;1m"
+BC			=	"\033[36;1m"
+BW			=	"\033[37;1m"
+Y			=	"\033[33m"
+R			=	"\033[31m"
+G			=	"\033[32m"
+B			=	"\033[34m"
+KW			=	"\033[37;5m"
+KR			=	"\033[31;5m"
+KG			=	"\033[32;5m"
+KB			=	"\033[34;5m"
+X			=	"\033[0m"
+UP			=	"\033[A"
+CUT			=	"\033[K"
+CLR			=	printf "\r                         \r"
+
