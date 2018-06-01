@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 16:27:54 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/01 20:02:53 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/01 20:12:38 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,38 @@ typedef struct		s_hash
 }					t_hash;
 
 /*
-** PART 1 FUNCTIONS
+** IO FUNCTIONS
 */
+
+void				ft_putchar(char c);
+void				ft_putstr(char const *s);
+void				ft_putendl(char const *s);
+void				ft_putnbr(int n);
+void				ft_putchar_fd(char c, int fd);
+void				ft_putstr_fd(char const *s, int fd);
+void				ft_putendl_fd(char const *s, int fd);
+void				ft_putnbr_fd(int n, int fd);
+void				ft_putstr_npr(char *str);
+int					ft_putnbr_base(int n, char *base);
+void				*ft_print_memory(void *addr, unsigned int size);
+
+
+/*
+** LIST FUNCTIONS
+*/
+
+t_list				*ft_lstnew(void const *content, size_t content_size);
+void				ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
+void				ft_lstdel(t_list **alst, void (*del)(void *, size_t));
+void				ft_lstadd(t_list **alst, t_list *new);
+void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
+t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
+void				ft_lstpush(t_list **alist, t_list *list);
+
+/*
+** MEMORY FUNCTIONS
+*/
+
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_bzero(void *s, size_t n);
 void				*ft_memcpy(void *dst, const void *src, size_t n);
@@ -42,6 +72,14 @@ void				*ft_memccpy(void *dst, const void *src, int c, size_t n);
 void				*ft_memmove(void *dst, const void *src, size_t len);
 void				*ft_memchr(void const *s, int c, size_t n);
 int					ft_memcmp(const void *s1, const void *s2, size_t n);
+void				*ft_memalloc(size_t size);
+void				ft_memdel(void **ap);
+void				*ft_memdup(const void *src, size_t n);
+
+/*
+** STRING FUNCTIONS
+*/
+
 size_t				ft_strlen(const char *s);
 char				*ft_strdup(const char *s1);
 char				*ft_strndup(const char *s1, size_t n);
@@ -65,11 +103,6 @@ int					ft_isascii(int c);
 int					ft_isprint(int c);
 int					ft_toupper(int c);
 int					ft_tolower(int c);
-/*
-** PART 2 FUNCTIONS
-*/
-void				*ft_memalloc(size_t size);
-void				ft_memdel(void **ap);
 char				*ft_strnew(size_t size);
 void				ft_strdel(char **as);
 void				ft_strclr(char *s);
@@ -84,39 +117,18 @@ char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strtrim(char const *s);
 char				**ft_strsplit(char const *s, char c);
 char				*ft_itoa(int n);
-void				ft_putchar(char c);
-void				ft_putstr(char const *s);
-void				ft_putendl(char const *s);
-void				ft_putnbr(int n);
-void				ft_putchar_fd(char c, int fd);
-void				ft_putstr_fd(char const *s, int fd);
-void				ft_putendl_fd(char const *s, int fd);
-void				ft_putnbr_fd(int n, int fd);
-/*
-** BONUS FUNCTIONS
-*/
-t_list				*ft_lstnew(void const *content, size_t content_size);
-void				ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
-void				ft_lstdel(t_list **alst, void (*del)(void *, size_t));
-void				ft_lstadd(t_list **alst, t_list *new);
-void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
-t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
-/*
-** ADDITIONAL FUNCTIONS
-*/
 int					ft_islower(int c);
 int					ft_isupper(int c);
 int					ft_isspace(int c);
-void				ft_putstr_npr(char *str);
-int					ft_putnbr_base(int n, char *base);
-char				*ft_itoa_base(int nbr, char *base);
-void				*ft_print_memory(void *addr, unsigned int size);
-
 int					ft_issign(int c);
 int					ft_char_count(char *s, char find);
-void				ft_lstpush(t_list **alist, t_list *list);
 char				*ft_strappend(char *dst, char *append);
 char				*ft_strnappend(char *dst, char *append, size_t n);
+char				*ft_itoa_base(int nbr, char *base);
+
+/*
+** HASH FUNCTIONS
+*/
 
 t_hash				*ft_hashnew(int key, void const *data, size_t data_size);
 t_hash				*ft_hashpop(t_hash **list, int key);
@@ -124,6 +136,5 @@ void				ft_hashpush(t_hash **list, t_hash *elem);
 void				ft_hashdel(t_hash **elem);
 int					ft_hashadd(t_hash **list, int key, void *data, size_t size);
 void				*ft_hashget(t_hash **list, int key);
-void				*ft_memdup(const void *src, size_t n);
 
 #endif
