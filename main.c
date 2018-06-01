@@ -6,11 +6,12 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:05:25 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/30 19:16:53 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/01 22:08:59 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include <wchar.h>
 #include <stdio.h>
 
 void	printf_tests();
@@ -22,7 +23,9 @@ int		main()
 	char	ctest = 'X';*/
 
 	//ft_printf("1st spec : %d and 2nd spec : %d");
-	ft_printf("1st spec : %d and 2nd spec : %d", 10, 9);
+	//ft_printf("1st spec : %d and 2nd spec : %d", 10, 9);
+	wchar_t wc = 'Ʃ';
+	printf("%c", wc);
 
 	ft_putchar('\n');
 
