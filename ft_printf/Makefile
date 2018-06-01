@@ -33,10 +33,10 @@ all			:	$(NAME)
 
 $(NAME)		:	$(OBJ)
 			@$(CLR)
-			@echo $(UP) $(CUT)
-			@echo $(UP)$(G)[$(LB)PRINTF $(G)COMPILED]$(X)
+			@echo $(UP) $(CUT) $(UP)
 			@$(MAKE) -C libft
 			@ar rcs $(NAME) $(OBJ)
+			@echo $(G)[$(LB)PRINTF $(G)COMPILED]$(X)
 			@/bin/rm -f .cmp
 
 $(ODIR)%.o	:	$(SDIR)%.c $(HEADER)
@@ -55,7 +55,7 @@ clean		:
 			@echo $(G)[$(LB)PRINTF $(G)CLEANED]$(X)
 
 fclean		:	clean
-			@/bin/rm -f $(LDIR)libft.a
+			@/bin/rm -f $(LIBFT)
 			@/bin/rm -f $(NAME)
 
 re			:	fclean all
