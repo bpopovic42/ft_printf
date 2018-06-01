@@ -47,7 +47,7 @@ $(ODIR)%.o	:	$(SDIR)%.c $(HEADER)
 			@echo -n $@
 
 clean		:
-			$(MAKE) clean -C libft
+			@$(MAKE) clean -C libft
 			@echo $(R)Cleaning$(X) the $(LB)ft_printf $(X)files...
 			@/bin/rm -f $(OBJ)
 			@/bin/rm -rf $(ODIR)
