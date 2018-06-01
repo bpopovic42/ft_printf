@@ -6,7 +6,7 @@
 #    By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/03 08:42:00 by bopopovi          #+#    #+#              #
-#*   Updated: 2018/05/31 18:17:54 by bopopovi         ###   ########.fr       *#
+#*   Updated: 2018/06/01 20:02:09 by bopopovi         ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ SRC_LST		=	ft_lstnew.c ft_lstdelone.c ft_lstdel.c ft_lstadd.c \
 
 SRC_MEM		=	ft_bzero.c ft_memset.c ft_memcpy.c ft_memccpy.c \
 			ft_memmove.c ft_memchr.c ft_memcmp.c ft_memalloc.c \
-			ft_memdel.c
+			ft_memdel.c ft_memdup.c
 
 # **************************************************************************** #
 # Strings :
@@ -54,7 +54,8 @@ SRC_STR		=	ft_islower.c ft_isupper.c ft_isalpha.c ft_isdigit.c \
 # **************************************************************************** #
 # Hash :
 
-SRC_HASH	=	ft_hashnew.c ft_hashpopkey.c ft_hashpush.c ft_hashdel.c
+SRC_HASH	=	ft_hashnew.c ft_hashpop.c ft_hashpush.c ft_hashdel.c \
+			ft_hashget.c ft_hashadd.c
 
 ############################## VAR #############################################
 
