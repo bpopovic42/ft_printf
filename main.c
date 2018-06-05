@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:05:25 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/04 21:25:59 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/05 14:48:11 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void	ptf_wc(wchar_t c)
 {
 	unsigned char			bytes[5];
 	int	shift;
-	int flag = 0;
 	int i;
 
 	/*ft_putnbr_base(c, "01");
@@ -85,9 +84,8 @@ void	ptf_wc(wchar_t c)
 	while (shift > 0)
 	{
 		shift -= 6;
-		if ((c >> shift) != 0 || flag == 1)
+		if ((c >> shift) != 0 || i != 0)
 		{
-			flag = 1;
 			bytes[i] += (c >> shift) + 128;
 			c ^= (c >> shift) << shift;
 			i++;
