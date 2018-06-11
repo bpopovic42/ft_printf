@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/30 19:35:19 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/11 20:32:36 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,17 @@
 #include "libft.h"
 #include <stdarg.h>
 #include <unistd.h>
+#include <wchar.h>
+#include <stdio.h>
+#include <unistd.h>
+
+#define BUFF_SIZE 64
+
+typedef struct		s_buff
+{
+	char			buff[BUFF_SIZE + 2];
+	size_t			pos;
+}					t_buff;
 
 int		ft_printf(const char * restrict format, ...);
 t_list	*store_args(const char *restrict format, va_list ap);
@@ -24,5 +35,8 @@ size_t	parse_format_string(char **output, va_list ap, char *fmt);
 int		fast_append(char **dst, char **app, size_t *dlen, size_t *alen);
 int		get_format_arg(char *format, char **output, va_list ap);
 
+void	fill_buffer(t_buff *buff, void *data, size_t size);
+void	ptf_wcs(wchar_t *s, t_buff *buff);
+int		ptf_wc(wchar_t c, t_buff *buff);
 
 #endif

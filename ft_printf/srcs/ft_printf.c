@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:26:54 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/30 19:46:33 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/11 17:41:09 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int		parse_format(char **output, char **format, va_list ap, size_t *in_len, size
 {
 	(void)ap;
 	(void)format;
+	(void)in_len;
 	char		*arg;
 	size_t		format_len;
 	size_t		arg_len;
@@ -154,4 +155,17 @@ t_list		*store_args(const char * restrict format, va_list ap)
 		format++;
 	}
 	return (NULL);
+}
+
+void	fill_buffer(t_buff *buff, void *data, size_t size)
+{
+	size_t i;
+
+	i = 0;
+	while (i < size)
+	{
+		(buff->buff)[buff->pos] = ((char*)data)[i];
+		buff->pos++;
+		i++;
+	}
 }
