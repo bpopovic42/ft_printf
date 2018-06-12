@@ -6,46 +6,65 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/11 14:38:49 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/12 02:32:01 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/12 17:33:04 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "acutest.h"
 #include "ft_printf.h"
+#include <time.h>
+#include <limits.h>
 
-void	test_wc(void)
+wchar_t* get_rand_wcs(size_t start, size_t end, wchar_t *ustr)
 {
-	char	s1[BUFF_SIZE];
-	wchar_t	lol;
+	size_t	interval_len;
 	int		i;
-	wchar_t	tmp[BUFF_SIZE / sizeof(wchar_t) + 1];
-	t_buff	buff;
+	size_t	len = BUFF_SIZE / sizeof(wchar_t);
 
+	interval_len = end - start + 1;
 	i = 0;
-	lol = L'字';
-	setlocale(P_ALL, "");
-	ft_bzero(tmp, BUFF_SIZE / sizeof(wchar_t));
-	while (i < (BUFF_SIZE / sizeof(wchar_t)))
+	srand(time(NULL));
+	while (i < len)
 	{
-		//i += sprintf(tmp + i, "%C", lol);
-		tmp[i] = lol;
+		ustr[i] = (rand() % interval_len) + start;
 		i++;
-		lol++;
 	}
-	tmp[BUFF_SIZE / sizeof(wchar_t) - 1] = '\0';
+	ustr[len] = L'\0';
+	return ustr;
+}
 
-	printf("%S\n", tmp);
+void	test_randwcs(void)
+{
+	char		s1[BUFF_SIZE + 1];
+	t_buff		buff;
+	wchar_t		ustr[BUFF_SIZE / sizeof(wchar_t) + 1];
+	wchar_t		*test = get_rand_wcs(0x0000, 0xFFFF, ustr);
 
-	ft_bzero(s1, BUFF_SIZE);
-	wcstombs(s1, tmp, BUFF_SIZE);
-	ft_bzero(buff.buff, BUFF_SIZE);
-	ptf_wcs((wchar_t*)tmp, &buff);
-	printf("%s\n", s1);
-	printf("%s\n", buff.buff);
+	setlocale(P_ALL, "");
+	init_buffer(&buff);
+	ft_bzero(s1, BUFF_SIZE + 1);
+	wcstombs(s1, test, BUFF_SIZE + 1);
+	ptf_wcs(test, &buff);
+	printf("%S", test);
 	TEST_CHECK_(ft_strcmp(s1, buff.buff) == 0, "Expected %s got %s", s1, buff.buff);
 }
 
+void	test_wchar(void)
+{
+	wchar_t		test = L'వ';
+	char		s[10];
+	t_buff		buff;
+
+	setlocale(P_ALL, "");
+	init_buffer(&buff);
+	ft_bzero(s, 10);
+	wctomb(s, test);
+	ptf_wc(test, &buff);
+	TEST_CHECK_(ft_strcmp(s, buff.buff) == 0, "Expected %s got %s", s, buff.buff);
+}
+
 TEST_LIST = {
-	{ "wc", test_wc },
+	{ "randwcs", test_randwcs },
+	{ "wchar", test_wchar },
 	{ 0 }
 };
