@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/12 17:32:24 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/12 18:36:15 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <wchar.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <limits.h>
 
 #define BUFF_SIZE 64
 
@@ -37,7 +38,7 @@ int		get_format_arg(char *format, char **output, va_list ap);
 
 void	fill_buffer(t_buff *buff, void *data, size_t size);
 void	ptf_wcs(wchar_t *s, t_buff *buff);
-int		ptf_wc(wchar_t c, t_buff *buff);
+int		ft_wctomb(char *s, wchar_t wc);
 void	init_buffer(t_buff *buff);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/11 14:50:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/11 18:37:24 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/12 18:39:26 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,37 +16,34 @@ void	ptf_wcs(wchar_t *s, t_buff *buff)
 {
 	while (*s)
 	{
-		ptf_wc(*s, buff);
+		ft_wctomb(buff->buff, *s);
 		s++;
 	}
 }
 
-int		ptf_wc(wchar_t c, t_buff *buff)
+int		ft_wctomb(char *s, wchar_t wc)
 {
-	unsigned char			bytes[5];
 	int	shift;
 	int i;
 
-	ft_bzero(bytes, 5);
+	ft_bzero(s, MB_LEN_MAX);
 	shift = 24;
 	i = 0;
-	bytes[0] = c <= 127 ? c : 0;
-	c = c <= 127 ? 0 : c;
-	bytes[0] += c > 127 ? 64 : 0;
-	bytes[0] += c > 4096 ? 32 : 0;
-	bytes[0] += c > 262144 ? 16 : 0;
+	s[0] = wc <= 127 ? wc : 0;
+	wc = wc <= 127 ? 0 : wc;
+	s[0] += wc > 127 ? 64 : 0;
+	s[0] += wc > 4096 ? 32 : 0;
+	s[0] += wc > 262144 ? 16 : 0;
 	while (shift > 0)
 	{
 		shift -= 6;
-		if ((c >> shift) != 0 || i != 0)
+		if ((wc >> shift) != 0 || i != 0)
 		{
-			bytes[i] += (c >> shift) + 128;
-			c ^= (c >> shift) << shift;
+			s[i] += (wc >> shift) + 128;
+			wc ^= (wc >> shift) << shift;
 			i++;
 		}
 	}
-	fill_buffer(buff, bytes, i);
-	//write(1, &bytes, i == 0 ? 1 : i);
-	//write(1, &bytes, 5);
+	s[MB_LEN_MAX - 1] = '\0';
 	return (i);
 }

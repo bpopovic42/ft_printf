@@ -6,14 +6,13 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/11 14:38:49 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/12 17:33:04 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/12 18:37:42 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "acutest.h"
 #include "ft_printf.h"
 #include <time.h>
-#include <limits.h>
 
 wchar_t* get_rand_wcs(size_t start, size_t end, wchar_t *ustr)
 {
@@ -52,19 +51,19 @@ void	test_randwcs(void)
 void	test_wchar(void)
 {
 	wchar_t		test = L'వ';
-	char		s[10];
+	char		s[MB_LEN_MAX];
 	t_buff		buff;
 
 	setlocale(P_ALL, "");
 	init_buffer(&buff);
-	ft_bzero(s, 10);
+	ft_bzero(s, MB_LEN_MAX);
 	wctomb(s, test);
-	ptf_wc(test, &buff);
+	ft_wctomb(buff.buff, test);
 	TEST_CHECK_(ft_strcmp(s, buff.buff) == 0, "Expected %s got %s", s, buff.buff);
 }
 
 TEST_LIST = {
-	{ "randwcs", test_randwcs },
+	//{ "randwcs", test_randwcs },
 	{ "wchar", test_wchar },
 	{ 0 }
 };
