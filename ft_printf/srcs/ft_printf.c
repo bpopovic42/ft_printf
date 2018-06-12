@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:26:54 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/12 01:52:19 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/12 17:32:03 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,8 +164,15 @@ void	fill_buffer(t_buff *buff, void *data, size_t size)
 	i = 0;
 	while (i < size)
 	{
-		(buff->buff)[buff->pos] = ((char*)data)[i];
+		(buff->buff)[buff->pos] = (char)((char*)data)[i];
 		buff->pos++;
 		i++;
 	}
+	(buff->buff)[buff->pos] = '\0';
+}
+
+void	init_buffer(t_buff *buff)
+{
+	buff->pos = 0;
+	ft_bzero(buff, BUFF_SIZE + 1);
 }

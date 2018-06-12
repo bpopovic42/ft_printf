@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/11 20:32:36 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/12 17:32:24 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 typedef struct		s_buff
 {
-	char			buff[BUFF_SIZE + 2];
+	char			buff[BUFF_SIZE + 1];
 	size_t			pos;
 }					t_buff;
 
@@ -38,5 +38,6 @@ int		get_format_arg(char *format, char **output, va_list ap);
 void	fill_buffer(t_buff *buff, void *data, size_t size);
 void	ptf_wcs(wchar_t *s, t_buff *buff);
 int		ptf_wc(wchar_t c, t_buff *buff);
+void	init_buffer(t_buff *buff);
 
 #endif
