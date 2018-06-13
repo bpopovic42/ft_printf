@@ -3,8 +3,7 @@ if [ "$1" == "db" ]; then
 	make test DEBUG=-g
 	lldb unit_tests
 fi
-if [ ! -f unit_tests ] && [ "$1" != "db" ]; then
+if [ "$1" != "db" ]; then
 	make test
-elif [ "$1" != "db" ]; then
 	./unit_tests
 fi

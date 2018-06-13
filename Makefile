@@ -29,9 +29,9 @@ $(NAME)		:	$(SRCS)
 	@$(MAKE) -C $(LDIR)
 	@$(CC) $(CFLAGS) -o $(NAME) $(SRCS) $(LIB) $(INC)
 
-test		:	$(UTEST)
+test		:	$(TSRCS)
 	@$(MAKE) -C $(LDIR)
-	@$(CC) $(DEBUG) -o $(TNAME) ft_printf/srcs/* $(TSRCS) \
+	$(CC) $(DEBUG) -o $(TNAME) ft_printf/srcs/* $(TSRCS) \
 		ft_printf/libft/libft.a ft_printf/libftprintf.a \
 		-I./ft_printf/includes -I./ft_printf/libft/includes
 
