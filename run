@@ -1,0 +1,10 @@
+#!/bin/bash
+if [ "$1" == "db" ]; then
+	make test DEBUG=-g
+	lldb unit_tests
+elif [ "$1" == "run" ]; then
+	make test
+fi
+if [ -f unit_tests ] && [ "$1" != "db" ]; then
+	./unit_tests
+fi
