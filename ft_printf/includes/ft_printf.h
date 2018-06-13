@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/12 21:53:57 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/13 15:52:18 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <limits.h>
+#include <stdlib.h>
 
 #define BUFF_SIZE 64
 
