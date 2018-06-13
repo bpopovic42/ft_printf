@@ -31,7 +31,7 @@ $(NAME)		:	$(SRCS)
 
 test		:	$(TSRCS)
 	@$(MAKE) -C $(LDIR)
-	$(CC) $(DEBUG) -o $(TNAME) ft_printf/srcs/* $(TSRCS) \
+	@$(CC) $(DEBUG) -o $(TNAME) ft_printf/srcs/* $(TSRCS) \
 		ft_printf/libft/libft.a ft_printf/libftprintf.a \
 		-I./ft_printf/includes -I./ft_printf/libft/includes
 
