@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/11 14:38:49 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/13 15:54:20 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/13 22:11:41 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include <time.h>
 
 #define RLEN 64
+#define MAX_INT_LEN 19
+#define PRECISION 6
 
 wchar_t* get_rand_wcs(size_t start, size_t end, wchar_t *ustr)
 {
@@ -77,11 +79,30 @@ void	test_wchar(void)
 	rval2 = ft_wctomb(NULL, *test);
 	TEST_CHECK_((ft_strcmp(s1, s2) == 0) && (rval1 == rval2),
 		"Expected \"%s\" %d got \"%s\" %d", s1, rval1, s2, rval2);
+}
 
+void	test_float(void)
+{
+	//double	test = 0.1234567;
+	//double	test = 1.1234567;
+	//double	test = 11.1234567;
+	//double	test = 11.1234597;
+	//double	test = 11.9223372036854775808;
+	//double	test = 9223372036854775808;
+	double		test = 1.234;
+	char	buff[MAX_INT_LEN + PRECISION + 1];
+
+	//ft_putstr(gcvt(test, 6, buff));
+	//ft_bzero(buff, MAX_INT_LEN + PRECISION + 1);
+	//ft_ftoa(test, PRECISION, buff);
+	//ft_putstr(buff);
+	//printf(" %.20f", test);
+	printf("%e", test);
 }
 
 TEST_LIST = {
 	{ "randwcs", test_randwcs },
 	{ "wchar", test_wchar },
+	{ "float", test_float },
 	{ 0 }
 };

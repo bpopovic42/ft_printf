@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/13 15:52:18 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/13 20:26:43 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,7 @@ int		ft_wcstombs(char *s, wchar_t *wcs, size_t n);
 int		ft_wctomb(char *s, wchar_t wc);
 
 void	init_buffer(t_buff *buff);
+
+char	*ft_ftoa(double val, int precision, char *buff);
 
 #endif
