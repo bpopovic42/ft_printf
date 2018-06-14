@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/11 14:38:49 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/13 22:11:41 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/14 22:52:14 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@
 #include <time.h>
 
 #define RLEN 64
-#define MAX_INT_LEN 19
-#define PRECISION 6
-
+#define MAX_INT_LEN 21
+#define PRECISION 10
 wchar_t* get_rand_wcs(size_t start, size_t end, wchar_t *ustr)
 {
 	size_t	interval_len;
@@ -83,21 +82,51 @@ void	test_wchar(void)
 
 void	test_float(void)
 {
-	//double	test = 0.1234567;
-	//double	test = 1.1234567;
-	//double	test = 11.1234567;
-	//double	test = 11.1234597;
-	//double	test = 11.9223372036854775808;
-	//double	test = 9223372036854775808;
-	double		test = 1.234;
+	double test[] = { 0.1234567, 1.1234567, 11.1234567, 11.1234597, 11.9223372036854775808,
+		9223372036854775808, 92233720, 11.234, -11.234, 1.3 };
 	char	buff[MAX_INT_LEN + PRECISION + 1];
+	int i = 10;
 
-	//ft_putstr(gcvt(test, 6, buff));
-	//ft_bzero(buff, MAX_INT_LEN + PRECISION + 1);
-	//ft_ftoa(test, PRECISION, buff);
-	//ft_putstr(buff);
-	//printf(" %.20f", test);
-	printf("%e", test);
+	while (i >= 0)
+	{
+		ft_bzero(buff, MAX_INT_LEN + PRECISION + 1);
+		ft_ftoa(test[i], PRECISION, buff);
+		printf("\nb : %s\n", buff);
+		printf("f : %.10f\n", test[i]);
+		//printf("e : %e\n", test[i]);
+		i--;
+	}
+}
+
+void	print_mem_dbl(double val)
+{
+	union {
+		double val;
+		uint64_t u64;
+	} u = {val};
+	int i = 63;
+	uint64_t res = 0;
+	uint64_t exp = 0;
+	while (i)
+	{
+		if ((u.u64 >> i))
+		{
+			ft_putchar('1');
+			u.u64 ^= ((u.u64 >> i) << i);
+			if (i <= 51)
+				res += 1;
+			else if (i != 63)
+				exp += 1;
+		}
+		else
+			ft_putchar('0');
+		if (i <= 51)
+			res <<= 1;
+		else if (i != 63)
+			exp <<= 1;
+		i--;
+	}
+	printf("\nexp : %lld, mant : %lld\n", exp, res);
 }
 
 TEST_LIST = {
