@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/14 22:55:36 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/14 23:03:25 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,13 @@ char	*ft_ftoa(double val, int precision, char *buff)
 	while (precision > 0)
 	{
 		val *= 10;
-		if ((int)val == 0)
+		if (precision % 18 == 0)
+		{
+			ft_u64toa((uint64_t)val, buff, 1);
+			val -= (uint64_t)val;
+			val *= 10;
+		}
+		else if ((int)val == 0)
 		{
 			buff[i] = '0';
 		}

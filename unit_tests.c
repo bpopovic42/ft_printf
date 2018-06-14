@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/11 14:38:49 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/14 22:52:14 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/14 23:00:13 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 #define RLEN 64
 #define MAX_INT_LEN 21
-#define PRECISION 10
+#define PRECISION 25
 wchar_t* get_rand_wcs(size_t start, size_t end, wchar_t *ustr)
 {
 	size_t	interval_len;
@@ -83,7 +83,7 @@ void	test_wchar(void)
 void	test_float(void)
 {
 	double test[] = { 0.1234567, 1.1234567, 11.1234567, 11.1234597, 11.9223372036854775808,
-		9223372036854775808, 92233720, 11.234, -11.234, 1.3 };
+		9223372036854775808, 92233720, 11.234, -11.234, 1.3, 1.99998999999999999999999 };
 	char	buff[MAX_INT_LEN + PRECISION + 1];
 	int i = 10;
 
@@ -92,7 +92,7 @@ void	test_float(void)
 		ft_bzero(buff, MAX_INT_LEN + PRECISION + 1);
 		ft_ftoa(test[i], PRECISION, buff);
 		printf("\nb : %s\n", buff);
-		printf("f : %.10f\n", test[i]);
+		printf("f : %.25f\n", test[i]);
 		//printf("e : %e\n", test[i]);
 		i--;
 	}
