@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/18 18:05:39 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/18 20:26:31 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,56 +18,6 @@ int		round_it_up(uint64_t *ftoi, int j);
 void	ft_app(char *s, char c);
 int		ft_u64toa(uint64_t val, char *buff, int size);
 
-/*char	*ft_ftoa(double val, int precision, char *buff)
-{
-	uint64_t	int_part;
-	int			radix;
-	int			i;
-
-	i = 0;
-	radix = 0;
-	if (val < 0)
-	{
-		buff[0] = '-';
-		radix++;
-		i++;
-		val *= -1;
-	}
-	while (val >= 10 && val >= 1)
-	{
-		val /= 10;
-		radix++;
-	}
-	int_part = (int)val;
-	val -= int_part;
-	int_part *= 10;
-	buff[radix + 1] = '.';
-	while (i < precision + radix + 1)
-	{
-		val *= 10;
-		int_part += (int)val;
-		if (i + 1 != precision)
-			int_part *= 10;
-		val -= (int)val;
-		i++;
-	}
-	if (int_part % 10 > 5)
-		int_part++;
-	int_part /= 10;
-	//i++;
-	while (i >= 0)
-	{
-		if (buff[i] != '.' && buff[i] != '-')
-		{
-			buff[i] = int_part % 10 + '0';
-			int_part /= 10;
-		}
-		i--;
-	}
-	//printf("%llu", int_part);
-	return (buff);
-}*/
-
 char	*ft_ftoa(double val, int precision, char *buff)
 {
 	uint64_t	ftoi[(precision / 18) + 1];
@@ -76,11 +26,8 @@ char	*ft_ftoa(double val, int precision, char *buff)
 
 	i = 0;
 	j = 0;
-	if (val < 0)
-	{
-		buff[0] = '-';
-		val *= -1;
-	}
+	buff[0] = val < 0 ? '-' : buff[0];
+	val = val < 0 ? val *= -1 : val;
 	ftoi[j] = (uint64_t)val;
 	val -= ftoi[j];
 	while (precision > 0)
@@ -95,9 +42,7 @@ char	*ft_ftoa(double val, int precision, char *buff)
 		precision--;
 	}
 	if ((val * 10) > 5)
-	{
 		precision += round_it_up(ftoi, j);
-	}
 	j++;
 	while (i < j)
 	{

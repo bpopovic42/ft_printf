@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/11 14:38:49 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/18 18:00:51 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/18 20:26:50 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 #define RLEN 64
 #define MAX_INT_LEN 21
-#define PRECISION 16
+#define PRECISION 60
 
 wchar_t* get_rand_wcs(size_t start, size_t end, wchar_t *ustr)
 {
