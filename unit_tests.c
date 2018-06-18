@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/11 14:38:49 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/14 23:00:13 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/18 18:00:51 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 
 #define RLEN 64
 #define MAX_INT_LEN 21
-#define PRECISION 25
+#define PRECISION 16
+
 wchar_t* get_rand_wcs(size_t start, size_t end, wchar_t *ustr)
 {
 	size_t	interval_len;
@@ -80,20 +81,51 @@ void	test_wchar(void)
 		"Expected \"%s\" %d got \"%s\" %d", s1, rval1, s2, rval2);
 }
 
+void	test_float_loop(void)
+{
+	double test[] = { 0.1234567, 1.1234567, 11.1234567, 11.1234597, 11.9223372036854775808,
+		9223372036854775808, 92233720, 11.234, -11.234, -11.239, 1.3, 1.99998999999999999999999,
+		(1.0 / 4) };
+	char	buff[MAX_INT_LEN + PRECISION + 1];
+	int i = 12;
+	int j = i;
+	int prec = PRECISION;
+	char *ptf;
+
+	while (prec >= 0)
+	{
+		while (i >= 0)
+		{
+			ft_bzero(buff, MAX_INT_LEN + prec + 1);
+			ft_ftoa(test[i], prec, buff);
+			asprintf(&ptf, "%.*f", prec, test[i]);
+			TEST_CHECK_((ft_strcmp(ptf, buff) == 0),
+					"Precision : %d, expected %s got %s\n", prec, ptf, buff);
+			free(ptf);
+			//printf("\nb : %s\n", buff);
+			//printf("f : %.*f\n", prec, test[i]);
+			//printf("e : %e\n", test[i]);
+			i--;
+		}
+		i = j;
+		prec--;
+	}
+}
+
 void	test_float(void)
 {
 	double test[] = { 0.1234567, 1.1234567, 11.1234567, 11.1234597, 11.9223372036854775808,
-		9223372036854775808, 92233720, 11.234, -11.234, 1.3, 1.99998999999999999999999 };
+		9223372036854775808, 92233720, 11.234, -11.234, -11.239, 1.3, 1.99998999999999999999999,
+		(1.0 / 4) };
 	char	buff[MAX_INT_LEN + PRECISION + 1];
-	int i = 10;
+	int i = 12;
 
 	while (i >= 0)
 	{
 		ft_bzero(buff, MAX_INT_LEN + PRECISION + 1);
 		ft_ftoa(test[i], PRECISION, buff);
 		printf("\nb : %s\n", buff);
-		printf("f : %.25f\n", test[i]);
-		//printf("e : %e\n", test[i]);
+		printf("f : %.*f\n", PRECISION, test[i]);
 		i--;
 	}
 }
@@ -133,5 +165,6 @@ TEST_LIST = {
 	{ "randwcs", test_randwcs },
 	{ "wchar", test_wchar },
 	{ "float", test_float },
+	{ "lfloat", test_float_loop },
 	{ 0 }
 };
