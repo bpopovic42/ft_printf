@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/11 14:38:49 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/19 19:44:48 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/19 20:45:34 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 #define RLEN 64
 #define MAX_INT_LEN 21
-#define PRECISION 12
+#define PRECISION 15
 
 wchar_t* get_rand_wcs(size_t start, size_t end, wchar_t *ustr)
 {
@@ -83,50 +83,52 @@ void	test_wchar(void)
 
 void	test_float_loop(void)
 {
-	double test[] = { 0.1234567, 1.1234567, 11.1234567, 11.1234597, 11.9223372036854775808,
-		9223372036854775808, 92233720, 11.234, -11.234, -11.239, 1.3, 1.99998999999999999999999,
-		(1.0 / 4) };
+	double test[] = { 0.1234567, 1.1234567, 11.1234567, 11.1234597,
+		11.9223372036854775808, 9223372036854775807, 92233720, 11.234,
+		-11.234, -11.239, 1.3, 1.99998999999999999999999, (1.0 / 4) };
 	char	buff[MAX_INT_LEN + PRECISION + 1];
-	int i = 12;
-	int j = i;
-	int prec = PRECISION;
-	char *ptf;
+	int		test_size;
+	int		i;
+	int		prec = PRECISION;
+	char	*ptf;
 
+	test_size = 12;
+	i = 0;
 	while (prec >= 0)
 	{
-		while (i >= 0)
+		while (i <= test_size)
 		{
 			ft_bzero(buff, MAX_INT_LEN + prec + 1);
 			ft_ftoa(test[i], prec, buff);
 			asprintf(&ptf, "%.*f", prec, test[i]);
 			TEST_CHECK_((ft_strcmp(ptf, buff) == 0),
-					"Precision : %d, expected %s got %s\n", prec, ptf, buff);
+				"Precision : %d, expected %s got %s\n", prec, ptf, buff);
 			free(ptf);
-			//printf("\nb : %s\n", buff);
-			//printf("f : %.*f\n", prec, test[i]);
-			//printf("e : %e\n", test[i]);
-			i--;
+			i++;
 		}
-		i = j;
+		i = 0;
 		prec--;
 	}
 }
 
 void	test_float(void)
 {
-	double test[] = { 0.1234567, 1.1234567, 11.1234567, 11.1234597, 11.9223372036854775808,
-		9223372036854775808, 92233720, 11.234, -11.234, -11.239, 1.3, 1.99998999999999999999999,
-		(1.0 / 4) };
+	double test[] = { 0.1234567, 1.1234567, 11.1234567, 11.1234597,
+		11.9223372036854775808, 9223372036854775807, 92233720, 11.234,
+		-11.234, -11.239, 1.3, 1.99998999999999999999999, (1.0 / 4) };
 	char	buff[MAX_INT_LEN + PRECISION + 1];
-	int i = 12;
+	int		test_size;
+	int		i;
 
-	while (i >= 0)
+	test_size = 12;
+	i = 0;
+	while (i <= test_size)
 	{
 		ft_bzero(buff, MAX_INT_LEN + PRECISION + 1);
 		ft_ftoa(test[i], PRECISION, buff);
 		printf("\nb : %s\n", buff);
 		printf("f : %.*f\n", PRECISION, test[i]);
-		i--;
+		i++;
 	}
 }
 
