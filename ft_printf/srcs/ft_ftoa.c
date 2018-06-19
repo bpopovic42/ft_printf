@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/19 14:58:40 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/19 19:44:28 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,11 @@
 #include <stdio.h>
 
 int		round_it_up(uint64_t *ftoi, int j);
+int		round_it(uint64_t *int_part, short int *ftoi, int j);
 void	ft_app(char *s, char c);
 int		ft_u64toa(uint64_t val, char *buff, int size);
 
-char	*ft_ftoa(double val, int precision, char *buff)
+/*char	*ft_ftoa(double val, int precision, char *buff)
 {
 	uint64_t	ftoi[(precision / 18) + 2]; // Max nbr of char - 1 for LLONG_MAX
 	int			i;
@@ -52,6 +53,63 @@ char	*ft_ftoa(double val, int precision, char *buff)
 		ft_app(buff, '0');
 	ft_app(buff, '\0');
 	return (buff);
+}*/
+
+char	*ft_ftoa(double val, int precision, char *buff)
+{
+	short int tab[precision];
+	uint64_t int_part;
+	int i;
+
+	i = 0;
+	buff[0] = val < 0 ? '-' : buff[0];
+	val = val < 0 ? val *= -1 : val;
+	int_part = (uint64_t)val;
+	val -= (uint64_t)val;
+	while (i < precision)
+	{
+		val *= 10;
+		tab[i] = (uint64_t)val;
+		val -= (uint64_t)val;
+		i++;
+	}
+	if ((val * 10) > 5)
+	{
+		round_it(&int_part, tab, precision - 1);
+	}
+	ft_u64toa(int_part, buff, 1);
+	ft_app(buff, '.');
+	int j = 0;
+	while (j < i)
+	{
+		ft_app(buff, tab[j] + '0');
+		j++;
+	}
+	return (buff);
+}
+
+int		round_it(uint64_t *int_part, short int *ftoi, int j)
+{
+	ftoi[j] += 5;
+	while (j >= 0)
+	{
+		ft_putnbr(ftoi[j - 1]);
+		if (ftoi[j] >= 10)
+		{
+			ftoi[j] = 0;
+			if (j > 0)
+				ftoi[j - 1]++;
+			else
+				int_part[0]++;
+		}
+		j--;
+	}
+	if (ftoi[j] >= 10)
+	{
+		ftoi[j] = 0;
+		int_part[0]++;
+	}
+	return (0);
 }
 
 int		round_it_up(uint64_t *ftoi, int j)
