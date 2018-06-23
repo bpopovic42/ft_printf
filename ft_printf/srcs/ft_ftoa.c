@@ -6,17 +6,15 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/23 20:05:37 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/23 20:08:23 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h>
 
 int		round_it(uint64_t *int_part, char *ftoi, int j);
 void	ft_app(char *s, char c);
 int		ft_u64toa(uint64_t val, char *buff, int size);
-double	dabs(double val);
 
 char	*ft_ftoa(double val, int precision, char *buff)
 {
