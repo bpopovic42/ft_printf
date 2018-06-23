@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/23 19:57:17 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/23 20:05:37 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ double	dabs(double val);
 char	*ft_ftoa(double val, int precision, char *buff)
 {
 	char		tab[precision];
-	uint64_t	int_part;
 	int			i;
 	t_dbl		tmp;
 
@@ -29,8 +28,8 @@ char	*ft_ftoa(double val, int precision, char *buff)
 	tmp.val = val;
 	buff[0] = (tmp.u64 >> 63) ? '-' : buff[0];
 	val = val < 0 ? val * -1 : val;
-	int_part = (uint64_t)val;
-	val -= (uint64_t)val;
+	tmp.u64 = (uint64_t)val;
+	val -= tmp.u64;
 	while (i < precision)
 	{
 		val *= 10;
@@ -39,10 +38,9 @@ char	*ft_ftoa(double val, int precision, char *buff)
 		i++;
 	}
 	if ((val * 10) > 5)
-		round_it(&int_part, tab, precision - 1);
-	ft_u64toa(int_part, buff, 1);
-	if (precision)
-		ft_app(buff, '.');
+		round_it(&tmp.u64, tab, precision - 1);
+	ft_u64toa(tmp.u64, buff, 1);
+	ft_app(buff, precision ? '.' : '\0');
 	i = -1;
 	while (++i < precision)
 		ft_app(buff, tab[i] + '0');
