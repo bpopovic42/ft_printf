@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/13 20:26:43 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/23 19:54:14 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@ typedef struct		s_buff
 	char			buff[BUFF_SIZE + 1];
 	size_t			pos;
 }					t_buff;
+
+typedef union		u_dbl
+{
+	double			val;
+	uint64_t		u64;
+}					t_dbl;
 
 int		ft_printf(const char * restrict format, ...);
 t_list	*store_args(const char *restrict format, va_list ap);
