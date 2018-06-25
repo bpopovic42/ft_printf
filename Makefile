@@ -6,6 +6,8 @@ TNAME		=	unit_tests
 
 TSRCS		=	unit_tests.c
 
+PTF_SRCS	=	ft_printf.c
+
 OBJS		=	$(SRCS:.c=.o)
 
 SRCS		=	main.c
@@ -22,12 +24,14 @@ INC			=	$(addprefix -I./$(LDIR)/, $(IDIRS))
 
 CFLAGS		=	-Wall -Wextra -Werror
 
+PTF_SRC		=	$(addprefix $(LDIR)/srcs/, $(PTF_SRCS))
+
 all			:	$(NAME)
 	@echo > /dev/null
 
-$(NAME)		:	$(SRCS)
+$(NAME)		:	$(SRCS) $(PTF_SRC)
 	@$(MAKE) -C $(LDIR)
-	@$(CC) $(CFLAGS) -o $(NAME) $(SRCS) $(LIB) $(INC)
+	@$(CC) $(DEBUG) $(CFLAGS) -o $(NAME) $(SRCS) $(LIB) $(INC)
 
 test		:	$(TSRCS)
 	@$(MAKE) -C $(LDIR)
