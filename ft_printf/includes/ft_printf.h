@@ -6,14 +6,14 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/23 19:54:14 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/25 16:30:03 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-#include "libft.h"
+#include "../libft/includes/libft.h"
 #include <stdarg.h>
 #include <unistd.h>
 #include <wchar.h>
