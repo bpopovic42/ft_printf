@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/11 14:38:49 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/23 19:47:32 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/24 21:15:48 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	test_wchar(void)
 
 void	test_float_loop(void)
 {
-	double test[] = { 0.1234567, 1.1234567, 11.1234567, 11.1234597,
+	double test[] = { -1.0, -0.0, 0.0, 0.1234567, 1.1234567, 11.1234567, 11.1234597,
 		11.9223372036854775808, 9223372036854775807, 92233720, 11.234,
 		-11.234, -11.239, 1.3, 1.99998999999999999999999, (1.0 / 4) };
 	char	buff[MAX_INT_LEN + PRECISION + 1];
@@ -94,7 +94,7 @@ void	test_float_loop(void)
 	int		prec = PRECISION;
 	char	*ptf;
 
-	test_size = 12;
+	test_size = 15;
 	i = 0;
 	while (prec >= 0)
 	{
