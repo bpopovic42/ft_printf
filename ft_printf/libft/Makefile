@@ -6,7 +6,7 @@
 #    By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/03 08:42:00 by bopopovi          #+#    #+#              #
-#*   Updated: 2018/06/26 00:32:52 by bopopovi         ###   ########.fr       *#
+#*   Updated: 2018/06/26 17:21:01 by bopopovi         ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ NAME		=	libft.a
 SRC_IO		=	ft_putchar.c ft_putstr.c ft_putnbr.c ft_putnbr_base.c \
 			ft_putstr_npr.c ft_putchar_fd.c ft_putstr_fd.c \
 			ft_putendl.c ft_putendl_fd.c ft_putnbr_fd.c \
-			ft_print_memory.c
+			ft_print_memory.c ft_print_bits.c
 
 # **************************************************************************** #
 # Lists :

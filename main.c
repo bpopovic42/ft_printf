@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:05:25 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/26 00:22:32 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/26 17:14:00 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int		main()
 	(void)dtest;
 	(void)ctest;
 	(void)ldtest;
-	prval = printf("Here's a number : %lld, Here's a percent : %%, Here's a char : %c, and Here's a string : %s\n", ldtest, ctest, stest);
-	frval = ft_printf("Here's a number : %lld, Here's a percent : %%, Here's a char : %c, and Here's a string : %s\n", ldtest, ctest, stest);
+	prval = printf("Nbr : %lld, Char : %c, Str : %s\n", ldtest, ctest, stest);
+	frval = ft_printf("Nbr : %lld, Char : %c, Str : %s\n", ldtest, ctest, stest);
 	printf("prval = %d, frval = %d\n", prval, frval);
 	//printf(L"%C", wc); // Gives interesting compilation error
 	return (0);

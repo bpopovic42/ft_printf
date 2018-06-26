@@ -6,20 +6,11 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:26:54 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/26 00:22:59 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/26 17:36:27 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-int			parse_input(char *fmt, t_buff *buff, va_list ap);
-int			buff_append(t_buff *buff, char *input, int size);
-int			treat_arg(t_buff *buff, char **input, va_list ap);
-int			ft_strprepc(char *str, char c);
-int			is_fspecif(int c);
-int			treat_arg_type_int(t_buff *buff, char type, va_list ap);
-int			ptf_itoa(char *buff, int64_t val);
-int			treat_arg_type_str(t_buff *buff, char type, va_list ap);
 
 int			ft_printf(const char * restrict format, ...)
 {
@@ -28,8 +19,17 @@ int			ft_printf(const char * restrict format, ...)
 	char		*ptr;
 	t_buff		buff;
 
-	ptr = (char*)format;
 	va_start(ap, format);
+	return (ft_vprintf(format, ap));
+}
+
+int			ft_vprintf(const char * restrict format, va_list ap)
+{
+	char	*ptr;
+	size_t	line_size;
+	t_buff	buff;
+
+	ptr = (char*)format;
 	ft_bzero(buff.buff, BUFF_SIZE + 1);
 	buff.pos = 0;
 	line_size = parse_input(ptr, &buff, ap);
@@ -69,7 +69,7 @@ int			treat_arg(t_buff *buff, char **input, va_list ap)
 		buff_append(buff, *input + i, 1);
 	else
 	{
-		while (!is_fspecif((*input)[i]))
+		while (!ft_printf_is_fspecif((*input)[i]))
 			i++;
 	}
 	if (ft_strchr("sS", (*input)[i]))
@@ -102,34 +102,14 @@ int			treat_arg_type_int(t_buff *buff, char type, va_list ap)
 	size = 1;
 	ft_bzero(ptr, 19);
 	if (type == 'd' || type == 'i')
-		size = ptf_itoa(ptr, va_arg(ap, int64_t));
+		size = ft_printf_itoa(ptr, va_arg(ap, int64_t));
 	else if (type == 'c')
 		ptr[0] = va_arg(ap, int);
 	buff_append(buff, ptr, size);
 	return (size);
 }
 
-void		print_bits(int64_t val)
-{
-	ft_putendl("BITS :");
-	int size;
-
-	size = (sizeof(val) * 8) - 1;
-	while (size)
-	{
-		if ((val >> size))
-		{
-			ft_putchar('1');
-			val ^= ((val >> size) << size);
-		}
-		else
-			ft_putchar('0');
-		size--;
-	}
-	ft_putchar('\n');
-}
-
-int			ptf_itoa(char *buff, int64_t val)
+int			ft_printf_itoa(char *buff, int64_t val)
 {
 	int		size;
 	int		is_neg;
@@ -138,9 +118,8 @@ int			ptf_itoa(char *buff, int64_t val)
 	is_neg = val < 0 ? 1 : 0;
 	if (val < 0)
 	{
-		val = ~val;
+		val = (~val) + 1;
 		size++;
-		val++;
 	}
 	else if (val == 0)
 	{
@@ -178,79 +157,9 @@ int			buff_append(t_buff *buff, char *input, int size)
 	return (i);
 }
 
-int			is_fspecif(int c)
+int			ft_printf_is_fspecif(int c)
 {
 	return (c == 's' || c == 'S' || c == 'p' || c == 'd' || c == 'D' || c == 'i'
 			|| c == 'o' || c == 'O' || c == 'u' || c == 'U' || c == 'x'
 				|| c == 'X' || c == 'c' || c == 'C');
-}
-
-int			get_format_arg(char *format, char **output, va_list ap)
-{
-	size_t	i;
-	int		format_len;
-	int		buff;
-
-	i = 1;
-	format_len = 0;
-	buff = 0;
-	while (!is_fspecif(format[i]))
-		i++;
-	format_len = (int)i;
-	if (format[format_len] == 'd')
-	{
-		buff = va_arg(ap, int);
-		*output = ft_itoa(buff);
-	}
-	else
-		*output = ft_strdup("#Unsupported specifier");
-	return (format_len + 1);
-}
-
-t_list		*store_args(const char * restrict format, va_list ap)
-{
-	int			d;
-	char		c;
-	char		*s;
-
-	while (*format)
-	{
-		if (*format == 's')
-		{
-			s = va_arg(ap, char *);
-			ft_putstr(s);
-		}
-		else if (*format == 'd')
-		{
-			d = va_arg(ap, int);
-			ft_putnbr(d);
-		}
-		else if (*format == 'c')
-		{
-			c = va_arg(ap, int);
-			ft_putchar(c);
-		}
-		format++;
-	}
-	return (NULL);
-}
-
-void	fill_buffer(t_buff *buff, void *data, size_t size)
-{
-	size_t i;
-
-	i = 0;
-	while (i < size)
-	{
-		(buff->buff)[buff->pos] = (char)((char*)data)[i];
-		buff->pos++;
-		i++;
-	}
-	(buff->buff)[buff->pos] = '\0';
-}
-
-void	init_buffer(t_buff *buff)
-{
-	buff->pos = 0;
-	ft_bzero(buff, BUFF_SIZE + 1);
 }

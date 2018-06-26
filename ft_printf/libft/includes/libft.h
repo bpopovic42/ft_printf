@@ -6,13 +6,14 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 16:27:54 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/26 00:14:57 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/26 17:24:56 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 # include <string.h>
+# include <stdlib.h>
 
 typedef unsigned int	t_uint;
 typedef unsigned char	t_uchar;
@@ -47,6 +48,7 @@ void				ft_putnbr_fd(int n, int fd);
 void				ft_putstr_npr(char *str);
 int					ft_putnbr_base(int n, char *base);
 void				*ft_print_memory(void *addr, unsigned int size);
+void				ft_print_bits(int64_t val);
 
 
 /*
