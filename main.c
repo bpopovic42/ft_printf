@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:05:25 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/26 17:14:00 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/26 19:32:32 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <wchar.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <locale.h>
 
 void	printf_tests();
 void	ptf_wc(wchar_t c);
@@ -23,17 +24,24 @@ int		main()
 {
 	char	*stest = "Hello";
 	int		dtest = 1234;
-	int64_t		ldtest = 1231245124;
+	int64_t		lldtest = 1231245124;
+	long int	ldtest = 1231245124;
 	char	ctest = 'X';
+	double	dbltest = 1.234567;
 	int		prval = 0;
 	int		frval = 0;
+	wchar_t	*wcstest = L"틯岭玈௠았♰蜱귯㽰";
 
 	(void)stest;
 	(void)dtest;
 	(void)ctest;
 	(void)ldtest;
-	prval = printf("Nbr : %lld, Char : %c, Str : %s\n", ldtest, ctest, stest);
-	frval = ft_printf("Nbr : %lld, Char : %c, Str : %s\n", ldtest, ctest, stest);
+	(void)wcstest;
+	(void)lldtest;
+	(void)dbltest;
+	setlocale(LC_ALL, "");
+	prval = printf("Nbr : %f, Char : %c, Wstr : %S\n", dbltest, ctest, wcstest);
+	frval = ft_printf("Nbr : %f, Char : %c, Wstr : %S\n", dbltest, ctest, wcstest);
 	printf("prval = %d, frval = %d\n", prval, frval);
 	//printf(L"%C", wc); // Gives interesting compilation error
 	return (0);

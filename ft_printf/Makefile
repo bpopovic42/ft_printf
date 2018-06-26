@@ -12,7 +12,8 @@ LDIR		=	./libft/
 
 LIBFT		=	$(LDIR)libft.a
 
-SRCS		=	ft_printf.c \
+SRCS		=	ft_printf.c ft_printf_buffer.c ft_printf_is_fspecif.c \
+			ft_printf_itoa.c ft_printf_parse_args.c \
 
 OBJS		=	$(SRCS:.c=.o)
 
