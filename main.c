@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:05:25 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/26 19:32:32 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/26 19:50:49 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int		main()
 	long int	ldtest = 1231245124;
 	char	ctest = 'X';
 	double	dbltest = 1.234567;
+	void	*ptrtest = &ctest;
 	int		prval = 0;
 	int		frval = 0;
 	wchar_t	*wcstest = L"틯岭玈௠았♰蜱귯㽰";
@@ -40,8 +41,8 @@ int		main()
 	(void)lldtest;
 	(void)dbltest;
 	setlocale(LC_ALL, "");
-	prval = printf("Nbr : %f, Char : %c, Wstr : %S\n", dbltest, ctest, wcstest);
-	frval = ft_printf("Nbr : %f, Char : %c, Wstr : %S\n", dbltest, ctest, wcstest);
+	prval = printf("Nbr : %p, Char : %c, Wstr : %S\n", ptrtest, ctest, wcstest);
+	frval = ft_printf("Nbr : %p, Char : %c, Wstr : %S\n", ptrtest, ctest, wcstest);
 	printf("prval = %d, frval = %d\n", prval, frval);
 	//printf(L"%C", wc); // Gives interesting compilation error
 	return (0);

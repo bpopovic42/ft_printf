@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/26 19:06:04 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/26 20:26:15 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int		treat_arg_type_str(t_buff *buff, char type, va_list ap);
 int		ft_vprintf(const char * restrict format, va_list ap);
 int		treat_arg_type_wcstr(t_buff *buff, wchar_t *wcstr, size_t size);
 int		treat_arg_type_dbl(t_buff *buff, char type, va_list ap);
+int		treat_arg_type_base(t_buff *buff, char type, va_list ap);
+int		ft_printf_itoa_base(char *buff, int base, int64_t nbr);
 size_t	ft_wcslen(wchar_t *wcs);
 
 #endif
