@@ -6,7 +6,8 @@ TNAME		=	unit_tests
 
 TSRCS		=	unit_tests.c
 
-PTF_SRCS	=	ft_printf.c
+PTF_SRCS	=	ft_printf.c ft_printf_buffer.c ft_printf_is_fspecif.c \
+			ft_printf_itoa.c ft_printf_parse_args.c
 
 OBJS		=	$(SRCS:.c=.o)
 

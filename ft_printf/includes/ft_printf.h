@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/26 18:17:07 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/26 19:06:04 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,13 @@
 #include <stdlib.h>
 
 #define BUFF_SIZE 64
+#define MAX_INT_LEN 21
 
 typedef struct		s_buff
 {
 	char			buff[BUFF_SIZE + 1];
 	size_t			pos;
 }					t_buff;
-
-typedef union		u_dbl
-{
-	double			val;
-	uint64_t		u64;
-}					t_dbl;
 
 int		ft_printf(const char * restrict format, ...);
 int		ft_wcstombs(char *s, wchar_t *wcs, size_t n);
@@ -47,5 +42,7 @@ int		ft_printf_itoa(char *buff, int64_t val);
 int		treat_arg_type_str(t_buff *buff, char type, va_list ap);
 int		ft_vprintf(const char * restrict format, va_list ap);
 int		treat_arg_type_wcstr(t_buff *buff, wchar_t *wcstr, size_t size);
+int		treat_arg_type_dbl(t_buff *buff, char type, va_list ap);
+size_t	ft_wcslen(wchar_t *wcs);
 
 #endif
