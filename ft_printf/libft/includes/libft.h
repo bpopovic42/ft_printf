@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 16:27:54 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/26 17:24:56 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/26 18:14:42 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,8 @@ char				*ft_strappend(char *dst, char *append);
 char				*ft_strnappend(char *dst, char *append, size_t n);
 char				*ft_itoa_base(int nbr, char *base);
 int					ft_strcinsert(char *str, char ins, size_t pos);
+int					ft_wcstombs(char *s, wchar_t *wcs, size_t n);
+int					ft_wctomb(char *s, wchar_t wc);
 
 /*
 ** HASH FUNCTIONS

@@ -6,11 +6,13 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 15:48:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/13 15:49:03 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/26 18:17:19 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
+#include <wchar.h>
+#include <limits.h>
 
 int		ft_wcstombs(char *s, wchar_t *wcs, size_t n)
 {

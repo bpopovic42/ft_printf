@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/26 17:36:16 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/26 18:17:07 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,8 @@
 #include "../libft/includes/libft.h"
 #include <stdarg.h>
 #include <unistd.h>
-#include <wchar.h>
 #include <stdio.h>
 #include <unistd.h>
-#include <limits.h>
 #include <stdlib.h>
 
 #define BUFF_SIZE 64
@@ -47,6 +45,7 @@ int		ft_printf_is_fspecif(int c);
 int		treat_arg_type_int(t_buff *buff, char type, va_list ap);
 int		ft_printf_itoa(char *buff, int64_t val);
 int		treat_arg_type_str(t_buff *buff, char type, va_list ap);
-int			ft_vprintf(const char * restrict format, va_list ap);
+int		ft_vprintf(const char * restrict format, va_list ap);
+int		treat_arg_type_wcstr(t_buff *buff, wchar_t *wcstr, size_t size);
 
 #endif
