@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 17:18:06 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/26 17:25:02 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/27 18:51:52 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ void		ft_print_bits(int64_t val)
 {
 	int size;
 
-	size = (sizeof(val) * 8) - 1;
-	while (size)
+	size = (int)((sizeof(val) * 8) - 1);
+	while (size >= 0)
 	{
-		if ((val >> size))
+		if ((val >> size) > 0)
 		{
 			ft_putchar('1');
-			val ^= ((val >> size) << size);
+			val ^= ((1 >> size) << size);
 		}
 		else
 			ft_putchar('0');
