@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:05:25 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/27 13:27:27 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/27 14:16:43 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void				stock_value(int value);
 int		main()
 {
 	char	*stest = "Hello";
-	int		dtest = 1234;
+	int		dtest = -1234;
 	int64_t		lldtest = 1231245124;
 	long int	ldtest = 1231245124;
 	char	ctest = 'X';
@@ -44,8 +44,8 @@ int		main()
 	(void)ptrtest;
 	(void)uitest;
 	setlocale(LC_ALL, "");
-	prval = printf("Nbr : %X, Char : %c, Wstr : %S\n", uitest, ctest, wcstest);
-	frval = ft_printf("Nbr : %X, Char : %c, Wstr : %S\n", uitest, ctest, wcstest);
+	prval = printf("Nbr : %#o, Char : %c, Wstr : %S\n", dtest, ctest, wcstest);
+	frval = ft_printf("Nbr : %#o, Char : %c, Wstr : %S\n", dtest, ctest, wcstest);
 	printf("prval = %d, frval = %d\n", prval, frval);
 	//printf(L"%C", wc); // Gives interesting compilation error
 	return (0);
