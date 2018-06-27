@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/27 14:45:07 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/27 19:59:06 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,17 @@ int			treat_arg(t_buff *buff, char **input, va_list ap)
 	{
 		while (!ft_printf_is_fspecif((*input)[i]))
 		{
-			if (!ft_printf_is_fspecif((*input)[i]))
-				flags = get_flags(flags, ((*input)[i]));
+			if (ft_strchr("123456789", (*input)[i]))
+				buff->flags.width = ft_atoi((*input) + i);
+			else if ((*input)[i] == '.')
+				buff->flags.precision = ft_atoi((*input) + i + 1);
+			else if (!ft_printf_is_fspecif((*input)[i]))
+				get_flags(buff, ((*input)[i]));
 			i++;
 		}
+		printf("htag : %d, zero : %d, minus : %d, space : %d, plus : %d, apos : %d, width : %d, precision : %d\n",
+				buff->flags.htag, buff->flags.zero, buff->flags.minus, buff->flags.space, buff->flags.plus,
+					buff->flags.apos, buff->flags.width, buff->flags.precision);
 	}
 	if (ft_strchr("sS", (*input)[i]))
 		size += treat_arg_type_str(buff, (*input)[i], ap);
@@ -44,16 +51,25 @@ int			treat_arg(t_buff *buff, char **input, va_list ap)
 	return (size);
 }
 
-int64_t	get_flags(uint64_t flags, char c)
+#include <limits.h>
+
+int			get_flags(t_buff *buff, char c)
 {
-	ft_print_bits(flags);
-	ft_putchar('\n');
-	if (!ft_strchr("0123456789#- +hljz", c))
+	if (!ft_strchr("0#- +hljz", c))
 		return (-1);
 	else if (c == '#')
-		ft_toggle_bit(flags, 63);
-	ft_print_bits(flags);
-	return (flags);
+		buff->flags.htag = true;
+	else if (c == '0')
+		buff->flags.zero = true;
+	else if (c == '-')
+		buff->flags.minus = true;
+	else if (c == ' ')
+		buff->flags.space = true;
+	else if (c == '+')
+		buff->flags.plus = true;
+	else if (c == '\'')
+		buff->flags.apos = true;
+	return (0);
 }
 
 int			treat_arg_type_str(t_buff *buff, char type, va_list ap)

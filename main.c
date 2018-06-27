@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:05:25 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/27 14:16:43 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/27 19:57:15 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ int		main()
 	(void)ptrtest;
 	(void)uitest;
 	setlocale(LC_ALL, "");
-	prval = printf("Nbr : %#o, Char : %c, Wstr : %S\n", dtest, ctest, wcstest);
-	frval = ft_printf("Nbr : %#o, Char : %c, Wstr : %S\n", dtest, ctest, wcstest);
+	prval = printf("Nbr : %#0o, Char : %c, Wstr : %S\n", dtest, ctest, wcstest);
+	frval = ft_printf("Nbr : %#012o, Char : %c, Wstr : %S\n", dtest, ctest, wcstest);
 	printf("prval = %d, frval = %d\n", prval, frval);
 	//printf(L"%C", wc); // Gives interesting compilation error
 	return (0);

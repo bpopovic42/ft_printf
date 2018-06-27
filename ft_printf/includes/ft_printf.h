@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/27 14:15:20 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/27 19:54:05 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,28 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #define BUFF_SIZE 64
 #define MAX_INT_LEN 21
+
+typedef struct		s_flags
+{
+	bool			htag;
+	bool			zero;
+	bool			minus;
+	bool			space;
+	bool			plus;
+	bool			apos;
+	int				width;
+	int				precision;
+}					t_flags;
 
 typedef struct		s_buff
 {
 	char			buff[BUFF_SIZE + 1];
 	size_t			pos;
+	t_flags			flags;
 }					t_buff;
 
 int		ft_printf(const char * restrict format, ...);
@@ -46,6 +60,6 @@ int		treat_arg_type_dbl(t_buff *buff, char type, va_list ap);
 int		treat_arg_type_base(t_buff *buff, char type, va_list ap);
 int		ft_printf_itoa_base(char *buff, int base, int64_t nbr);
 size_t	ft_wcslen(wchar_t *wcs);
-int64_t	get_flags(uint64_t flags, char c);
+int		get_flags(t_buff *buff, char c);
 
 #endif
