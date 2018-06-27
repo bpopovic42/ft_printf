@@ -28,13 +28,13 @@ CFLAGS		=	-Wall -Wextra -Werror
 PTF_SRC		=	$(addprefix $(LDIR)/srcs/, $(PTF_SRCS))
 
 all			:	$(NAME)
-	@$(MAKE) -C $(LDIR)/libft
-	@$(MAKE) -C $(LDIR)
 	@echo > /dev/null
 
-$(NAME)		:
+lib			:
 	@$(MAKE) -C $(LDIR)/libft
 	@$(MAKE) -C $(LDIR)
+
+$(NAME)		:	$(OBJS) lib
 	@$(CC) $(DEBUG) $(CFLAGS) -o $(NAME) $(SRCS) $(LIB) $(INC)
 
 test		:	$(TSRCS)
