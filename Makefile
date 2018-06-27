@@ -33,9 +33,13 @@ all			:	$(NAME)
 	@echo > /dev/null
 
 $(NAME)		:
+	@$(MAKE) -C $(LDIR)/libft
+	@$(MAKE) -C $(LDIR)
 	@$(CC) $(DEBUG) $(CFLAGS) -o $(NAME) $(SRCS) $(LIB) $(INC)
 
 test		:	$(TSRCS)
+	@$(MAKE) -C $(LDIR)/libft
+	@$(MAKE) -C $(LDIR)
 	@$(CC) $(DEBUG) -o $(TNAME) ft_printf/srcs/* $(TSRCS) \
 		ft_printf/libft/libft.a ft_printf/libftprintf.a \
 		-I./ft_printf/includes -I./ft_printf/libft/includes
