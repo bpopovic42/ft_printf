@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 17:18:06 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/27 18:51:52 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/27 19:23:37 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void		ft_print_bits(int64_t val)
 		if ((val >> size) > 0)
 		{
 			ft_putchar('1');
-			val ^= ((1 >> size) << size);
+			val ^= (1 << size);
 		}
 		else
 			ft_putchar('0');
