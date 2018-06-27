@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 16:27:54 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/26 20:18:23 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/27 14:12:11 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,5 +150,12 @@ void				ft_hashpush(t_hash **list, t_hash *elem);
 void				ft_hashdel(t_hash **elem);
 int					ft_hashadd(t_hash **list, int key, void *data, size_t size);
 void				*ft_hashget(t_hash **list, int key);
+
+/*
+** BINARY FUNCTIONS
+*/
+
+int					ft_is_bit_set(int64_t set, int bit);
+int64_t				ft_toggle_bit(int64_t set, int bit);
 
 #endif

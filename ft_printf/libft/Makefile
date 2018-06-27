@@ -6,7 +6,7 @@
 #    By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/03 08:42:00 by bopopovi          #+#    #+#              #
-#*   Updated: 2018/06/26 20:18:38 by bopopovi         ###   ########.fr       *#
+#*   Updated: 2018/06/27 14:19:45 by bopopovi         ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,6 +58,11 @@ SRC_STR		=	ft_islower.c ft_isupper.c ft_isalpha.c ft_isdigit.c \
 SRC_HASH	=	ft_hashnew.c ft_hashpop.c ft_hashpush.c ft_hashdel.c \
 			ft_hashget.c ft_hashadd.c
 
+# **************************************************************************** #
+# Binary :
+
+SRC_BIN		=	ft_toggle_bit.c ft_is_bit_set.c
+
 ############################## VAR #############################################
 
 IO			=	$(addprefix ft_io/, $(SRC_IO))
@@ -70,7 +75,9 @@ STR			=	$(addprefix ft_str/, $(SRC_STR))
 
 HASH		=	$(addprefix ft_hash/, $(SRC_HASH))
 
-SRCS		=	$(IO) $(LST) $(MEM) $(STR) $(HASH)
+BIN			=	$(addprefix ft_bin/, $(SRC_BIN))
+
+SRCS		=	$(IO) $(LST) $(MEM) $(STR) $(HASH) $(BIN)
 
 INC			=	$(addprefix -I,$(IDIR)/)
 
@@ -154,7 +161,8 @@ MKODIR		=	if [ ! -d $(ODIR) ]; then \
 			/bin/mkdir -p objs/ft_lst; \
 			/bin/mkdir -p objs/ft_mem; \
 			/bin/mkdir -p objs/ft_str; \
-			/bin/mkdir -p objs/ft_hash; fi
+			/bin/mkdir -p objs/ft_hash; \
+			/bin/mkdir -p objs/ft_bin; fi
 
 CMP			=	if [ ! -e .cmp ]; then \
 			echo $(Y)Compiling $(X)the $(B)Libft $(X)files...$(Y); \
