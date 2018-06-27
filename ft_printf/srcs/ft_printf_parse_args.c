@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/26 20:25:33 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/27 13:24:54 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int			treat_arg(t_buff *buff, char **input, va_list ap)
 	}
 	if (ft_strchr("sS", (*input)[i]))
 		size += treat_arg_type_str(buff, (*input)[i], ap);
-	else if (ft_strchr("pdDioOuUxXcC", (*input)[i]))
+	else if (ft_strchr("dDiuUcC", (*input)[i]))
 		size += treat_arg_type_int(buff, (*input)[i], ap);
 	else if (ft_strchr("poOxX", (*input)[i]))
 		size += treat_arg_type_base(buff, (*input)[i], ap);
@@ -53,6 +53,7 @@ int			treat_arg_type_str(t_buff *buff, char type, va_list ap)
 	else if (type == 'S')
 	{
 		wptr = va_arg(ap, wchar_t *);
+		ft_wcslen(wptr);
 		size = treat_arg_type_wcstr(buff, wptr, ft_wcslen(wptr));
 	}
 	return (size);
@@ -60,7 +61,7 @@ int			treat_arg_type_str(t_buff *buff, char type, va_list ap)
 
 int			treat_arg_type_wcstr(t_buff *buff, wchar_t *wcstr, size_t size)
 {
-	char	ptr[size * sizeof(wchar_t)];
+	char	ptr[size * sizeof(wchar_t) + 1];
 	size_t	bytes;
 
 	ft_bzero(ptr, size * sizeof(wchar_t) + 1);
@@ -90,7 +91,16 @@ int			treat_arg_type_base(t_buff *buff, char type, va_list ap)
 	int		size;
 
 	size = 0;
+	ft_bzero(ptr, 65);
 	if (type == 'p')
+		size = ft_printf_itoa_base(ptr, 16, va_arg(ap, int64_t));
+	else if (type == 'o')
+		size = ft_printf_itoa_base(ptr, 8, va_arg(ap, int64_t));
+	else if (type == 'O')
+		size = ft_printf_itoa_base(ptr, 8, va_arg(ap, int64_t));
+	else if (type == 'x')
+		size = ft_printf_itoa_base(ptr, 16, va_arg(ap, int64_t));
+	else if (type == 'X')
 		size = ft_printf_itoa_base(ptr, 16, va_arg(ap, int64_t));
 	buff_append(buff, ptr, size);
 	return (size);
