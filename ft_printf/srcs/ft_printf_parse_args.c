@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/27 19:59:06 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/27 20:38:44 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ int			treat_arg(t_buff *buff, char **input, va_list ap)
 	{
 		while (!ft_printf_is_fspecif((*input)[i]))
 		{
-			if (ft_strchr("123456789", (*input)[i]))
-				buff->flags.width = ft_atoi((*input) + i);
-			else if ((*input)[i] == '.')
+			if ((*input)[i] == '.')
 				buff->flags.precision = ft_atoi((*input) + i + 1);
+			else if (ft_strchr("123456789", (*input)[i]) && !buff->flags.width)
+				buff->flags.width = ft_atoi((*input) + i);
 			else if (!ft_printf_is_fspecif((*input)[i]))
 				get_flags(buff, ((*input)[i]));
 			i++;
