@@ -23,7 +23,7 @@ IDIRS		=	includes libft/includes
 
 INC			=	$(addprefix -I./$(LDIR)/, $(IDIRS))
 
-CFLAGS		=	-Wall -Wextra -Werror
+CFLAGS		=	$(DEBUG) -Wall -Wextra -Werror
 
 PTF_SRC		=	$(addprefix $(LDIR)/srcs/, $(PTF_SRCS))
 
@@ -32,10 +32,10 @@ all			:	$(NAME)
 
 lib			:
 	@$(MAKE) -C $(LDIR)/libft
-	@$(MAKE) -C $(LDIR)
+	@$(MAKE) DEBUG=$(DEBUG) -C $(LDIR)
 
 $(NAME)		:	$(OBJS) lib
-	@$(CC) $(DEBUG) $(CFLAGS) -o $(NAME) $(SRCS) $(LIB) $(INC)
+	@$(CC) $(CFLAGS) -o $(NAME) $(SRCS) $(LIB) $(INC)
 
 test		:	$(TSRCS)
 	@$(MAKE) -C $(LDIR)/libft

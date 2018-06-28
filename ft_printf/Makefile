@@ -27,7 +27,7 @@ OBJ			=	$(addprefix $(ODIR), $(OBJS))
 
 INC			=	$(addprefix -I,$(IDIR) $(LDIR)$(IDIR))
 
-CFLAGS		=	-Wall -Wextra -Werror
+CFLAGS		=	$(DEBUG) -Wall -Wextra -Werror
 
 all			:	$(NAME)
 			@echo > /dev/null
