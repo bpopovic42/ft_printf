@@ -6,20 +6,17 @@ TNAME		=	unit_tests
 
 TSRCS		=	unit_tests.c
 
-PTF_SRCS	=	ft_printf.c ft_printf_buffer.c ft_printf_is_fspecif.c \
-			ft_printf_itoa.c ft_printf_parse_args.c ft_printf_itoa_base.c
-
 OBJS		=	$(SRCS:.c=.o)
 
 SRCS		=	main.c
 
-LIBS		=	libftprintf.a libft/libft.a
+LIBS		=	libftprintf.a
 
 LDIR		=	ft_printf
 
 LIB			=	$(addprefix $(LDIR)/, $(LIBS))
 
-IDIRS		=	includes libft/includes
+IDIRS		=	includes
 
 INC			=	$(addprefix -I./$(LDIR)/, $(IDIRS))
 
@@ -31,22 +28,18 @@ all			:	$(NAME)
 	@echo > /dev/null
 
 lib			:
-	@$(MAKE) DEBUG=$(DEBUG) -C $(LDIR)/libft
 	@$(MAKE) DEBUG=$(DEBUG) -C $(LDIR)
 
 $(NAME)		:	$(OBJS) lib
 	@$(CC) $(CFLAGS) -o $(NAME) $(SRCS) $(LIB) $(INC)
 
 test		:	$(TSRCS)
-	@$(MAKE) -C $(LDIR)/libft
 	@$(MAKE) -C $(LDIR)
 	@$(CC) $(DEBUG) -o $(TNAME) ft_printf/srcs/* $(TSRCS) \
-		ft_printf/libft/libft.a ft_printf/libftprintf.a \
-		-I./ft_printf/includes -I./ft_printf/libft/includes
+		ft_printf/libftprintf.a -I./ft_printf/includes
 
 clean		:
 	@$(MAKE) clean -C $(LDIR)
-	@$(MAKE) clean -C $(LDIR)/libft
 
 fclean		:	clean
 	@/bin/rm -f $(LIB)

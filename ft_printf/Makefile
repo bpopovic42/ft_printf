@@ -1,46 +1,128 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2018/04/03 08:42:00 by bopopovi          #+#    #+#              #
+#*   Updated: 2018/06/28 19:54:42 by bopopovi         ###   ########.fr       *#
+#                                                                              #
+# **************************************************************************** #
+
 NAME		=	libftprintf.a
 
-CC			=	gcc
+############################## SRCS ############################################
 
-SDIR		=	./srcs/
+# **************************************************************************** #
+# Input/Output :
 
-ODIR		=	./objs/
+SRC_IO		=	ft_putchar.c ft_putstr.c ft_putnbr.c ft_putnbr_base.c \
+			ft_putstr_npr.c ft_putchar_fd.c ft_putstr_fd.c \
+			ft_putendl.c ft_putendl_fd.c ft_putnbr_fd.c \
+			ft_print_memory.c ft_print_bits.c
 
-IDIR		=	./includes/
+# **************************************************************************** #
+# Lists :
 
-LDIR		=	./libft/
+SRC_LST		=	ft_lstnew.c ft_lstdelone.c ft_lstdel.c ft_lstadd.c \
+			ft_lstiter.c ft_lstmap.c ft_lstpush.c
 
-LIBFT		=	$(LDIR)libft.a
+# **************************************************************************** #
+# Memory :
 
-SRCS		=	ft_printf.c ft_printf_buffer.c ft_printf_is_fspecif.c \
+SRC_MEM		=	ft_bzero.c ft_memset.c ft_memcpy.c ft_memccpy.c \
+			ft_memmove.c ft_memchr.c ft_memcmp.c ft_memalloc.c \
+			ft_memdel.c ft_memdup.c
+
+# **************************************************************************** #
+# Strings :
+
+SRC_STR		=	ft_islower.c ft_isupper.c ft_isalpha.c ft_isdigit.c \
+			ft_isalnum.c ft_isascii.c ft_isprint.c ft_isspace.c \
+			ft_toupper.c ft_tolower.c ft_strlen.c ft_strcpy.c \
+			ft_strncpy.c ft_strcmp.c ft_strncmp.c ft_strcat.c \
+			ft_strncat.c ft_strlcat.c ft_strrchr.c ft_strchr.c \
+			ft_strchri.c ft_strstr.c ft_strnstr.c ft_itoa_base.c \
+			ft_atoi.c ft_strdup.c ft_strndup.c ft_strnew.c \
+			ft_strdel.c ft_strclr.c ft_striter.c ft_striteri.c \
+			ft_strmap.c ft_strmapi.c ft_strequ.c ft_strnequ.c \
+			ft_strsub.c ft_strjoin.c ft_strtrim.c ft_strsplit.c \
+			ft_itoa.c ft_issign.c ft_char_count.c ft_strappend.c \
+			ft_strnappend.c ft_strcinsert.c ft_wctomb.c ft_wcstombs.c \
+			ft_wcslen.c ft_ftoa.c ft_strrev.c
+
+# **************************************************************************** #
+# Hash :
+
+SRC_HASH	=	ft_hashnew.c ft_hashpop.c ft_hashpush.c ft_hashdel.c \
+			ft_hashget.c ft_hashadd.c
+
+# **************************************************************************** #
+# Binary :
+
+SRC_BIN		=	ft_toggle_bit.c ft_is_bit_set.c
+
+# **************************************************************************** #
+# Printf :
+
+SRC_PTF		=	ft_printf.c ft_printf_buffer.c ft_printf_is_fspecif.c \
 			ft_printf_itoa.c ft_printf_parse_args.c ft_printf_itoa_base.c \
+
+############################## VAR #############################################
+
+IO			=	$(addprefix ft_io/, $(SRC_IO))
+
+LST			=	$(addprefix ft_lst/, $(SRC_LST))
+
+MEM			=	$(addprefix ft_mem/, $(SRC_MEM))
+
+STR			=	$(addprefix ft_str/, $(SRC_STR))
+
+HASH		=	$(addprefix ft_hash/, $(SRC_HASH))
+
+BIN			=	$(addprefix ft_bin/, $(SRC_BIN))
+
+PTF			=	$(addprefix ft_printf/, $(SRC_PTF))
+
+SRCS		=	$(IO) $(LST) $(MEM) $(STR) $(HASH) $(BIN) $(PTF)
+
+INC			=	$(addprefix -I,$(IDIR)/)
+
+SRC			=	$(addprefix $(SDIR)/, $(SRCS))
+
+OBJ			=	$(addprefix $(ODIR)/, $(OBJS))
+
+IDIR		=	./includes
+
+SDIR		=	./srcs
+
+ODIR		=	./objs
+
+LFTS		=	libft.h ft_printf.h
+
+LFT			=	$(addprefix $(IDIR)/, $(LFTS))
 
 OBJS		=	$(SRCS:.c=.o)
 
-HEADERS		=	ft_printf.h
-
-HEADER		=	$(addprefix $(IDIR), $(HEADERS))
-
-SRC			=	$(addprefix $(SDIR), $(SRCS))
-
-OBJ			=	$(addprefix $(ODIR), $(OBJS))
-
-INC			=	$(addprefix -I,$(IDIR) $(LDIR)$(IDIR))
+CC			=	gcc
 
 CFLAGS		=	$(DEBUG) -Wall -Wextra -Werror
+
+############################## RULES ###########################################
 
 all			:	$(NAME)
 			@echo > /dev/null
 
 $(NAME)		:	$(OBJ)
+			@ar rcs $(NAME) $(OBJ)
 			@$(CLR)
 			@echo $(UP) $(CUT) $(UP)
-			@$(MAKE) -C libft
-			@ar rcs $(NAME) $(OBJ)
-			@echo $(G)[$(LB)PRINTF $(G)COMPILED]$(X)
 			@/bin/rm -f .cmp
+			@echo $(G)[$(B)LIBFT $(G)COMPILED]$(X)
 
-$(ODIR)%.o	:	$(SDIR)%.c $(HEADER)
+
+$(ODIR)/%.o	:	$(SDIR)/%.c $(LFT)
 			@$(CMP)
 			@$(MKODIR)
 			@$(CC) $(CFLAGS) $(INC) -c $< -o $@
@@ -48,24 +130,21 @@ $(ODIR)%.o	:	$(SDIR)%.c $(HEADER)
 			@echo -n $@
 
 clean		:
-			@$(MAKE) clean -C libft
-			@echo $(R)Cleaning$(X) the $(LB)ft_printf $(X)files...
+			@echo $(R)Cleaning $(X)the $(B)Libft $(X)files...
 			@/bin/rm -f $(OBJ)
 			@/bin/rm -rf $(ODIR)
 			@echo $(UP) $(CUT) $(UP)
-			@echo $(G)[$(LB)PRINTF $(G)CLEANED]$(X)
+			@echo $(G)[$(B)LIBFT $(G)CLEANED]$(X)
 
 fclean		:	clean
-			@/bin/rm -f $(LIBFT)
 			@/bin/rm -f $(NAME)
 
 re			:	fclean all
 
-.PHONY		: all, clean, fclean, re
+.PHONY		:	all, clean, fclean, re
 
-############################# FUN ##############################################
+############################## FUN #############################################
 
-LB			=	"\033[96m"
 BY			=	"\033[33;1m"
 BR			=	"\033[31;1m"
 BG			=	"\033[32;1m"
@@ -87,8 +166,15 @@ CUT			=	"\033[K"
 CLR			=	printf "\r%40c\r" " "
 
 MKODIR		=	if [ ! -d $(ODIR) ]; then \
-			/bin/mkdir -p $(ODIR); fi
+			/bin/mkdir -p $(ODIR); \
+			/bin/mkdir -p objs/ft_io; \
+			/bin/mkdir -p objs/ft_lst; \
+			/bin/mkdir -p objs/ft_mem; \
+			/bin/mkdir -p objs/ft_str; \
+			/bin/mkdir -p objs/ft_hash; \
+			/bin/mkdir -p objs/ft_bin; \
+			/bin/mkdir -p objs/ft_printf; fi
 
 CMP			=	if [ ! -e .cmp ]; then \
-			echo $(Y)Compiling $(X)the $(LB)ft_printf $(X)files...$(X); \
+			echo $(Y)Compiling $(X)the $(B)Libft $(X)files...$(Y); \
 			touch .cmp; fi
