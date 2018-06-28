@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/27 14:04:41 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/27 19:25:33 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/27 19:27:48 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 int64_t			ft_toggle_bit(int64_t set, int bit)
 {
-	set ^= ((int64_t)1 << bit);
+	set ^= ((int64_t)1 << (bit - 1));
 	return (set);
 }

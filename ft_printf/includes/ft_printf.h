@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/27 19:54:05 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/28 17:33:11 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <limits.h>
 
 #define BUFF_SIZE 64
 #define MAX_INT_LEN 21
@@ -60,6 +61,7 @@ int		treat_arg_type_dbl(t_buff *buff, char type, va_list ap);
 int		treat_arg_type_base(t_buff *buff, char type, va_list ap);
 int		ft_printf_itoa_base(char *buff, int base, int64_t nbr);
 size_t	ft_wcslen(wchar_t *wcs);
-int		get_flags(t_buff *buff, char c);
+int			get_flags(t_buff *buff, char **input, int i);
+void	util_printf_flags(t_buff *buff);
 
 #endif

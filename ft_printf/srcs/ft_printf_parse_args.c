@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/27 20:38:44 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/28 19:07:30 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,18 @@ int			treat_arg(t_buff *buff, char **input, va_list ap)
 {
 	int			i;
 	int			size;
-	int64_t	flags;
 
 	i = 1;
 	size = 0;
-	flags = 0;
 	if ((*input)[i] == '%')
 		buff_append(buff, *input + i, 1);
 	else
 	{
-		while (!ft_printf_is_fspecif((*input)[i]))
-		{
-			if ((*input)[i] == '.')
-				buff->flags.precision = ft_atoi((*input) + i + 1);
-			else if (ft_strchr("123456789", (*input)[i]) && !buff->flags.width)
-				buff->flags.width = ft_atoi((*input) + i);
-			else if (!ft_printf_is_fspecif((*input)[i]))
-				get_flags(buff, ((*input)[i]));
-			i++;
-		}
-		printf("htag : %d, zero : %d, minus : %d, space : %d, plus : %d, apos : %d, width : %d, precision : %d\n",
-				buff->flags.htag, buff->flags.zero, buff->flags.minus, buff->flags.space, buff->flags.plus,
-					buff->flags.apos, buff->flags.width, buff->flags.precision);
+		i = get_flags(buff, input, i);
+		if (buff->flags.minus && buff->flags.zero)
+			buff->flags.zero = 0;
+		if (buff->flags.space && buff->flags.plus)
+			buff->flags.space = 0;
 	}
 	if (ft_strchr("sS", (*input)[i]))
 		size += treat_arg_type_str(buff, (*input)[i], ap);
@@ -51,25 +41,44 @@ int			treat_arg(t_buff *buff, char **input, va_list ap)
 	return (size);
 }
 
-#include <limits.h>
-
-int			get_flags(t_buff *buff, char c)
+void		util_printf_flags(t_buff *buff)
 {
-	if (!ft_strchr("0#- +hljz", c))
-		return (-1);
-	else if (c == '#')
-		buff->flags.htag = true;
-	else if (c == '0')
-		buff->flags.zero = true;
-	else if (c == '-')
-		buff->flags.minus = true;
-	else if (c == ' ')
-		buff->flags.space = true;
-	else if (c == '+')
-		buff->flags.plus = true;
-	else if (c == '\'')
-		buff->flags.apos = true;
-	return (0);
+	printf("htag : %d, zero : %d, minus : %d, space : %d, plus : %d, apos : %d, width : %d, precision : %d\n",
+		buff->flags.htag, buff->flags.zero, buff->flags.minus, buff->flags.space, buff->flags.plus,
+			buff->flags.apos, buff->flags.width, buff->flags.precision);
+}
+
+int			get_flags(t_buff *buff, char **input, int i)
+{
+	while ((*input)[i] && !ft_printf_is_fspecif((*input)[i]))
+	{
+		if ((*input)[i] == '.')
+		{
+			buff->flags.precision = ft_atoi((*input) + i + 1);
+			while (ft_isdigit((*input)[i + 1]) && (*input)[i + 1])
+				i++;
+		}
+		else if (ft_strchr("123456789", (*input)[i]) && !buff->flags.width)
+		{
+			buff->flags.width = ft_atoi((*input) + i);
+			while (ft_isdigit((*input)[i + 1]) && (*input)[i + 1])
+				i++;
+		}
+		else if ((*input)[i] == '#')
+			buff->flags.htag = true;
+		else if ((*input)[i] == '0')
+			buff->flags.zero = true;
+		else if ((*input)[i] == '-')
+			buff->flags.minus = true;
+		else if ((*input)[i] == ' ')
+			buff->flags.space = true;
+		else if ((*input)[i] == '+')
+			buff->flags.plus = true;
+		else if ((*input)[i] == '\'')
+			buff->flags.apos = true;
+		i++;
+	}
+	return (i);
 }
 
 int			treat_arg_type_str(t_buff *buff, char type, va_list ap)
@@ -87,7 +96,6 @@ int			treat_arg_type_str(t_buff *buff, char type, va_list ap)
 	else if (type == 'S')
 	{
 		wptr = va_arg(ap, wchar_t *);
-		ft_wcslen(wptr);
 		size = treat_arg_type_wcstr(buff, wptr, ft_wcslen(wptr));
 	}
 	return (size);
@@ -111,6 +119,8 @@ int			treat_arg_type_int(t_buff *buff, char type, va_list ap)
 
 	size = 1;
 	ft_bzero(ptr, 19);
+	if (buff->flags.precision && buff->flags.zero)
+		buff->flags.zero = 0;
 	if (type == 'd' || type == 'i' || type == 'D')
 		size = ft_printf_itoa(ptr, va_arg(ap, int64_t));
 	else if (type == 'u')
@@ -138,22 +148,37 @@ int			treat_arg_type_base(t_buff *buff, char type, va_list ap)
 		size = ft_printf_itoa_base(ptr, 16, va_arg(ap, int64_t));
 	else if (type == 'X')
 		size = ft_printf_itoa_base(ptr, 16, va_arg(ap, int64_t));
+	if (buff->flags.htag && size == 1 && ptr[0] == '0' && ft_strchr("xX", type))
+		type == 'x' ? buff_append(buff, "0x", 2) : buff_append(buff, "0X", 2);
+	else if (buff->flags.htag && ft_strchr("oO", type))
+		buff_append(buff, "0", 1);
+	if (size < buff->flags.precision)
+	{
+		buff->flags.precision -= size;
+		while (buff->flags.precision)
+		{
+			buff_append(buff, "0", 1);
+			buff->flags.precision--;
+		}
+	}
 	buff_append(buff, ptr, size);
 	return (size);
 }
 
 int			treat_arg_type_dbl(t_buff *buff, char type, va_list ap)
 {
-	char	tmp[MAX_INT_LEN + 1]; // + precision
+	char	tmp[MAX_INT_LEN + 1 + buff->flags.precision]; // + precision
 	int		size;
 
 	ft_bzero(tmp, MAX_INT_LEN + 1);
 	size = 0;
 	if (type == 'f')
 	{
-		ft_ftoa(va_arg(ap, double), 6, tmp);
+		ft_ftoa(va_arg(ap, double), buff->flags.precision ? buff->flags.precision : 6, tmp);
 		size = ft_strlen(tmp);
 	}
 	buff_append(buff, tmp, size);
+	if (buff->flags.htag && ft_strchr("aAeEfFgG", type) && !ft_strchr(tmp, '.'))
+		buff_append(buff, ".", 1);
 	return (size);
 }

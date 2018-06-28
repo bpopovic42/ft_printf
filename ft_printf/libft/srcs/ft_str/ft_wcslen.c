@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:31:39 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/26 18:34:40 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/28 17:28:50 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ size_t		ft_wcslen(wchar_t *wcs)
 	i = 0;
 	if (wcs)
 	{
-		while (wcs[i])
+		while (wcs[i] != L'\0')
 			i++;
 	}
 	return (i);
