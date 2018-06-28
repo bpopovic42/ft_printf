@@ -31,7 +31,7 @@ all			:	$(NAME)
 	@echo > /dev/null
 
 lib			:
-	@$(MAKE) -C $(LDIR)/libft
+	@$(MAKE) DEBUG=$(DEBUG) -C $(LDIR)/libft
 	@$(MAKE) DEBUG=$(DEBUG) -C $(LDIR)
 
 $(NAME)		:	$(OBJS) lib
