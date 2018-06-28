@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/28 19:07:30 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/28 19:23:34 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int			treat_arg(t_buff *buff, char **input, va_list ap)
 	else
 	{
 		i = get_flags(buff, input, i);
+		if (ft_strchr("diouixX", (*input)[i]) && buff->flags.zero && buff->flags.precision)
+			buff->flags.zero = 0;
 		if (buff->flags.minus && buff->flags.zero)
 			buff->flags.zero = 0;
 		if (buff->flags.space && buff->flags.plus)
@@ -150,8 +152,17 @@ int			treat_arg_type_base(t_buff *buff, char type, va_list ap)
 		size = ft_printf_itoa_base(ptr, 16, va_arg(ap, int64_t));
 	if (buff->flags.htag && size == 1 && ptr[0] == '0' && ft_strchr("xX", type))
 		type == 'x' ? buff_append(buff, "0x", 2) : buff_append(buff, "0X", 2);
-	else if (buff->flags.htag && ft_strchr("oO", type))
-		buff_append(buff, "0", 1);
+	else if (buff->flags.htag && ft_strchr("oO", type) && !buff->flags.precision)
+		buff->flags.precision++;
+	if (buff->flags.precision < buff->flags.width && size < buff->flags.width)
+	{
+		buff->flags.width -= (buff->flags.precision > size ? buff->flags.precision : size);
+		while (buff->flags.width)
+		{
+			buff_append(buff, buff->flags.zero ? "0" : " ", 1);
+			buff->flags.width--;
+		}
+	}
 	if (size < buff->flags.precision)
 	{
 		buff->flags.precision -= size;
