@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:03:18 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/29 19:19:04 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/29 19:22:40 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ int			get_flags(t_buff *buff, char **input, int i)
 			while (ft_isdigit((*input)[i + 1]) && (*input)[i + 1])
 				i++;
 		}
-		buff->flags.htag = (*input)[i] == '#' ? true : false;
-		buff->flags.zero = (*input)[i] == '0' ? true : false;
-		buff->flags.minus = (*input)[i] == '-' ? true : false;
-		buff->flags.space = (*input)[i] == ' ' ? true : false;
-		buff->flags.plus = (*input)[i] == '+' ? true : false;
-		buff->flags.apos = (*input)[i] == '\'' ? true : false;
+		buff->flags.htag = (*input)[i] == '#' ? true : buff->flags.htag;
+		buff->flags.zero = (*input)[i] == '0' ? true : buff->flags.zero;
+		buff->flags.minus = (*input)[i] == '-' ? true : buff->flags.minus;
+		buff->flags.space = (*input)[i] == ' ' ? true : buff->flags.space;
+		buff->flags.plus = (*input)[i] == '+' ? true : buff->flags.plus;
+		buff->flags.apos = (*input)[i] == '\'' ? true : buff->flags.apos;
 		i++;
 	}
 	if (ft_strchr("diouixX", buff->flags.specifier) && buff->flags.zero && buff->flags.precision)
