@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 19:52:34 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/27 13:22:59 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/29 17:23:02 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,21 @@ int			ft_printf_itoa_base(char *buff, int base, int64_t nbr)
 	i = 0;
 	if (base > 16 || base < 2)
 		return (-1);
-	while (nbr)
+	if (nbr < 0)
+		nbr = ~(nbr) + 1;
+	if (!nbr)
 	{
 		buff[i] = charset[nbr % base];
 		i++;
-		nbr /= base;
+	}
+	else
+	{
+		while (nbr)
+		{
+			buff[i] = charset[nbr % base];
+			i++;
+			nbr /= base;
+		}
 	}
 	buff[i] = '\0';
 	buff = ft_strrev(buff);
