@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/29 16:56:11 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/29 18:20:49 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,10 +160,8 @@ int			treat_arg_type_base(t_buff *buff, char type, va_list ap)
 		size = ft_printf_itoa_base(ptr, 16, va_arg(ap, int64_t));
 	else if (type == 'X')
 		size = ft_printf_itoa_base(ptr, 16, va_arg(ap, int64_t));
-	if (buff->flags.htag && size >= 1 && ptr[0] != '0' && ft_strchr("xX", type))
-		type == 'x' ? buff_append(buff, "0x", 2) : buff_append(buff, "0X", 2);
-	else if (buff->flags.htag && ft_strchr("oO", type) && !buff->flags.precision)
-		buff->flags.precision++;
+	if (ft_strchr("xX", buff->flags.specifier) && buff->flags.htag && buff->flags.width >= 2 && size && ptr[0] != '0')
+		buff->flags.width -= 2;
 	return (print_arg(buff, ptr, size));
 }
 
@@ -174,6 +172,10 @@ int			print_arg(t_buff *buff, char *input, int size)
 
 	added_size = 0;
 	i = 0;
+	if (buff->flags.htag && size >= 1 && input[0] != '0' && ft_strchr("xX", buff->flags.specifier))
+		buff->flags.specifier == 'x' ? buff_append(buff, "0x", 2) : buff_append(buff, "0X", 2);
+	else if (buff->flags.htag && ft_strchr("oO", buff->flags.specifier) && !buff->flags.precision)
+		buff->flags.precision++;
 	if (!buff->flags.minus)
 		added_size = treat_precision(buff, size);
 	if (buff->flags.specifier == 'X')
@@ -189,7 +191,7 @@ int			print_arg(t_buff *buff, char *input, int size)
 		buff_append(buff, ".", 1);
 	if (buff->flags.minus)
 		added_size = treat_precision(buff, size);
-	return (added_size + size);
+	return (added_size + size + (ft_strchr("xX", buff->flags.specifier) && buff->flags.htag ? 2 : 0));
 }
 
 int			treat_precision(t_buff *buff, int arg_size)
