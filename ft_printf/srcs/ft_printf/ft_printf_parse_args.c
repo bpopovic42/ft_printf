@@ -6,94 +6,11 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/29 18:21:39 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/29 19:08:13 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-int			treat_arg(t_buff *buff, char **input, va_list ap)
-{
-	int			i;
-	int			size;
-
-	i = 1;
-	size = 0;
-	reset_flags(&buff->flags);
-	i = get_flags(buff, input, i);
-	if (ft_strchr("diouixX", buff->flags.specifier) && buff->flags.zero && buff->flags.precision)
-		buff->flags.zero = 0;
-	if (buff->flags.minus && buff->flags.zero)
-		buff->flags.zero = 0;
-	if (buff->flags.space && buff->flags.plus)
-		buff->flags.space = 0;
-	if (ft_strchr("sS", buff->flags.specifier))
-		size += treat_arg_type_str(buff, buff->flags.specifier, ap);
-	else if (ft_strchr("dDiuUcC", buff->flags.specifier))
-		size += treat_arg_type_int(buff, buff->flags.specifier, ap);
-	else if (ft_strchr("poOxX", buff->flags.specifier))
-		size += treat_arg_type_base(buff, buff->flags.specifier, ap);
-	else if (ft_strchr("fFeEgGaA", buff->flags.specifier))
-		size += treat_arg_type_dbl(buff, buff->flags.specifier, ap);
-	else if ((*input)[i] == '%')
-		size = print_arg(buff, &buff->flags.specifier, 1);
-	*input += i + 1;
-	return (size);
-}
-
-void		reset_flags(t_flags *flags)
-{
-	flags->htag = false;
-	flags->zero = false;
-	flags->minus = false;
-	flags->space = false;
-	flags->plus = false;
-	flags->apos = false;
-	flags->width = 0;
-	flags->precision = 0;
-	flags->htag = 0;
-}
-
-void		util_printf_flags(t_buff *buff)
-{
-	printf("htag : %d, zero : %d, minus : %d, space : %d, plus : %d, apos : %d, width : %d, precision : %d\n",
-		buff->flags.htag, buff->flags.zero, buff->flags.minus, buff->flags.space, buff->flags.plus,
-			buff->flags.apos, buff->flags.width, buff->flags.precision);
-}
-
-int			get_flags(t_buff *buff, char **input, int i)
-{
-	while ((*input)[i] && !ft_printf_is_fspecif((*input)[i]))
-	{
-		if ((*input)[i] == '.')
-		{
-			buff->flags.precision = ft_atoi((*input) + i + 1);
-			while (ft_isdigit((*input)[i + 1]) && (*input)[i + 1])
-				i++;
-		}
-		else if (ft_strchr("123456789", (*input)[i]) && !buff->flags.width)
-		{
-			buff->flags.width = ft_atoi((*input) + i);
-			while (ft_isdigit((*input)[i + 1]) && (*input)[i + 1])
-				i++;
-		}
-		else if ((*input)[i] == '#')
-			buff->flags.htag = true;
-		else if ((*input)[i] == '0')
-			buff->flags.zero = true;
-		else if ((*input)[i] == '-')
-			buff->flags.minus = true;
-		else if ((*input)[i] == ' ')
-			buff->flags.space = true;
-		else if ((*input)[i] == '+')
-			buff->flags.plus = true;
-		else if ((*input)[i] == '\'')
-			buff->flags.apos = true;
-		i++;
-	}
-	buff->flags.specifier = (*input)[i];
-	return (i);
-}
 
 int			treat_arg_type_str(t_buff *buff, char type, va_list ap)
 {
@@ -194,32 +111,6 @@ int			print_arg(t_buff *buff, char *input, int size)
 	return (added_size + size + (ft_strchr("xX", buff->flags.specifier) && buff->flags.htag ? 2 : 0));
 }
 
-int			treat_precision(t_buff *buff, int arg_size)
-{
-	int		added_len;
-
-	added_len = 0;
-	if (buff->flags.precision < buff->flags.width && arg_size < buff->flags.width)
-	{
-		buff->flags.width -= (buff->flags.precision > arg_size ? buff->flags.precision : arg_size);
-		while (buff->flags.width)
-		{
-			added_len += buff_append(buff, buff->flags.zero ? "0" : " ", 1);
-			buff->flags.width--;
-		}
-	}
-	if (arg_size < buff->flags.precision)
-	{
-		buff->flags.precision -= arg_size;
-		while (buff->flags.precision)
-		{
-			added_len += buff_append(buff, "0", 1);
-			buff->flags.precision--;
-		}
-	}
-	return (added_len);
-}
-
 int			treat_arg_type_dbl(t_buff *buff, char type, va_list ap)
 {
 	char	tmp[MAX_INT_LEN + 1 + buff->flags.precision]; // + precision
@@ -233,4 +124,11 @@ int			treat_arg_type_dbl(t_buff *buff, char type, va_list ap)
 		size = ft_strlen(tmp);
 	}
 	return (print_arg(buff, tmp, size));
+}
+
+void		util_printf_flags(t_buff *buff)
+{
+	printf("htag : %d, zero : %d, minus : %d, space : %d, plus : %d, apos : %d, width : %d, precision : %d\n",
+		buff->flags.htag, buff->flags.zero, buff->flags.minus, buff->flags.space, buff->flags.plus,
+			buff->flags.apos, buff->flags.width, buff->flags.precision);
 }
