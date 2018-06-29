@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/29 18:20:49 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/29 18:21:39 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ int			treat_arg_type_int(t_buff *buff, char type, va_list ap)
 		buff->flags.zero = 0;
 	if (type == 'd' || type == 'i' || type == 'D')
 		size = ft_printf_itoa(ptr, va_arg(ap, int64_t));
-	else if (type == 'u')
+	else if (type == 'u' || type == 'U')
 		size = ft_printf_itoa(ptr, va_arg(ap, int64_t));
 	else if (type == 'c')
 		ptr[0] = va_arg(ap, int);
