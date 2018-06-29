@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/28 19:55:47 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/29 15:54:41 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct		s_flags
 	bool			apos;
 	int				width;
 	int				precision;
+	char			specifier;
 }					t_flags;
 
 typedef struct		s_buff
@@ -63,5 +64,8 @@ int		ft_printf_itoa_base(char *buff, int base, int64_t nbr);
 size_t	ft_wcslen(wchar_t *wcs);
 int			get_flags(t_buff *buff, char **input, int i);
 void	util_printf_flags(t_buff *buff);
+int		treat_precision(t_buff *buff, int arg_size);
+int			print_arg(t_buff *buff, char *input, int size);
+void		reset_flags(t_flags *flags);
 
 #endif
