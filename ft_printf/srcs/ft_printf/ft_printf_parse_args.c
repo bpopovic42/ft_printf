@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/29 15:54:51 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/29 16:56:11 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,13 @@ int			treat_arg(t_buff *buff, char **input, va_list ap)
 	i = 1;
 	size = 0;
 	reset_flags(&buff->flags);
-	if ((*input)[i] == '%')
-		buff_append(buff, *input + i, 1);
-	else
-	{
-		i = get_flags(buff, input, i);
-		if (ft_strchr("diouixX", buff->flags.specifier) && buff->flags.zero && buff->flags.precision)
-			buff->flags.zero = 0;
-		if (buff->flags.minus && buff->flags.zero)
-			buff->flags.zero = 0;
-		if (buff->flags.space && buff->flags.plus)
-			buff->flags.space = 0;
-	}
+	i = get_flags(buff, input, i);
+	if (ft_strchr("diouixX", buff->flags.specifier) && buff->flags.zero && buff->flags.precision)
+		buff->flags.zero = 0;
+	if (buff->flags.minus && buff->flags.zero)
+		buff->flags.zero = 0;
+	if (buff->flags.space && buff->flags.plus)
+		buff->flags.space = 0;
 	if (ft_strchr("sS", buff->flags.specifier))
 		size += treat_arg_type_str(buff, buff->flags.specifier, ap);
 	else if (ft_strchr("dDiuUcC", buff->flags.specifier))
@@ -40,6 +35,8 @@ int			treat_arg(t_buff *buff, char **input, va_list ap)
 		size += treat_arg_type_base(buff, buff->flags.specifier, ap);
 	else if (ft_strchr("fFeEgGaA", buff->flags.specifier))
 		size += treat_arg_type_dbl(buff, buff->flags.specifier, ap);
+	else if ((*input)[i] == '%')
+		size = print_arg(buff, &buff->flags.specifier, 1);
 	*input += i + 1;
 	return (size);
 }
@@ -163,7 +160,7 @@ int			treat_arg_type_base(t_buff *buff, char type, va_list ap)
 		size = ft_printf_itoa_base(ptr, 16, va_arg(ap, int64_t));
 	else if (type == 'X')
 		size = ft_printf_itoa_base(ptr, 16, va_arg(ap, int64_t));
-	if (buff->flags.htag && size == 1 && ptr[0] == '0' && ft_strchr("xX", type))
+	if (buff->flags.htag && size >= 1 && ptr[0] != '0' && ft_strchr("xX", type))
 		type == 'x' ? buff_append(buff, "0x", 2) : buff_append(buff, "0X", 2);
 	else if (buff->flags.htag && ft_strchr("oO", type) && !buff->flags.precision)
 		buff->flags.precision++;
@@ -173,11 +170,25 @@ int			treat_arg_type_base(t_buff *buff, char type, va_list ap)
 int			print_arg(t_buff *buff, char *input, int size)
 {
 	int		added_size;
+	int		i;
 
-	added_size = treat_precision(buff, size);
+	added_size = 0;
+	i = 0;
+	if (!buff->flags.minus)
+		added_size = treat_precision(buff, size);
+	if (buff->flags.specifier == 'X')
+	{
+		while (input[i])
+		{
+			input[i] = ft_toupper(input[i]);
+			i++;
+		}
+	}
 	buff_append(buff, input, size);
 	if (buff->flags.htag && ft_strchr("aAeEfFgG", buff->flags.specifier) && !ft_strchr(input, '.'))
 		buff_append(buff, ".", 1);
+	if (buff->flags.minus)
+		added_size = treat_precision(buff, size);
 	return (added_size + size);
 }
 
