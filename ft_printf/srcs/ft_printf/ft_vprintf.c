@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:06:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/29 19:19:01 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/29 20:54:57 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,21 +51,34 @@ int			treat_arg(t_buff *buff, char **input, va_list ap)
 {
 	int			i;
 	int			size;
+	int			(*fptr)(t_buff*, char, va_list);
 
 	i = 1;
 	size = 0;
 	reset_flags(&buff->flags);
 	i = get_flags(buff, input, i);
-	if (ft_strchr("sS", buff->flags.specifier))
-		size += treat_arg_type_str(buff, buff->flags.specifier, ap);
-	else if (ft_strchr("dDiuUcC", buff->flags.specifier))
-		size += treat_arg_type_int(buff, buff->flags.specifier, ap);
-	else if (ft_strchr("poOxX", buff->flags.specifier))
-		size += treat_arg_type_base(buff, buff->flags.specifier, ap);
-	else if (ft_strchr("fFeEgGaA", buff->flags.specifier))
-		size += treat_arg_type_dbl(buff, buff->flags.specifier, ap);
-	else if ((*input)[i] == '%')
-		size = print_arg(buff, &buff->flags.specifier, 1);
+	if (!(fptr = treat_specifier_by_type(buff->flags.specifier)))
+	{
+		if (buff->flags.specifier == '%')
+			print_arg(buff, &buff->flags.specifier, 1);
+		else
+			return (-1);
+	}
+	else
+		size = fptr(buff, buff->flags.specifier, ap);
 	*input += i + 1;
 	return (size);
+}
+
+int		(*treat_specifier_by_type(char specifier))(t_buff*, char, va_list)
+{
+	if (ft_strchr("sS", specifier))
+		return (treat_arg_type_str);
+	else if (ft_strchr("dDiuUcC", specifier))
+		return (treat_arg_type_int);
+	else if (ft_strchr("poOxX", specifier))
+		return (treat_arg_type_base);
+	else if (ft_strchr("fFeEgGaA", specifier))
+		return (treat_arg_type_dbl);
+	return (NULL);
 }

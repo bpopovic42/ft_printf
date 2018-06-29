@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/29 15:54:41 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/06/29 20:09:09 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,6 @@ void	util_printf_flags(t_buff *buff);
 int		treat_precision(t_buff *buff, int arg_size);
 int			print_arg(t_buff *buff, char *input, int size);
 void		reset_flags(t_flags *flags);
+int		(*treat_specifier_by_type(char specifier))(t_buff*, char, va_list);
 
 #endif
