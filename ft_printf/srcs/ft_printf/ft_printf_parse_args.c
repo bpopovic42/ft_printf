@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/29 19:08:13 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/03 02:01:47 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,28 @@ int			treat_arg_type_int(t_buff *buff, char type, va_list ap)
 {
 	char	ptr[19];
 	int		size;
+	int64_t		tmp;
 
 	size = 1;
 	ft_bzero(ptr, 19);
+	if (buff->flags.l == 'l')
+		tmp = va_arg(ap, long);
+	else if (buff->flags.l == 'L')
+		tmp = va_arg(ap, long long);
+	else if (buff->flags.j)
+		tmp = va_arg(ap, intmax_t);
+	else if (buff->flags.z)
+		tmp = va_arg(ap, size_t);
+	else
+		tmp = va_arg(ap, int);
 	if (buff->flags.precision && buff->flags.zero)
 		buff->flags.zero = 0;
 	if (type == 'd' || type == 'i' || type == 'D')
-		size = ft_printf_itoa(ptr, va_arg(ap, int64_t));
+		size = ft_printf_itoa(ptr, tmp);
 	else if (type == 'u' || type == 'U')
-		size = ft_printf_itoa(ptr, va_arg(ap, int64_t));
+		size = ft_printf_itoa(ptr, tmp);
 	else if (type == 'c')
-		ptr[0] = va_arg(ap, int);
+		ptr[0] = tmp;
 	return (print_arg(buff, ptr, size));
 }
 
@@ -64,19 +75,26 @@ int			treat_arg_type_base(t_buff *buff, char type, va_list ap)
 {
 	char	ptr[65];
 	int		size;
+	uint64_t	tmp;
 
 	size = 0;
 	ft_bzero(ptr, 65);
+	if (buff->flags.l == 'l')
+		tmp = va_arg(ap, unsigned long);
+	else if (buff->flags.l == 'L')
+		tmp = va_arg(ap, unsigned long long);
+	else if (buff->flags.j)
+		tmp = va_arg(ap, uintmax_t);
+	else if (buff->flags.z)
+		tmp = va_arg(ap, size_t);
+	else
+		tmp = va_arg(ap, unsigned int);
 	if (type == 'p')
-		size = ft_printf_itoa_base(ptr, 16, va_arg(ap, int64_t));
-	else if (type == 'o')
-		size = ft_printf_itoa_base(ptr, 8, va_arg(ap, int64_t));
-	else if (type == 'O')
-		size = ft_printf_itoa_base(ptr, 8, va_arg(ap, int64_t));
-	else if (type == 'x')
-		size = ft_printf_itoa_base(ptr, 16, va_arg(ap, int64_t));
-	else if (type == 'X')
-		size = ft_printf_itoa_base(ptr, 16, va_arg(ap, int64_t));
+		size = ft_printf_itoa_base(ptr, 16, tmp);
+	else if (type == 'o' || type == 'O')
+		size = ft_printf_itoa_base(ptr, 8, tmp);
+	else if (type == 'x' || type == 'X')
+		size = ft_printf_itoa_base(ptr, 16, tmp);
 	if (ft_strchr("xX", buff->flags.specifier) && buff->flags.htag && buff->flags.width >= 2 && size && ptr[0] != '0')
 		buff->flags.width -= 2;
 	return (print_arg(buff, ptr, size));

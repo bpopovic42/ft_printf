@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/02 18:56:58 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/03 01:40:58 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@ typedef struct		s_flags
 	bool			space;
 	bool			plus;
 	bool			apos;
+	bool			j;
+	bool			z;
+	char			l;
+	char			h;
 	int				width;
 	int				precision;
 	char			specifier;
@@ -53,6 +57,7 @@ int		parse_input(char *fmt, t_buff *buff, va_list ap);
 int		buff_append(t_buff *buff, char *input, int size);
 int		treat_arg(t_buff *buff, char **input, va_list ap);
 int		ft_printf_is_fspecif(int c);
+int		ft_printf_is_flag(int c);
 int		treat_arg_type_int(t_buff *buff, char type, va_list ap);
 int		ft_printf_itoa(char *buff, int64_t val);
 int		treat_arg_type_str(t_buff *buff, char type, va_list ap);
@@ -68,5 +73,6 @@ int		treat_precision(t_buff *buff, int arg_size);
 int			print_arg(t_buff *buff, char *input, int size);
 void		reset_flags(t_flags *flags);
 int		(*treat_specifier_by_type(char specifier))(t_buff*, char, va_list);
+void		save_flags(t_buff *buff, int c, int i);
 
 #endif

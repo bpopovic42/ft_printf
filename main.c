@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:05:25 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/02 18:51:22 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/02 23:41:16 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		main()
 {
 	char	*stest = "Hello";
 	int		dtest = -42;
-	int64_t		lldtest = 1231245124;
+	int64_t		lldtest = -42;
 	long int	ldtest = 1231245124;
 	char	ctest = 'X';
 	double	dbltest = 1.234567;
@@ -43,9 +43,10 @@ int		main()
 	(void)dbltest;
 	(void)ptrtest;
 	(void)uitest;
+
 	setlocale(LC_ALL, "");
-	prval = printf("%x\n", dtest);
-	frval = ft_printf("%x\n", dtest);
+	prval = printf("%x\n", -42);
+	frval = ft_printf("%x\n", -42);
 	printf("prval = %d, frval = %d\n", prval, frval);
 	//printf(L"%C", wc); // Gives interesting compilation error
 	return (0);
