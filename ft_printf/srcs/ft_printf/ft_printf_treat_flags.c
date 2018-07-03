@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:03:18 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/03 02:21:58 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/03 03:00:28 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int			treat_precision(t_buff *buff, int arg_size)
 	added_len = 0;
 	if (buff->flags.precision < buff->flags.width && arg_size < buff->flags.width)
 	{
-		buff->flags.width -= (buff->flags.precision > arg_size ? buff->flags.precision : arg_size);
+		buff->flags.width -= (buff->flags.precision < arg_size && buff->flags.precision > 0 ? buff->flags.precision : arg_size);
 		while (buff->flags.width)
 		{
 			added_len += buff_append(buff, buff->flags.zero ? "0" : " ", 1);

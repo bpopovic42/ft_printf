@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/03 02:30:09 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/03 02:50:52 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int			print_arg(t_buff *buff, char *input, int size)
 		buff_append(buff, ".", 1);
 	if (buff->flags.minus)
 		added_size = treat_precision(buff, size);
-	return (added_size + size + (ft_strchr("xX", buff->flags.specifier) && buff->flags.htag ? 2 : 0));
+	return (added_size + size + (ft_strchr("xX", buff->flags.specifier) && buff->flags.htag && input[0] != '0' ? 2 : 0));
 }
 
 int			treat_arg_type_dbl(t_buff *buff, char type, va_list ap)
