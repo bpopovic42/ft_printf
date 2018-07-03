@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/03 02:01:47 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/03 02:30:09 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,8 @@ int			print_arg(t_buff *buff, char *input, int size)
 			i++;
 		}
 	}
+	size = !buff->flags.precision && input[0] == '0' ? 0 : size;
+	size -= buff->flags.precision > 0 && ft_strchr("sS", buff->flags.specifier) ? buff->flags.precision : 0;
 	buff_append(buff, input, size);
 	if (buff->flags.htag && ft_strchr("aAeEfFgG", buff->flags.specifier) && !ft_strchr(input, '.'))
 		buff_append(buff, ".", 1);

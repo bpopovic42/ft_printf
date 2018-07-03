@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:03:18 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/03 01:45:48 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/03 02:21:58 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void		reset_flags(t_flags *flags)
 	flags->l = 0;
 	flags->h = 0;
 	flags->width = 0;
-	flags->precision = 0;
+	flags->precision = -1;
 	flags->htag = 0;
 }
 
