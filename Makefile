@@ -20,7 +20,7 @@ IDIRS		=	includes
 
 INC			=	$(addprefix -I./$(LDIR)/, $(IDIRS))
 
-CFLAGS		=	$(DEBUG) -Wall -Wextra -Werror
+CFLAGS		=	$(DEBUG)
 
 PTF_SRC		=	$(addprefix $(LDIR)/srcs/, $(PTF_SRCS))
 
