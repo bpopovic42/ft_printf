@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/03 01:40:58 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/04 20:11:35 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int		ft_printf_itoa_base(char *buff, int base, uint64_t nbr);
 size_t	ft_wcslen(wchar_t *wcs);
 int			get_flags(t_buff *buff, char **input, int i);
 void	util_printf_flags(t_buff *buff);
-int		treat_precision(t_buff *buff, int arg_size);
+int			treat_precision(t_buff *buff, char *input, int arg_size);
 int			print_arg(t_buff *buff, char *input, int size);
 void		reset_flags(t_flags *flags);
 int		(*treat_specifier_by_type(char specifier))(t_buff*, char, va_list);

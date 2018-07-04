@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/04 02:47:50 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/04 21:26:31 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int			treat_arg_type_int(t_buff *buff, char type, va_list ap)
 		tmp = va_arg(ap, size_t);
 	else
 		tmp = va_arg(ap, int);
-	if (buff->flags.precision && buff->flags.zero)
+	if (buff->flags.precision > 0 && buff->flags.zero)
 		buff->flags.zero = 0;
 	if (type == 'd' || type == 'i' || type == 'D')
 		size = ft_printf_itoa(ptr, tmp);
@@ -102,43 +102,6 @@ int			treat_arg_type_base(t_buff *buff, char type, va_list ap)
 	return (print_arg(buff, ptr, size));
 }
 
-int			print_arg(t_buff *buff, char *input, int size)
-{
-	int		added_size;
-	int		i;
-
-	added_size = 0;
-	i = 0;
-	if (buff->flags.htag && ft_strchr("oO", buff->flags.specifier) && !buff->flags.precision)
-		buff->flags.precision++;
-	if (!buff->flags.minus)
-	{
-		//if ((buff->flags.specifier == 'c' && *input) || buff->flags.specifier != 'c')
-		if (buff->flags.specifier == 'c' && !*input && buff->flags.width > 0)
-			size = 1;
-		added_size = treat_precision(buff, size);
-	}
-	if (buff->flags.htag && size >= 1 && input[0] != '0' && ft_strchr("xX", buff->flags.specifier))
-		buff->flags.specifier == 'x' ? buff_append(buff, "0x", 2) : buff_append(buff, "0X", 2);
-	if (buff->flags.specifier == 'X')
-	{
-		while (input[i])
-		{
-			input[i] = ft_toupper(input[i]);
-			i++;
-		}
-	}
-	size = !buff->flags.precision && input[0] == '0' ? 0 : size;
-	//size -= buff->flags.precision > 0 && ft_strchr("sS", buff->flags.specifier) ? buff->flags.precision : 0;
-	if ((input && *input) || buff->flags.specifier == 'c')
-		size = buff_append(buff, input, size < buff->flags.precision || buff->flags.precision < 1  || !ft_strchr("sS", buff->flags.specifier) ? size : buff->flags.precision);
-	if (buff->flags.htag && ft_strchr("aAeEfFgG", buff->flags.specifier) && !ft_strchr(input, '.'))
-		buff_append(buff, ".", 1);
-	if (buff->flags.minus)
-		added_size = treat_precision(buff, size);
-	return (added_size + size + (ft_strchr("xX", buff->flags.specifier) && buff->flags.htag && input[0] != '0' ? 2 : 0));
-}
-
 int			treat_arg_type_dbl(t_buff *buff, char type, va_list ap)
 {
 	char	tmp[MAX_INT_LEN + 1 + buff->flags.precision]; // + precision
@@ -159,4 +122,95 @@ void		util_printf_flags(t_buff *buff)
 	printf("htag : %d, zero : %d, minus : %d, space : %d, plus : %d, apos : %d, width : %d, precision : %d\n",
 		buff->flags.htag, buff->flags.zero, buff->flags.minus, buff->flags.space, buff->flags.plus,
 			buff->flags.apos, buff->flags.width, buff->flags.precision);
+}
+
+int			print_arg(t_buff *buff, char *input, int size)
+{
+	int		added_size;
+	int		i;
+
+	added_size = 0;
+	i = 0;
+
+	if (ft_strchr("aAdeEfFgG", buff->flags.specifier) && ((buff->flags.zero && buff->flags.width > 0) || (buff->flags.precision > size)))
+	{
+		if (buff->flags.plus && *input != '-')
+		{
+			added_size++;
+			buff->flags.width -= buff_append(buff, "+", 1);
+		}
+		else if (*input == '-')
+		{
+			input++;
+			added_size++;
+			size--;
+			buff->flags.width -= buff_append(buff, "-", 1);
+		}
+		buff->flags.plus = 0;
+	}
+
+	if (buff->flags.htag && ft_strchr("oO", buff->flags.specifier) && buff->flags.width > 0)
+		buff->flags.width--;
+
+	if (size > 0 && buff->flags.precision >= 0 && buff->flags.specifier == 's')
+	{
+		input[buff->flags.precision] = '\0';
+		size = buff->flags.precision;
+	}
+
+	if (!buff->flags.minus)
+	{
+		if (buff->flags.specifier == 'c' && !*input && buff->flags.width > 0)
+			size = 1;
+		if (buff->flags.specifier == 'c' && !*input && buff->flags.width <= 0)
+			buff->flags.precision = 0;
+		added_size += treat_precision(buff, input, size);
+	}
+
+	if (buff->flags.specifier == 'X')
+	{
+		while (input[i])
+		{
+			input[i] = ft_toupper(input[i]);
+			i++;
+		}
+	}
+
+	if (buff->flags.htag && size >= 1 && input[0] != '0' && ft_strchr("xX", buff->flags.specifier) && !buff->flags.zero)
+		buff->flags.specifier == 'x' ? buff_append(buff, "0x", 2) : buff_append(buff, "0X", 2);
+
+	if (buff->flags.htag && ft_strchr("oO", buff->flags.specifier))
+		added_size += buff_append(buff, "0", 1);
+
+	size = !buff->flags.precision && input[0] == '0' ? 0 : size;
+
+	if (buff->flags.precision > size && ft_strchr("dioOuUxX", buff->flags.specifier))
+	{
+		while ((buff->flags.precision - size) > 0)
+		{
+			buff_append(buff, ft_strchr("dioOuUxX", buff->flags.specifier) ? "0" : " ", 1);
+			buff->flags.precision--;
+			added_size++;
+			buff->flags.width--;
+		}
+	}
+
+	if (ft_strchr("aAdeEfFgGi", buff->flags.specifier) && (buff->flags.space || buff->flags.plus))
+	{
+		if (buff->flags.plus && *input != '-')
+			added_size += buff_append(buff, "+", 1);
+		else if (buff->flags.space && *input != '-')
+			added_size += buff_append(buff, " ", 1);
+	}
+
+	if ((input && *input) || buff->flags.specifier == 'c')
+		size = buff_append(buff, input, size < buff->flags.precision || buff->flags.precision < 1  || !ft_strchr("sS", buff->flags.specifier) ? size : buff->flags.precision);
+
+	if (buff->flags.htag && ft_strchr("aAeEfFgG", buff->flags.specifier) && !ft_strchr(input, '.'))
+		buff_append(buff, ".", 1);
+
+	if (buff->flags.minus)
+		added_size += treat_precision(buff, input, size);
+
+	return (added_size + size + (ft_strchr("xX", buff->flags.specifier) && buff->flags.htag && input[0] != '0' ? 2 : 0));
 }

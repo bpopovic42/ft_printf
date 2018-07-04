@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:03:18 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/04 01:31:47 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/04 21:09:42 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,17 @@ void		reset_flags(t_flags *flags)
 	flags->htag = 0;
 }
 
-int			treat_precision(t_buff *buff, int arg_size)
+int			treat_precision(t_buff *buff, char *input, int arg_size)
 {
 	int		added_len;
 
 	added_len = 0;
+	if (!buff->flags.precision && ft_strchr("dioOuUxX", buff->flags.specifier) && input[0] == '0' && buff->flags.width > 0)
+		added_len += buff_append(buff, " ", 1);
+
+	if (buff->flags.zero && buff->flags.htag && ft_strchr("xX", buff->flags.specifier))
+		buff->flags.specifier == 'x' ? buff_append(buff, "0x", 2) : buff_append(buff, "0X", 2);
+
 	if (buff->flags.precision < buff->flags.width && arg_size < buff->flags.width)
 	{
 		buff->flags.width -= (buff->flags.precision > arg_size && buff->flags.precision > 0  && arg_size > 0 ? buff->flags.precision : arg_size);
@@ -98,6 +104,7 @@ int			treat_precision(t_buff *buff, int arg_size)
 			buff->flags.width--;
 		}
 	}
+
 	if (arg_size < buff->flags.precision)
 	{
 		buff->flags.precision -= arg_size;
@@ -107,5 +114,6 @@ int			treat_precision(t_buff *buff, int arg_size)
 			buff->flags.precision--;
 		}
 	}
+
 	return (added_len);
 }
