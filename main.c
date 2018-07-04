@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:05:25 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/03 02:15:17 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/04 02:38:11 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ int		main()
 	(void)uitest;
 
 	setlocale(LC_ALL, "");
-	prval = printf("%.0x\n", 0);
-	frval = ft_printf("%.0x\n", 0);
+	prval = printf("%2c 12p\n", 0);
+	frval = ft_printf("%2c 12f\n", 0);
 	printf("prval = %d, frval = %d\n", prval, frval);
 	//printf(L"%C", wc); // Gives interesting compilation error
 	return (0);

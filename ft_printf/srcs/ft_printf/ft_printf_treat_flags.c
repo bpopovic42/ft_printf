@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:03:18 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/03 03:00:28 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/04 01:31:47 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int			get_flags(t_buff *buff, char **input, int i)
 		save_flags(buff, (*input)[i], i);
 		i++;
 	}
-	if (ft_strchr("diouixX", buff->flags.specifier) && buff->flags.zero && buff->flags.precision)
+	if (ft_strchr("diouixX", buff->flags.specifier) && buff->flags.zero && buff->flags.precision > 0)
 		buff->flags.zero = 0;
 	if (buff->flags.minus && buff->flags.zero)
 		buff->flags.zero = 0;
@@ -91,7 +91,7 @@ int			treat_precision(t_buff *buff, int arg_size)
 	added_len = 0;
 	if (buff->flags.precision < buff->flags.width && arg_size < buff->flags.width)
 	{
-		buff->flags.width -= (buff->flags.precision < arg_size && buff->flags.precision > 0 ? buff->flags.precision : arg_size);
+		buff->flags.width -= (buff->flags.precision > arg_size && buff->flags.precision > 0  && arg_size > 0 ? buff->flags.precision : arg_size);
 		while (buff->flags.width)
 		{
 			added_len += buff_append(buff, buff->flags.zero ? "0" : " ", 1);
@@ -101,7 +101,7 @@ int			treat_precision(t_buff *buff, int arg_size)
 	if (arg_size < buff->flags.precision)
 	{
 		buff->flags.precision -= arg_size;
-		while (buff->flags.precision)
+		while (buff->flags.precision && buff->flags.specifier != 's')
 		{
 			added_len += buff_append(buff, "0", 1);
 			buff->flags.precision--;
