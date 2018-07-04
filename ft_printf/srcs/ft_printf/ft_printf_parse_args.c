@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/04 21:26:31 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/04 22:07:42 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ int			print_arg(t_buff *buff, char *input, int size)
 	added_size = 0;
 	i = 0;
 
-	if (ft_strchr("aAdeEfFgG", buff->flags.specifier) && ((buff->flags.zero && buff->flags.width > 0) || (buff->flags.precision > size)))
+	if (ft_strchr("aAdeEfFgGi", buff->flags.specifier) && ((buff->flags.zero && buff->flags.width > 0) || (buff->flags.precision > size)))
 	{
 		if (buff->flags.plus && *input != '-')
 		{
@@ -199,7 +199,7 @@ int			print_arg(t_buff *buff, char *input, int size)
 	{
 		if (buff->flags.plus && *input != '-')
 			added_size += buff_append(buff, "+", 1);
-		else if (buff->flags.space && *input != '-')
+		else if (buff->flags.space && *input != '-' && !(ft_strchr("di", buff->flags.specifier) && added_size > size))
 			added_size += buff_append(buff, " ", 1);
 	}
 
