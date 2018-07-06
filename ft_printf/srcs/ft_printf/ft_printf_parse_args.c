@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/06 15:47:10 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/06 16:03:00 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,13 +148,6 @@ int			treat_arg_type_dbl(t_buff *buff, char type, va_list ap)
 		size = ft_strlen(tmp);
 	}
 	return (print_arg(buff, tmp, size));
-}
-
-void		util_printf_flags(t_buff *buff)
-{
-	printf("htag : %d, zero : %d, minus : %d, space : %d, plus : %d, apos : %d, width : %d, precision : %d\n",
-		buff->flags.htag, buff->flags.zero, buff->flags.minus, buff->flags.space, buff->flags.plus,
-			buff->flags.apos, buff->flags.width, buff->flags.precision);
 }
 
 int			print_arg(t_buff *buff, char *input, int size)
