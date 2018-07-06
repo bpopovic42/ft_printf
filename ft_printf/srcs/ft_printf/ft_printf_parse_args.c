@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/06 14:46:43 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/06 15:47:10 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int			treat_arg_type_int(t_buff *buff, char type, va_list ap)
 	char	ptr[19];
 	int		size;
 	int64_t		tmp;
+	short int	tmp2;
+	signed char	tmp3;
 
 	size = 1;
 	ft_bzero(ptr, 19);
@@ -60,11 +62,19 @@ int			treat_arg_type_int(t_buff *buff, char type, va_list ap)
 		tmp = va_arg(ap, intmax_t);
 	else if (buff->flags.z)
 		tmp = va_arg(ap, size_t);
+	else if (buff->flags.h == 'h')
+		tmp2 = va_arg(ap, int);
+	else if (buff->flags.h == 'H')
+		tmp3 = va_arg(ap, int);
 	else
 		tmp = va_arg(ap, int);
 	if (buff->flags.precision > 0 && buff->flags.zero)
 		buff->flags.zero = 0;
-	if (type == 'd' || type == 'i' || type == 'D')
+	if (buff->flags.h == 'h')
+		size = ft_printf_itoa(ptr, tmp2);
+	else if (buff->flags.h == 'H')
+		size = ft_printf_itoa(ptr, tmp3);
+	else if (type == 'd' || type == 'i' || type == 'D')
 		size = ft_printf_itoa(ptr, tmp);
 	else if (type == 'c')
 		ptr[0] = tmp;
