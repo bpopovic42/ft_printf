@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:06:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/03 01:41:14 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/06 14:35:28 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,10 @@ int		(*treat_specifier_by_type(char specifier))(t_buff*, char, va_list)
 {
 	if (ft_strchr("sS", specifier))
 		return (treat_arg_type_str);
-	else if (ft_strchr("dDiuUcC", specifier))
+	else if (ft_strchr("dDicC", specifier))
 		return (treat_arg_type_int);
+	else if (ft_strchr("uU", specifier))
+		return (treat_arg_type_uint);
 	else if (ft_strchr("poOxX", specifier))
 		return (treat_arg_type_base);
 	else if (ft_strchr("fFeEgGaA", specifier))

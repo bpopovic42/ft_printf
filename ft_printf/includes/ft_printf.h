@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/06 12:49:04 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/06 14:45:54 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,9 @@ int		treat_arg(t_buff *buff, char **input, va_list ap);
 int		ft_printf_is_fspecif(int c);
 int		ft_printf_is_flag(int c);
 int		treat_arg_type_int(t_buff *buff, char type, va_list ap);
+int			treat_arg_type_uint(t_buff *buff, char type, va_list ap);
 int		ft_printf_itoa(char *buff, int64_t val);
+int		ft_printf_uitoa(char *buff, uint64_t val);
 int		treat_arg_type_str(t_buff *buff, char type, va_list ap);
 int		ft_vprintf(const char * restrict format, va_list ap);
 int		treat_arg_type_wcstr(t_buff *buff, wchar_t *wcstr, size_t size);
