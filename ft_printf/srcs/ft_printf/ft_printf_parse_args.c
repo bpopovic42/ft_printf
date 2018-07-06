@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/04 22:07:42 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/06 13:46:06 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,21 +132,21 @@ int			print_arg(t_buff *buff, char *input, int size)
 	added_size = 0;
 	i = 0;
 
-	if (ft_strchr("aAdeEfFgGi", buff->flags.specifier) && ((buff->flags.zero && buff->flags.width > 0) || (buff->flags.precision > size)))
+	if (ft_strchr("aAdeEfFgGi", buff->flags.specifier) && (buff->flags.plus || (*input == '-' && !buff->flags.minus)))
 	{
 		if (buff->flags.plus && *input != '-')
 		{
 			added_size++;
-			buff->flags.width -= buff_append(buff, "+", 1);
+			buff->flags.width--;
 		}
 		else if (*input == '-')
 		{
 			input++;
 			added_size++;
 			size--;
-			buff->flags.width -= buff_append(buff, "-", 1);
+			buff->flags.width--;
+			buff->flags.plus = '-';
 		}
-		buff->flags.plus = 0;
 	}
 
 	if (buff->flags.htag && ft_strchr("oO", buff->flags.specifier) && buff->flags.width > 0)
@@ -184,6 +184,11 @@ int			print_arg(t_buff *buff, char *input, int size)
 
 	size = !buff->flags.precision && input[0] == '0' ? 0 : size;
 
+	if (ft_strchr("aAdeEfFgGi", buff->flags.specifier) && buff->flags.plus && ((buff->pos > 0 && buff->buff[buff->pos - 1] != '0') || buff->pos == 0))
+	{
+		buff_append(buff, &buff->flags.plus, 1);
+	}
+
 	if (buff->flags.precision > size && ft_strchr("dioOuUxX", buff->flags.specifier))
 	{
 		while ((buff->flags.precision - size) > 0)
@@ -193,14 +198,6 @@ int			print_arg(t_buff *buff, char *input, int size)
 			added_size++;
 			buff->flags.width--;
 		}
-	}
-
-	if (ft_strchr("aAdeEfFgGi", buff->flags.specifier) && (buff->flags.space || buff->flags.plus))
-	{
-		if (buff->flags.plus && *input != '-')
-			added_size += buff_append(buff, "+", 1);
-		else if (buff->flags.space && *input != '-' && !(ft_strchr("di", buff->flags.specifier) && added_size > size))
-			added_size += buff_append(buff, " ", 1);
 	}
 
 	if ((input && *input) || buff->flags.specifier == 'c')

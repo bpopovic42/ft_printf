@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:03:18 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/04 22:07:34 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/06 13:46:17 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int			get_flags(t_buff *buff, char **input, int i)
 		save_flags(buff, (*input)[i], i);
 		i++;
 	}
-	if (ft_strchr("diouixX", buff->flags.specifier) && buff->flags.zero && buff->flags.precision > 0)
+	if (ft_strchr("diouxX", buff->flags.specifier) && buff->flags.zero && buff->flags.precision >= 0)
 		buff->flags.zero = 0;
 	if (buff->flags.minus && buff->flags.zero)
 		buff->flags.zero = 0;
@@ -47,7 +47,7 @@ void		save_flags(t_buff *buff, int c, int i)
 		buff->flags.zero = c == '0' && ((i == 1 && !buff->flags.htag) || (i == 2 && buff->flags.htag)) ? true : buff->flags.zero;
 		buff->flags.minus = c == '-' ? true : buff->flags.minus;
 		buff->flags.space = c == ' ' ? true : buff->flags.space;
-		buff->flags.plus = c == '+' ? true : buff->flags.plus;
+		buff->flags.plus = c == '+' ? '+' : buff->flags.plus;
 		buff->flags.apos = c == '\'' ? true : buff->flags.apos;
 		buff->flags.j = c == 'j' ? true : buff->flags.j;
 		buff->flags.z = c == 'z' ? true : buff->flags.z;
@@ -73,7 +73,7 @@ void		reset_flags(t_flags *flags)
 	flags->zero = false;
 	flags->minus = false;
 	flags->space = false;
-	flags->plus = false;
+	flags->plus = 0;
 	flags->apos = false;
 	flags->j = false;
 	flags->z = false;
@@ -97,21 +97,14 @@ int			treat_precision(t_buff *buff, char *input, int arg_size)
 
 	if (buff->flags.precision < buff->flags.width && arg_size < buff->flags.width)
 	{
+		if (ft_strchr("aAdeEfFgGi", buff->flags.specifier) && buff->flags.plus && (((buff->flags.width > arg_size || buff->flags.width > buff->flags.precision) && buff->flags.zero) && !buff->flags.minus))
+			buff_append(buff, &buff->flags.plus, 1);
+
 		buff->flags.width -= (buff->flags.precision > arg_size && buff->flags.precision > 0  && arg_size > 0 ? buff->flags.precision : arg_size);
 		while (buff->flags.width)
 		{
 			added_len += buff_append(buff, buff->flags.zero ? "0" : " ", 1);
 			buff->flags.width--;
-		}
-	}
-
-	if (arg_size < buff->flags.precision)
-	{
-		buff->flags.precision -= arg_size;
-		while (buff->flags.precision && buff->flags.specifier != 's')
-		{
-			added_len += buff_append(buff, "0", 1);
-			buff->flags.precision--;
 		}
 	}
 

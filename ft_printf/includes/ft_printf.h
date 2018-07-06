@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/04 20:11:35 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/06 12:49:04 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct		s_flags
 	bool			zero;
 	bool			minus;
 	bool			space;
-	bool			plus;
+	char			plus;
 	bool			apos;
 	bool			j;
 	bool			z;
