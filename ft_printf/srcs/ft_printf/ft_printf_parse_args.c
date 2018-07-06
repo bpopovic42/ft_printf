@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/06 13:46:06 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/06 14:06:39 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ int			print_arg(t_buff *buff, char *input, int size)
 	added_size = 0;
 	i = 0;
 
+
 	if (ft_strchr("aAdeEfFgGi", buff->flags.specifier) && (buff->flags.plus || (*input == '-' && !buff->flags.minus)))
 	{
 		if (buff->flags.plus && *input != '-')
@@ -185,8 +186,10 @@ int			print_arg(t_buff *buff, char *input, int size)
 	size = !buff->flags.precision && input[0] == '0' ? 0 : size;
 
 	if (ft_strchr("aAdeEfFgGi", buff->flags.specifier) && buff->flags.plus && ((buff->pos > 0 && buff->buff[buff->pos - 1] != '0') || buff->pos == 0))
-	{
 		buff_append(buff, &buff->flags.plus, 1);
+	else if (ft_strchr("AadeEfFgGi", buff->flags.specifier) && buff->flags.space && *input != '-' && (buff->pos == 0 || buff->buff[buff->pos - 1] != ' '))
+	{
+		added_size += buff_append(buff, " ", 1);
 	}
 
 	if (buff->flags.precision > size && ft_strchr("dioOuUxX", buff->flags.specifier))
