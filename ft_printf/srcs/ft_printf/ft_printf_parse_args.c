@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/11 19:47:27 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/11 19:56:57 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,8 +203,8 @@ int			print_arg(t_buff *buff, char *input, int size)
 		}
 	}
 
-	if (buff->flags.htag && size >= 1 && input[0] != '0' && ft_strchr("xX", buff->flags.specifier) && !buff->flags.zero)
-		buff->flags.specifier == 'x' ? buff_append(buff, "0x", 2) : buff_append(buff, "0X", 2);
+	if ((buff->flags.htag && size >= 1 && input[0] != '0' && ft_strchr("xX", buff->flags.specifier) && !buff->flags.zero) || buff->flags.specifier == 'p')
+		buff->flags.specifier == 'X' ? buff_append(buff, "0X", 2) : buff_append(buff, "0x", 2);
 
 	if (buff->flags.htag && ft_strchr("oO", buff->flags.specifier))
 		added_size += buff_append(buff, "0", 1);
@@ -238,5 +238,5 @@ int			print_arg(t_buff *buff, char *input, int size)
 	if (buff->flags.minus)
 		added_size += treat_precision(buff, input, size);
 
-	return (added_size + size + (ft_strchr("xX", buff->flags.specifier) && buff->flags.htag && input[0] != '0' ? 2 : 0));
+	return (added_size + size + ((ft_strchr("xX", buff->flags.specifier) && buff->flags.htag && input[0] != '0') || buff->flags.specifier == 'p' ? 2 : 0));
 }

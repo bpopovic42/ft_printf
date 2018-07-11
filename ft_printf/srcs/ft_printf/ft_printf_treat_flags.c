@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:03:18 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/06 13:46:17 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/11 19:54:14 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ int			treat_precision(t_buff *buff, char *input, int arg_size)
 	if (!buff->flags.precision && ft_strchr("dioOuUxX", buff->flags.specifier) && input[0] == '0' && buff->flags.width > 0)
 		added_len += buff_append(buff, " ", 1);
 
-	if (buff->flags.zero && buff->flags.htag && ft_strchr("xX", buff->flags.specifier))
-		buff->flags.specifier == 'x' ? buff_append(buff, "0x", 2) : buff_append(buff, "0X", 2);
+	if (buff->flags.zero && buff->flags.htag && ft_strchr("pxX", buff->flags.specifier))
+		buff->flags.specifier == 'X' ? buff_append(buff, "0X", 2) : buff_append(buff, "0x", 2);
 
 	if (buff->flags.precision < buff->flags.width && arg_size < buff->flags.width)
 	{
