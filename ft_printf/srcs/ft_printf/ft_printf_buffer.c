@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:48:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/26 18:49:13 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/11 17:02:40 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int			buff_append(t_buff *buff, char *input, int size)
 	i = 0;
 	if (buff->pos + size >= BUFF_SIZE)
 	{
-		write(1, buff->buff, BUFF_SIZE);
+		write(1, buff->buff, buff->pos);
 		buff->pos = 0;
 		ft_bzero(buff->buff, BUFF_SIZE + 1);
 	}
