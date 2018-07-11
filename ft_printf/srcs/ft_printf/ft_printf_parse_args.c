@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/11 21:20:09 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/11 21:28:20 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int			treat_arg_type_int(t_buff *buff, char type, va_list ap)
 
 	size = 1;
 	ft_bzero(ptr, 19);
-	if (buff->flags.l == 'l')
+	if (buff->flags.l == 'l' || type == 'D')
 		tmp = va_arg(ap, long);
 	else if (buff->flags.l == 'L')
 		tmp = va_arg(ap, long long);
@@ -116,7 +116,7 @@ int			treat_arg_type_base(t_buff *buff, char type, va_list ap)
 
 	size = 0;
 	ft_bzero(ptr, 65);
-	if (buff->flags.l == 'l' || buff->flags.specifier == 'p')
+	if (buff->flags.l == 'l' || buff->flags.specifier == 'p' || type == 'O')
 		tmp = va_arg(ap, unsigned long);
 	else if (buff->flags.l == 'L')
 		tmp = va_arg(ap, unsigned long long);
