@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/26 19:02:23 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/11 19:43:08 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ int		round_it(uint64_t *int_part, char *ftoi, int j)
 
 int		ft_u64toa(uint64_t val, char *buff, int size)
 {
+	(void)val;
+	(void)buff;
 	if (val >= 10)
 		size = ft_u64toa(val / 10, buff, size + 1);
 	ft_app(buff, val % 10 + '0');
