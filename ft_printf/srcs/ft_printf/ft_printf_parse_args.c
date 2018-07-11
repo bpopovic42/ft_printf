@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/11 19:56:57 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/11 21:20:09 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int			treat_arg_type_str(t_buff *buff, char type, va_list ap)
 	else if (type == 'S')
 	{
 		wptr = va_arg(ap, wchar_t *);
+		if (!wptr)
+			wptr = L"(null)";
 		size = treat_arg_type_wcstr(buff, wptr, ft_wcslen(wptr));
 	}
 	return (size);
