@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:06:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/11 17:13:52 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/11 21:14:49 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,20 @@ int			ft_vprintf(const char * restrict format, va_list ap)
 	ptr = (char*)format;
 	ft_bzero(buff.buff, BUFF_SIZE + 1);
 	buff.pos = 0;
+	buff.read = 0;
 	line_size = parse_input(ptr, &buff, ap);
 	if (buff.pos != 0)
-		write(1, buff.buff, buff.pos);
+		line_size += write(1, buff.buff, buff.pos);
 	return (line_size);
 }
 
 int			parse_input(char *fmt, t_buff *buff, va_list ap)
 {
 	int		read;
+	int		ret;
 
 	read = 0;
+	ret = 0;
 	while (*fmt)
 	{
 		if (*fmt != '%')
@@ -42,10 +45,13 @@ int			parse_input(char *fmt, t_buff *buff, va_list ap)
 		}
 		else
 		{
-			read += treat_arg(buff, &fmt, ap);
+			if (!*(fmt + 1))
+				fmt++;
+			else
+				ret += treat_arg(buff, &fmt, ap);
 		}
 	}
-	return (read);
+	return (buff->read);
 }
 
 int			treat_arg(t_buff *buff, char **input, va_list ap)
@@ -57,7 +63,8 @@ int			treat_arg(t_buff *buff, char **input, va_list ap)
 	i = 1;
 	size = 0;
 	reset_flags(&buff->flags);
-	i = get_flags(buff, input, i);
+	if ((i = get_flags(buff, input, i)) < 0)
+		return (i);
 	if (!(fptr = treat_specifier_by_type(buff->flags.specifier)))
 	{
 		if (buff->flags.specifier == '%')

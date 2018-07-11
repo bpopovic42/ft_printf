@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/06 16:03:14 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/11 21:07:21 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct		s_buff
 {
 	char			buff[BUFF_SIZE + 1];
 	size_t			pos;
+	size_t			read;
 	t_flags			flags;
 }					t_buff;
 

@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:03:18 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/11 19:54:14 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/11 21:15:20 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int			get_flags(t_buff *buff, char **input, int i)
 {
 	while ((*input)[i] && !ft_printf_is_fspecif((*input)[i]))
 	{
+		if (!ft_strchr("%aAcCsSidDpxXoOuUfFgGeEn0123456789-+ '#.hjlz", (*input)[i]))
+			return (i - 1);
 		if ((*input)[i] == '.')
 		{
 			buff->flags.precision = ft_atoi((*input) + i + 1);
