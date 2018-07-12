@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:05:25 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/12 18:43:27 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/12 19:38:06 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ int		main()
 	(void)uitest;
 
 	setlocale(LC_ALL, "");
-	frval = ft_printf("%C F\n", NULL);
-	prval = printf("%C P\n", NULL);
+	frval = ft_printf("%hO %hO F\n", 0, USHRT_MAX);
+	prval = printf("%hO %hO P\n", 0, USHRT_MAX);
 	//frval = ft_printf("{%3*d} F\n", 0, 0);
 	//prval = printf("{%3*d} P\n", 0, 0);
 	//frval = ft_printf("%s %d F\n", "lol", 12);

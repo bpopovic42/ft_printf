@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/12 18:50:15 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/12 19:50:48 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ int			treat_arg_type_str(t_buff *buff, char type, va_list ap)
 	int		size;
 
 	size = 0;
-	if (type == 's')
+	if (type == 's' && buff->flags.l != 'l')
 	{
 		ptr = va_arg(ap, char *);
 		if (!ptr)
 			ptr = "(null)";
 		size = print_arg(buff, ptr, ptr ? ft_strlen(ptr) : 0);
 	}
-	else if (type == 'S')
+	else if (type == 'S' || (type == 's' && buff->flags.l == 'l'))
 	{
 		wptr = va_arg(ap, wchar_t *);
 		if (!wptr)
@@ -57,7 +57,9 @@ int			treat_arg_type_int(t_buff *buff, char type, va_list ap)
 
 	size = 1;
 	ft_bzero(ptr, 19);
-	if (buff->flags.l == 'l' || type == 'D')
+	if (buff->flags.l == 'l' && type == 'c')
+		type = 'C';
+	if ((buff->flags.l == 'l' || type == 'D') && type != 'C')
 		tmp = va_arg(ap, long);
 	else if (buff->flags.l == 'L')
 		tmp = va_arg(ap, long long);
@@ -98,6 +100,8 @@ int			treat_arg_type_uint(t_buff *buff, char type, va_list ap)
 	char	ptr[19];
 	int		size;
 	uint64_t		tmp;
+	unsigned char	tmp2;
+	unsigned short	tmp3;
 
 	size = 1;
 	ft_bzero(ptr, 19);
@@ -105,6 +109,10 @@ int			treat_arg_type_uint(t_buff *buff, char type, va_list ap)
 		tmp = va_arg(ap, unsigned long);
 	else if (buff->flags.l == 'L')
 		tmp = va_arg(ap, unsigned long long);
+	else if (buff->flags.h == 'h')
+		tmp3 = va_arg(ap, unsigned int);
+	else if (buff->flags.h == 'H')
+		tmp2 = va_arg(ap, unsigned int);
 	else if (buff->flags.j)
 		tmp = va_arg(ap, uintmax_t);
 	else if (buff->flags.z)
@@ -113,7 +121,11 @@ int			treat_arg_type_uint(t_buff *buff, char type, va_list ap)
 		tmp = va_arg(ap, unsigned int);
 	if (buff->flags.precision > 0 && buff->flags.zero)
 		buff->flags.zero = 0;
-	if (type == 'u' || type == 'U')
+	if (buff->flags.h == 'h' && type != 'U')
+		size = ft_printf_uitoa(ptr, tmp3);
+	else if (buff->flags.h == 'H' && type != 'U')
+		size = ft_printf_uitoa(ptr, tmp2);
+	else if (type == 'u' || type == 'U')
 		size = ft_printf_uitoa(ptr, tmp);
 	return (print_arg(buff, ptr, size));
 }
