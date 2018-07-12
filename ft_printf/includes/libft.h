@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 16:27:54 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/27 14:12:11 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/12 17:27:56 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void				ft_putnbr_fd(int n, int fd);
 void				ft_putstr_npr(char *str);
 int					ft_putnbr_base(int n, char *base);
 void				*ft_print_memory(void *addr, unsigned int size);
-void				ft_print_bits(int64_t val);
+void				ft_print_bits(uint64_t val, size_t type);
 
 
 /*
@@ -134,8 +134,8 @@ char				*ft_strappend(char *dst, char *append);
 char				*ft_strnappend(char *dst, char *append, size_t n);
 char				*ft_itoa_base(int nbr, char *base);
 int					ft_strcinsert(char *str, char ins, size_t pos);
-int					ft_wcstombs(char *s, wchar_t *wcs, size_t n);
-int					ft_wctomb(char *s, wchar_t wc);
+int					ft_wcstombs(unsigned char *s, wchar_t *wcs, size_t n);
+int					ft_wctomb(unsigned char *s, wchar_t wc);
 size_t				ft_wcslen(wchar_t *wcs);
 char				*ft_ftoa(double val, int precision, char *buff);
 char				*ft_strrev(char *str);

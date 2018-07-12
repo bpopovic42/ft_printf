@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 15:48:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/06/26 18:17:19 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/12 17:28:13 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 #include <wchar.h>
 #include <limits.h>
 
-int		ft_wcstombs(char *s, wchar_t *wcs, size_t n)
+int		ft_wcstombs(unsigned char *s, wchar_t *wcs, size_t n)
 {
-	char	bytes[MB_LEN_MAX];
-	size_t	total_b;
-	int		mb_len;
+	unsigned char	bytes[MB_LEN_MAX];
+	size_t			total_b;
+	int				mb_len;
 
 	total_b = 0;
 	while (*wcs && total_b < n)
@@ -29,7 +29,7 @@ int		ft_wcstombs(char *s, wchar_t *wcs, size_t n)
 			return (-1);
 		total_b += mb_len;
 		if (n > 0)
-			ft_strncat(s, bytes, mb_len);
+			ft_strncat((char*)s, (char*)bytes, mb_len);
 		wcs++;
 	}
 	return (total_b);

@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/11 21:28:20 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/12 17:54:48 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ int			treat_arg_type_str(t_buff *buff, char type, va_list ap)
 
 int			treat_arg_type_wcstr(t_buff *buff, wchar_t *wcstr, size_t size)
 {
-	char	ptr[size * sizeof(wchar_t) + 1];
-	size_t	bytes;
+	unsigned char	ptr[size * sizeof(wchar_t) + 1];
+	size_t			bytes;
 
 	ft_bzero(ptr, size * sizeof(wchar_t) + 1);
 	bytes = ft_wcstombs(ptr, wcstr, size * sizeof(wchar_t));
-	return (print_arg(buff, ptr, bytes));
+	return (print_arg(buff, (char*)ptr, bytes));
 }
 
 int			treat_arg_type_int(t_buff *buff, char type, va_list ap)
@@ -53,6 +53,7 @@ int			treat_arg_type_int(t_buff *buff, char type, va_list ap)
 	int64_t		tmp;
 	short int	tmp2;
 	signed char	tmp3;
+	wchar_t		tmp4;
 
 	size = 1;
 	ft_bzero(ptr, 19);
@@ -68,18 +69,22 @@ int			treat_arg_type_int(t_buff *buff, char type, va_list ap)
 		tmp2 = va_arg(ap, int);
 	else if (buff->flags.h == 'H')
 		tmp3 = va_arg(ap, int);
+	else if (type == 'C')
+		tmp4 = va_arg(ap, wchar_t);
 	else
 		tmp = va_arg(ap, int);
 	if (buff->flags.precision > 0 && buff->flags.zero)
 		buff->flags.zero = 0;
 	if (buff->flags.h == 'h')
-		size = ft_printf_itoa(ptr, tmp2);
+		size = ft_printf_itoa((char*)ptr, tmp2);
 	else if (buff->flags.h == 'H')
-		size = ft_printf_itoa(ptr, tmp3);
+		size = ft_printf_itoa((char*)ptr, tmp3);
 	else if (type == 'd' || type == 'i' || type == 'D')
-		size = ft_printf_itoa(ptr, tmp);
+		size = ft_printf_itoa((char*)ptr, tmp);
 	else if (type == 'c')
 		ptr[0] = tmp;
+	else if (type == 'C')
+		size = ft_wctomb((unsigned char*)ptr, tmp4);
 	return (print_arg(buff, ptr, size));
 }
 
