@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/12 17:54:48 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/12 18:50:15 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,12 @@ int			treat_arg_type_int(t_buff *buff, char type, va_list ap)
 	else if (type == 'c')
 		ptr[0] = tmp;
 	else if (type == 'C')
-		size = ft_wctomb((unsigned char*)ptr, tmp4);
+	{
+		if (!tmp4)
+			size = buff_append(buff, "\0", 1);
+		else
+			size = ft_wctomb((unsigned char*)ptr, tmp4);
+	}
 	return (print_arg(buff, ptr, size));
 }
 
