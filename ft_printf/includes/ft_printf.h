@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/12 17:29:07 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/14 17:44:37 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ int		parse_input(char *fmt, t_buff *buff, va_list ap);
 int		buff_append(t_buff *buff, char *input, int size);
 int		treat_arg(t_buff *buff, char **input, va_list ap);
 int		ft_printf_is_fspecif(int c);
-int		ft_printf_is_flag(int c);
 int		treat_arg_type_int(t_buff *buff, char type, va_list ap);
 int			treat_arg_type_uint(t_buff *buff, char type, va_list ap);
 int		ft_printf_itoa(char *buff, int64_t val);
@@ -74,5 +73,7 @@ int			print_arg(t_buff *buff, char *input, int size);
 void		reset_flags(t_flags *flags);
 int		(*treat_specifier_by_type(char specifier))(t_buff*, char, va_list);
 void		save_flags(t_buff *buff, int c, int i);
+int			ft_printf_is_flag(char c);
+int		ft_printf_atoi(const char *str, int *res);
 
 #endif
