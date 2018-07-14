@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:03:18 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/14 17:59:09 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/14 18:04:13 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,6 @@ int			get_flags(t_buff *buff, char **input, int i)
 		save_flags(buff, (*input)[i], i);
 		i++;
 	}
-	if (ft_strchr("diouxX", buff->flags.specifier) && buff->flags.zero && buff->flags.precision >= 0)
-		buff->flags.zero = 0;
-	if (buff->flags.minus && buff->flags.zero)
-		buff->flags.zero = 0;
-	if (buff->flags.space && buff->flags.plus)
-		buff->flags.space = 0;
 	buff->flags.specifier = (*input)[i];
 	return (i);
 }
