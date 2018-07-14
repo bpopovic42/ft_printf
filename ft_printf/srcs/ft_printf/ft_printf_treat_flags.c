@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:03:18 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/14 17:44:43 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/14 17:59:09 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,9 @@ int			get_flags(t_buff *buff, char **input, int i)
 		if (!ft_printf_is_flag((*input)[i]))
 			return (i - 1);
 		if ((*input)[i] == '.')
-		{
 			i += ft_printf_atoi(*input + i + 1, &(buff->flags.precision));
-		}
 		else if (ft_strchr("123456789", (*input)[i]) && !buff->flags.width)
-		{
-			buff->flags.width = ft_atoi((*input) + i);
-			while (ft_isdigit((*input)[i + 1]) && (*input)[i + 1])
-				i++;
-		}
+			i += ft_printf_atoi(*input + i, &(buff->flags.width)) - 1;
 		save_flags(buff, (*input)[i], i);
 		i++;
 	}
