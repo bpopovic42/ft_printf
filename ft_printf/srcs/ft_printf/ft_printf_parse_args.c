@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/12 19:50:48 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/16 20:58:33 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,8 @@ int			treat_arg_type_base(t_buff *buff, char type, va_list ap)
 		size = ft_printf_itoa_base(ptr, 16, tmp);
 	if (ft_strchr("pxX", buff->flags.specifier) && buff->flags.htag && buff->flags.width >= 2 && size && ptr[0] != '0')
 		buff->flags.width -= 2;
+	if (buff->flags.htag && ft_strchr("oO", buff->flags.specifier) && buff->flags.width > 0)
+		buff->flags.width--;
 	return (print_arg(buff, ptr, size));
 }
 
@@ -200,8 +202,6 @@ int			print_arg(t_buff *buff, char *input, int size)
 		}
 	}
 
-	if (buff->flags.htag && ft_strchr("oO", buff->flags.specifier) && buff->flags.width > 0)
-		buff->flags.width--;
 
 	if (size > 0 && buff->flags.precision >= 0 && buff->flags.specifier == 's')
 	{
@@ -244,13 +244,16 @@ int			print_arg(t_buff *buff, char *input, int size)
 
 	if (buff->flags.precision > size && ft_strchr("dioOuUxX", buff->flags.specifier))
 	{
-		while ((buff->flags.precision - size) > 0)
+		added_size += buff_seqncat(buff, "0", buff->flags.precision - size);
+		buff->flags.width -= buff->flags.precision - size;
+		buff->flags.precision -= buff->flags.precision - size;
+		/*while ((buff->flags.precision - size) > 0)
 		{
-			buff_append(buff, ft_strchr("dioOuUxX", buff->flags.specifier) ? "0" : " ", 1);
+			buff_append(buff, "0", 1);
 			buff->flags.precision--;
 			added_size++;
 			buff->flags.width--;
-		}
+		}*/
 	}
 
 	if ((input && *input) || buff->flags.specifier == 'c')
