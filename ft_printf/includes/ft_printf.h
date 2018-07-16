@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/14 17:44:37 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/16 20:59:54 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,6 @@ int		(*treat_specifier_by_type(char specifier))(t_buff*, char, va_list);
 void		save_flags(t_buff *buff, int c, int i);
 int			ft_printf_is_flag(char c);
 int		ft_printf_atoi(const char *str, int *res);
+int			buff_seqncat(t_buff *buff, char *input, int n);
 
 #endif
