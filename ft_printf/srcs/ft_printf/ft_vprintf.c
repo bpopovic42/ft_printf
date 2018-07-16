@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:06:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/14 18:22:20 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/16 17:07:23 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,27 +30,26 @@ int			ft_vprintf(const char * restrict format, va_list ap)
 
 int			parse_input(char *fmt, t_buff *buff, va_list ap)
 {
-	int		read;
-	int		ret;
+	int		i;
 
-	read = 0;
-	ret = 0;
-	while (*fmt)
+	i = 0;
+	while (fmt[i])
 	{
-		if (*fmt != '%')
+		if (fmt[i] == '%')
 		{
-			buff_append(buff, fmt, 1);
-			fmt++;
-			read++;
-		}
-		else
-		{
+			buff_append(buff, fmt, i);
+			fmt += i;
+			i = 0;
 			if (!*(fmt + 1))
 				fmt++;
 			else
-				ret += treat_arg(buff, &fmt, ap);
+				treat_arg(buff, &fmt, ap);
 		}
+		else
+			i++;
 	}
+	if (!fmt[i] && *fmt)
+		buff_append(buff, fmt, i);
 	return (buff->read);
 }
 
