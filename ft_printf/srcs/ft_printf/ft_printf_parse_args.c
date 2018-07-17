@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/16 20:58:33 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/17 14:37:57 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,19 +187,14 @@ int			print_arg(t_buff *buff, char *input, int size)
 
 	if (ft_strchr("aAdeEfFgGi", buff->flags.specifier) && (buff->flags.plus || (*input == '-' && !buff->flags.minus)))
 	{
-		if (buff->flags.plus && *input != '-')
-		{
-			added_size++;
-			buff->flags.width--;
-		}
-		else if (*input == '-')
+		if (*input == '-')
 		{
 			input++;
-			added_size++;
 			size--;
-			buff->flags.width--;
 			buff->flags.plus = '-';
 		}
+		added_size++;
+		buff->flags.width--;
 	}
 
 
@@ -247,13 +242,6 @@ int			print_arg(t_buff *buff, char *input, int size)
 		added_size += buff_seqncat(buff, "0", buff->flags.precision - size);
 		buff->flags.width -= buff->flags.precision - size;
 		buff->flags.precision -= buff->flags.precision - size;
-		/*while ((buff->flags.precision - size) > 0)
-		{
-			buff_append(buff, "0", 1);
-			buff->flags.precision--;
-			added_size++;
-			buff->flags.width--;
-		}*/
 	}
 
 	if ((input && *input) || buff->flags.specifier == 'c')
