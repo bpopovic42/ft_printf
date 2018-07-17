@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/17 14:37:57 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/17 14:50:29 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,11 +149,11 @@ int			treat_arg_type_base(t_buff *buff, char type, va_list ap)
 	else
 		tmp = va_arg(ap, unsigned int);
 	if (type == 'p')
-		size = ft_printf_itoa_base(ptr, 16, tmp);
+		size = ft_printf_itoa_base(ptr, HEXA, tmp);
 	else if (type == 'o' || type == 'O')
-		size = ft_printf_itoa_base(ptr, 8, tmp);
+		size = ft_printf_itoa_base(ptr, OCTAL, tmp);
 	else if (type == 'x' || type == 'X')
-		size = ft_printf_itoa_base(ptr, 16, tmp);
+		size = ft_printf_itoa_base(ptr, type == 'X' ? HEXA_UP : HEXA, tmp);
 	if (ft_strchr("pxX", buff->flags.specifier) && buff->flags.htag && buff->flags.width >= 2 && size && ptr[0] != '0')
 		buff->flags.width -= 2;
 	if (buff->flags.htag && ft_strchr("oO", buff->flags.specifier) && buff->flags.width > 0)
@@ -211,15 +211,6 @@ int			print_arg(t_buff *buff, char *input, int size)
 		if (buff->flags.specifier == 'c' && !*input && buff->flags.width <= 0)
 			buff->flags.precision = 0;
 		added_size += treat_precision(buff, input, size);
-	}
-
-	if (buff->flags.specifier == 'X')
-	{
-		while (input[i])
-		{
-			input[i] = ft_toupper(input[i]);
-			i++;
-		}
 	}
 
 	if ((buff->flags.htag && size >= 1 && input[0] != '0' && ft_strchr("xX", buff->flags.specifier) && !buff->flags.zero) || buff->flags.specifier == 'p')
