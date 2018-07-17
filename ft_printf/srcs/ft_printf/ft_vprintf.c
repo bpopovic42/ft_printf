@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:06:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/16 17:07:23 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/17 19:27:22 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,23 +57,23 @@ int			treat_arg(t_buff *buff, char **input, va_list ap)
 {
 	int			i;
 	int			size;
-	int			(*fptr)(t_buff*, char, va_list);
+	int			(*fptr)(t_buff*, char, long long);
 
 	i = 1;
 	size = 0;
 	reset_flags(&buff->flags);
 	i = get_flags(buff, input, i);
 	size = (!(fptr = treat_specifier_by_type(buff->flags.specifier)) && buff->flags.specifier == '%') ?
-		print_arg(buff, &buff->flags.specifier, 1) : fptr(buff, buff->flags.specifier, ap);
+		print_arg(buff, &buff->flags.specifier, 1) : fptr(buff, buff->flags.specifier, get_varg(buff, SPECIF, ap));
 	*input += i + 1;
 	return (size);
 }
 
-int		(*treat_specifier_by_type(char specifier))(t_buff*, char, va_list)
+int		(*treat_specifier_by_type(char specifier))(t_buff*, char, long long)
 {
 	if (ft_strchr("sS", specifier))
 		return (treat_arg_type_str);
-	else if (ft_strchr("dDicC", specifier))
+	if (ft_strchr("dDicC", specifier))
 		return (treat_arg_type_int);
 	else if (ft_strchr("uU", specifier))
 		return (treat_arg_type_uint);
