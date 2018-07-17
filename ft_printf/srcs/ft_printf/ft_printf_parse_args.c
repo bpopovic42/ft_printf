@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/17 15:04:34 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/17 15:47:49 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,7 +184,6 @@ int			print_arg(t_buff *buff, char *input, int size)
 	added_size = 0;
 	i = 0;
 
-
 	if (ft_strchr("aAdeEfFgGi", SPECIF) && (PLUS || (*input == '-' && !MINUS)))
 	{
 		if (*input == '-')
@@ -197,7 +196,6 @@ int			print_arg(t_buff *buff, char *input, int size)
 		WIDTH--;
 	}
 
-
 	if (size > 0 && PRECISION >= 0 && SPECIF == 's')
 	{
 		input[PRECISION] = '\0';
@@ -206,25 +204,33 @@ int			print_arg(t_buff *buff, char *input, int size)
 
 	if (!MINUS)
 	{
-		if (SPECIF == 'c' && !*input && WIDTH > 0)
-			size = 1;
-		if (SPECIF == 'c' && !*input && WIDTH <= 0)
-			PRECISION = 0;
+		if (SPECIF == 'c' && !*input)
+		{
+			if (WIDTH > 0)
+				size = 1;
+			else
+				PRECISION = 0;
+		}
 		added_size += treat_precision(buff, input, size);
 	}
 
-	if ((HTAG && size >= 1 && input[0] != '0' && ft_strchr("xX", SPECIF) && !ZERO) || SPECIF == 'p')
-		SPECIF == 'X' ? buff_append(buff, "0X", 2) : buff_append(buff, "0x", 2);
+	if (HTAG && ft_strchr("xXoOp", SPECIF))
+	{
+		if ((size > 0 && *input != '0' && ft_strchr("xX", SPECIF) && !ZERO) || SPECIF == 'p')
+			SPECIF == 'X' ? buff_append(buff, "0X", 2) : buff_append(buff, "0x", 2);
+		else if (ft_strchr("oO", SPECIF))
+			added_size += buff_append(buff, "0", 1);
+	}
 
-	if (HTAG && ft_strchr("oO", SPECIF))
-		added_size += buff_append(buff, "0", 1);
+	size = (!PRECISION && *input == '0') ? 0 : size;
 
-	size = !PRECISION && input[0] == '0' ? 0 : size;
-
-	if (ft_strchr("aAdeEfFgGi", SPECIF) && PLUS && ((POS > 0 && buff->buff[POS - 1] != '0') || POS == 0))
-		buff_append(buff, &PLUS, 1);
-	else if (ft_strchr("AadeEfFgGi", SPECIF) && SPACE && (POS == 0 || buff->buff[POS - 1] != ' '))
-		added_size += buff_append(buff, " ", 1);
+	if (ft_strchr("aAdeEfFgGi", SPECIF) && (PLUS || SPACE))
+	{
+		if (PLUS && buff->buff[POS - 1] != '0')
+			buff_append(buff, &PLUS, 1);
+		else if (SPACE && buff->buff[POS - 1] != ' ')
+			added_size += buff_append(buff, " ", 1);
+	}
 
 	if (PRECISION > size && ft_strchr("dioOuUxX", SPECIF))
 	{
