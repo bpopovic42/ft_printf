@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/17 14:50:29 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/17 15:04:34 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ int			treat_arg_type_int(t_buff *buff, char type, va_list ap)
 		tmp4 = va_arg(ap, wchar_t);
 	else
 		tmp = va_arg(ap, int);
-	if (buff->flags.precision > 0 && buff->flags.zero)
-		buff->flags.zero = 0;
+	if (PRECISION > 0 && ZERO)
+		ZERO = 0;
 	if (buff->flags.h == 'h')
 		size = ft_printf_itoa((char*)ptr, tmp2);
 	else if (buff->flags.h == 'H')
@@ -119,8 +119,8 @@ int			treat_arg_type_uint(t_buff *buff, char type, va_list ap)
 		tmp = va_arg(ap, size_t);
 	else
 		tmp = va_arg(ap, unsigned int);
-	if (buff->flags.precision > 0 && buff->flags.zero)
-		buff->flags.zero = 0;
+	if (PRECISION > 0 && ZERO)
+		ZERO = 0;
 	if (buff->flags.h == 'h' && type != 'U')
 		size = ft_printf_uitoa(ptr, tmp3);
 	else if (buff->flags.h == 'H' && type != 'U')
@@ -138,7 +138,7 @@ int			treat_arg_type_base(t_buff *buff, char type, va_list ap)
 
 	size = 0;
 	ft_bzero(ptr, 65);
-	if (buff->flags.l == 'l' || buff->flags.specifier == 'p' || type == 'O')
+	if (buff->flags.l == 'l' || SPECIF == 'p' || type == 'O')
 		tmp = va_arg(ap, unsigned long);
 	else if (buff->flags.l == 'L')
 		tmp = va_arg(ap, unsigned long long);
@@ -154,23 +154,23 @@ int			treat_arg_type_base(t_buff *buff, char type, va_list ap)
 		size = ft_printf_itoa_base(ptr, OCTAL, tmp);
 	else if (type == 'x' || type == 'X')
 		size = ft_printf_itoa_base(ptr, type == 'X' ? HEXA_UP : HEXA, tmp);
-	if (ft_strchr("pxX", buff->flags.specifier) && buff->flags.htag && buff->flags.width >= 2 && size && ptr[0] != '0')
-		buff->flags.width -= 2;
-	if (buff->flags.htag && ft_strchr("oO", buff->flags.specifier) && buff->flags.width > 0)
-		buff->flags.width--;
+	if (ft_strchr("pxX", SPECIF) && HTAG && WIDTH >= 2 && size && ptr[0] != '0')
+		WIDTH -= 2;
+	if (HTAG && ft_strchr("oO", SPECIF) && WIDTH > 0)
+		WIDTH--;
 	return (print_arg(buff, ptr, size));
 }
 
 int			treat_arg_type_dbl(t_buff *buff, char type, va_list ap)
 {
-	char	tmp[MAX_INT_LEN + 1 + (buff->flags.precision >= 0 ? buff->flags.precision : 6)]; // + precision
+	char	tmp[MAX_INT_LEN + 1 + (PRECISION >= 0 ? PRECISION : 6)]; // + precision
 	int		size;
 
-	ft_bzero(tmp, MAX_INT_LEN + 1 + (buff->flags.precision >= 0 ? buff->flags.precision : 6));
+	ft_bzero(tmp, MAX_INT_LEN + 1 + (PRECISION >= 0 ? PRECISION : 6));
 	size = 0;
 	if (ft_strchr("fF", type))
 	{
-		ft_ftoa(va_arg(ap, double), (buff->flags.precision >= 0 ? buff->flags.precision : 6), tmp);
+		ft_ftoa(va_arg(ap, double), (PRECISION >= 0 ? PRECISION : 6), tmp);
 		size = ft_strlen(tmp);
 	}
 	return (print_arg(buff, tmp, size));
@@ -185,64 +185,62 @@ int			print_arg(t_buff *buff, char *input, int size)
 	i = 0;
 
 
-	if (ft_strchr("aAdeEfFgGi", buff->flags.specifier) && (buff->flags.plus || (*input == '-' && !buff->flags.minus)))
+	if (ft_strchr("aAdeEfFgGi", SPECIF) && (PLUS || (*input == '-' && !MINUS)))
 	{
 		if (*input == '-')
 		{
 			input++;
 			size--;
-			buff->flags.plus = '-';
+			PLUS = '-';
 		}
 		added_size++;
-		buff->flags.width--;
+		WIDTH--;
 	}
 
 
-	if (size > 0 && buff->flags.precision >= 0 && buff->flags.specifier == 's')
+	if (size > 0 && PRECISION >= 0 && SPECIF == 's')
 	{
-		input[buff->flags.precision] = '\0';
-		size = buff->flags.precision;
+		input[PRECISION] = '\0';
+		size = PRECISION;
 	}
 
-	if (!buff->flags.minus)
+	if (!MINUS)
 	{
-		if (buff->flags.specifier == 'c' && !*input && buff->flags.width > 0)
+		if (SPECIF == 'c' && !*input && WIDTH > 0)
 			size = 1;
-		if (buff->flags.specifier == 'c' && !*input && buff->flags.width <= 0)
-			buff->flags.precision = 0;
+		if (SPECIF == 'c' && !*input && WIDTH <= 0)
+			PRECISION = 0;
 		added_size += treat_precision(buff, input, size);
 	}
 
-	if ((buff->flags.htag && size >= 1 && input[0] != '0' && ft_strchr("xX", buff->flags.specifier) && !buff->flags.zero) || buff->flags.specifier == 'p')
-		buff->flags.specifier == 'X' ? buff_append(buff, "0X", 2) : buff_append(buff, "0x", 2);
+	if ((HTAG && size >= 1 && input[0] != '0' && ft_strchr("xX", SPECIF) && !ZERO) || SPECIF == 'p')
+		SPECIF == 'X' ? buff_append(buff, "0X", 2) : buff_append(buff, "0x", 2);
 
-	if (buff->flags.htag && ft_strchr("oO", buff->flags.specifier))
+	if (HTAG && ft_strchr("oO", SPECIF))
 		added_size += buff_append(buff, "0", 1);
 
-	size = !buff->flags.precision && input[0] == '0' ? 0 : size;
+	size = !PRECISION && input[0] == '0' ? 0 : size;
 
-	if (ft_strchr("aAdeEfFgGi", buff->flags.specifier) && buff->flags.plus && ((buff->pos > 0 && buff->buff[buff->pos - 1] != '0') || buff->pos == 0))
-		buff_append(buff, &buff->flags.plus, 1);
-	else if (ft_strchr("AadeEfFgGi", buff->flags.specifier) && buff->flags.space && *input != '-' && (buff->pos == 0 || buff->buff[buff->pos - 1] != ' '))
-	{
+	if (ft_strchr("aAdeEfFgGi", SPECIF) && PLUS && ((POS > 0 && buff->buff[POS - 1] != '0') || POS == 0))
+		buff_append(buff, &PLUS, 1);
+	else if (ft_strchr("AadeEfFgGi", SPECIF) && SPACE && (POS == 0 || buff->buff[POS - 1] != ' '))
 		added_size += buff_append(buff, " ", 1);
-	}
 
-	if (buff->flags.precision > size && ft_strchr("dioOuUxX", buff->flags.specifier))
+	if (PRECISION > size && ft_strchr("dioOuUxX", SPECIF))
 	{
-		added_size += buff_seqncat(buff, "0", buff->flags.precision - size);
-		buff->flags.width -= buff->flags.precision - size;
-		buff->flags.precision -= buff->flags.precision - size;
+		added_size += buff_seqncat(buff, "0", PRECISION - size);
+		WIDTH -= PRECISION - size;
+		PRECISION -= PRECISION - size;
 	}
 
-	if ((input && *input) || buff->flags.specifier == 'c')
-		size = buff_append(buff, input, size < buff->flags.precision || buff->flags.precision < 1  || !ft_strchr("sS", buff->flags.specifier) ? size : buff->flags.precision);
+	if ((input && *input) || SPECIF == 'c')
+		size = buff_append(buff, input, size < PRECISION || PRECISION < 1  || !ft_strchr("sS", SPECIF) ? size : PRECISION);
 
-	if (buff->flags.htag && ft_strchr("aAeEfFgG", buff->flags.specifier) && !ft_strchr(input, '.'))
+	if (HTAG && ft_strchr("aAeEfFgG", SPECIF) && !ft_strchr(input, '.'))
 		buff_append(buff, ".", 1);
 
-	if (buff->flags.minus)
+	if (MINUS)
 		added_size += treat_precision(buff, input, size);
 
-	return (added_size + size + ((ft_strchr("xX", buff->flags.specifier) && buff->flags.htag && input[0] != '0') || buff->flags.specifier == 'p' ? 2 : 0));
+	return (added_size + size + ((ft_strchr("xX", SPECIF) && HTAG && input[0] != '0') || SPECIF == 'p' ? 2 : 0));
 }

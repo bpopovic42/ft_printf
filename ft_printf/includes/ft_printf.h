@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/17 14:49:01 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/17 15:04:10 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,15 @@
 #define HEXA "0123456789abcdef"
 #define HEXA_UP "0123456789ABCDEF"
 #define OCTAL "01234567"
+#define SPECIF buff->flags.specifier
+#define PRECISION buff->flags.precision
+#define HTAG buff->flags.htag
+#define WIDTH buff->flags.width
+#define PLUS buff->flags.plus
+#define MINUS buff->flags.minus
+#define SPACE buff->flags.space
+#define ZERO buff->flags.zero
+#define POS buff->pos
 
 typedef struct		s_flags
 {
