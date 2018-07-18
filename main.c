@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:05:25 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/18 21:05:31 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/18 22:00:28 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ int		main()
 	//prval = printf("%hO %hO P\n", 0, USHRT_MAX);
 	//frval = ft_printf("{%3*d} F\n", 0, 0);
 	//prval = printf("{%3*d} P\n", 0, 0);
-	frval = ft_printf("%.10d F\n", -42);
-	//prval = printf("%c P\n", 42);
+	//frval = ft_printf("lol %d lala %C F\n", 42, -1);
+	//prval = printf("lol %d lala %C P\n", 42, -1); // Problematic test case
 	//frval = ft_printf("%");
 	printf("prval = %d, frval = %d\n", prval, frval);
 	//printf(L"%C", wc); // Gives interesting compilation error
