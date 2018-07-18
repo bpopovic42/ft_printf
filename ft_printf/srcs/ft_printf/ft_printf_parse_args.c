@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/18 21:32:06 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/18 21:54:27 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int			treat_arg_type_str(t_buff *buff, char type, long long value)
 	if (type == 's' && buff->flags.l != 'l')
 	{
 		if (!value)
-			value = (unsigned long)&"(null)";
+			value = (unsigned long)"(null)";
 		size = ft_strlen((char*)value);
 		if (WIDTH > size)
 			WIDTH -= size;
@@ -88,7 +88,7 @@ int			treat_arg_type_str(t_buff *buff, char type, long long value)
 	else if (type == 'S' || (type == 's' && buff->flags.l == 'l'))
 	{
 		if (!value)
-			value = (unsigned long)&L"(null)";
+			value = (unsigned long)L"(null)";
 		size = ft_wcslen((wchar_t*)value);
 		if (WIDTH > size)
 			WIDTH -= size;
