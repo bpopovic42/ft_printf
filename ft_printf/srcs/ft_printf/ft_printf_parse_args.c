@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/17 19:51:15 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/18 21:32:06 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,19 @@ int			treat_arg_type_str(t_buff *buff, char type, long long value)
 	{
 		if (!value)
 			value = (unsigned long)&"(null)";
-		size = print_arg(buff, (char*)value, value ? ft_strlen((char*)value) : 0);
+		size = ft_strlen((char*)value);
+		if (WIDTH > size)
+			WIDTH -= size;
+		size = print_arg(buff, (char*)value, size);
 	}
 	else if (type == 'S' || (type == 's' && buff->flags.l == 'l'))
 	{
 		if (!value)
 			value = (unsigned long)&L"(null)";
-		size = treat_arg_type_wcstr(buff, (wchar_t*)value, ft_wcslen((wchar_t*)value));
+		size = ft_wcslen((wchar_t*)value);
+		if (WIDTH > size)
+			WIDTH -= size;
+		size = treat_arg_type_wcstr(buff, (wchar_t*)value, size);
 	}
 	return (size);
 }
@@ -98,6 +104,8 @@ int			treat_arg_type_wcstr(t_buff *buff, wchar_t *wcstr, size_t size)
 
 	ft_bzero(ptr, size * sizeof(wchar_t) + 1);
 	bytes = ft_wcstombs(ptr, wcstr, size * sizeof(wchar_t));
+	if (WIDTH > (int)bytes)
+		WIDTH -= size;
 	return (print_arg(buff, (char*)ptr, bytes));
 }
 
@@ -123,6 +131,14 @@ int			treat_arg_type_int(t_buff *buff, char type, long long value)
 	}
 	else
 		size = ft_printf_itoa((char*)ptr, value);
+	if (PRECISION > size)
+		PRECISION -= size;
+	else
+		PRECISION = -1;
+	if (WIDTH > size + (PRECISION > 0 ? PRECISION : 0))
+		WIDTH -= size + (PRECISION > 0 ? PRECISION : 0);
+	else
+		WIDTH = 0;
 	return (print_arg(buff, ptr, size));
 }
 
@@ -137,6 +153,14 @@ int			treat_arg_type_uint(t_buff *buff, char type, long long value)
 	if (PRECISION > 0 && ZERO)
 		ZERO = 0;
 	size = ft_printf_uitoa(ptr, value);
+	if (PRECISION > size)
+		PRECISION -= size;
+	else
+		PRECISION = -1;
+	if (WIDTH > size + (PRECISION > 0 ? PRECISION : 0))
+		WIDTH -= size + (PRECISION > 0 ? PRECISION : 0);
+	else
+		WIDTH = 0;
 	return (print_arg(buff, ptr, size));
 }
 
@@ -161,6 +185,14 @@ int			treat_arg_type_base(t_buff *buff, char type, long long value)
 		WIDTH -= 2;
 	if (HTAG && ft_strchr("oO", SPECIF) && WIDTH > 0)
 		WIDTH--;
+	if (PRECISION > size)
+		PRECISION -= size;
+	else
+		PRECISION = -1;
+	if (WIDTH > size + (PRECISION > 0 ? PRECISION : 0))
+		WIDTH -= size + (PRECISION > 0 ? PRECISION : 0);
+	else
+		WIDTH = 0;
 	return (print_arg(buff, ptr, size));
 }
 
@@ -175,80 +207,51 @@ int			treat_arg_type_dbl(t_buff *buff, char type, long long value)
 	{
 		ft_ftoa(value, (PRECISION >= 0 ? PRECISION : 6), tmp);
 		size = ft_strlen(tmp);
+		PRECISION = 0;
 	}
+	if (WIDTH > size)
+		WIDTH -= size;
+	else
+		WIDTH = 0;
 	return (print_arg(buff, tmp, size));
 }
 
 int			print_arg(t_buff *buff, char *input, int size)
 {
-	int		added_size;
-	int		i;
+	(void)size;
+	if (!MINUS && WIDTH >= 0)
+		buff_seqncat(buff, " ", WIDTH);
+	input = treat_flag_plus(buff, input);
+	treat_htag(buff, input);
+	if (PRECISION >= 0)
+		buff_seqncat(buff, "0", PRECISION);
+	buff_append(buff, input, ft_strlen(input));
+	if (MINUS && WIDTH >= 0)
+		buff_seqncat(buff, ZERO ? "0" : " ", WIDTH);
+	return (buff->read);
+}
 
-	added_size = 0;
-	i = 0;
-	if (ft_strchr("aAdeEfFgGi", SPECIF) && (PLUS || (*input == '-' && !MINUS)))
+char*			treat_flag_plus(t_buff *buff, char *input)
+{
+	if (ft_strchr("aAeEfFgGidD", SPECIF))
 	{
-		if (*input == '-')
+		if (PLUS || *input == '-')
 		{
-			input++;
-			size--;
-			PLUS = '-';
+			buff_append(buff, *input == '-' ? "-" : "+", 1);
+			if (*input == '-')
+				input++;
 		}
-		added_size++;
-		WIDTH--;
 	}
+	return (input);
+}
 
-	if (size > 0 && PRECISION >= 0 && SPECIF == 's')
+void			treat_htag(t_buff *buff, char *input)
+{
+	if (*input != '0' && HTAG)
 	{
-		input[PRECISION] = '\0';
-		size = PRECISION;
+		if (ft_strchr("oO", SPECIF))
+			buff_append(buff, "0", 1);
+		else if (ft_strchr("xXp", SPECIF))
+			buff_append(buff, SPECIF == 'X' ? "0X" : "0x", 2);
 	}
-
-	if (!MINUS)
-	{
-		if (SPECIF == 'c' && !*input)
-		{
-			if (WIDTH > 0)
-				size = 1;
-			else
-				PRECISION = 0;
-		}
-		added_size += treat_precision(buff, input, size);
-	}
-
-	if (HTAG && ft_strchr("xXoOp", SPECIF))
-	{
-		if ((size > 0 && *input != '0' && ft_strchr("xX", SPECIF) && !ZERO) || SPECIF == 'p')
-			SPECIF == 'X' ? buff_append(buff, "0X", 2) : buff_append(buff, "0x", 2);
-		else if (ft_strchr("oO", SPECIF))
-			added_size += buff_append(buff, "0", 1);
-	}
-
-	size = (!PRECISION && *input == '0') ? 0 : size;
-
-	if (ft_strchr("aAdeEfFgGi", SPECIF) && (PLUS || SPACE))
-	{
-		if (PLUS && buff->buff[POS - 1] != '0')
-			buff_append(buff, &PLUS, 1);
-		else if (SPACE && buff->buff[POS - 1] != ' ')
-			added_size += buff_append(buff, " ", 1);
-	}
-
-	if (PRECISION > size && ft_strchr("dioOuUxX", SPECIF))
-	{
-		added_size += buff_seqncat(buff, "0", PRECISION - size);
-		WIDTH -= PRECISION - size;
-		PRECISION -= PRECISION - size;
-	}
-
-	if ((input && *input) || SPECIF == 'c')
-		size = buff_append(buff, input, size < PRECISION || PRECISION < 1  || !ft_strchr("sS", SPECIF) ? size : PRECISION);
-
-	if (HTAG && ft_strchr("aAeEfFgG", SPECIF) && !ft_strchr(input, '.'))
-		buff_append(buff, ".", 1);
-
-	if (MINUS)
-		added_size += treat_precision(buff, input, size);
-
-	return (added_size + size + ((ft_strchr("xX", SPECIF) && HTAG && input[0] != '0') || SPECIF == 'p' ? 2 : 0));
 }
