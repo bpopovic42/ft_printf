@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/19 20:43:31 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/19 21:22:18 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ int			treat_arg_type_str(t_buff *buff, char type, long long value)
 	size = 0;
 	value = !value ? (unsigned long)"(null)" : value;
 	size = type == 's' ? ft_strlen((char*)value) : ft_wcslen((wchar_t*)value);
+	if (PRECISION >= 0)
+		size = PRECISION;
 	get_width_and_precision(buff, 's', size);
 	if (type == 's')
 		size = print_arg(buff, (char*)value, size);
@@ -133,7 +135,10 @@ int			treat_arg_type_int(t_buff *buff, char type, long long value)
 		size = !value ? buff_append(buff, "\0", 1) : ft_wctomb(ptr, value);
 	else
 		size = ft_printf_itoa((char*)ptr, value);
-	get_width_and_precision(buff, 'd', size);
+	if (PRECISION == 0)
+		ptr[0] = '\0';
+	else
+		get_width_and_precision(buff, 'd', size);
 	return (print_arg(buff, (char*)ptr, size));
 }
 
@@ -147,7 +152,10 @@ int			treat_arg_type_uint(t_buff *buff, char type, long long value)
 	ft_bzero(ptr, 19);
 	ZERO = PRECISION > 0 && ZERO ? 0 : ZERO;
 	size = ft_printf_uitoa(ptr, value);
-	get_width_and_precision(buff, 'u', size);
+	if (PRECISION == 0)
+		ptr[0] = '\0';
+	else
+		get_width_and_precision(buff, 'u', size);
 	return (print_arg(buff, ptr, size));
 }
 
@@ -187,11 +195,24 @@ int			treat_arg_type_dbl(t_buff *buff, char type, long long value)
 int			print_arg(t_buff *buff, char *input, int size)
 {
 	(void)size;
+	if (ft_strchr("sS", SPECIF))
+	{
+		if (PRECISION >= 0)
+		{
+			if (!*input && WIDTH)
+			{
+				WIDTH += PRECISION;
+				PRECISION = -1;
+			}
+			else
+				input[PRECISION] = '\0';
+		}
+	}
 	if (!MINUS && WIDTH >= 0)
 		buff_seqncat(buff, ZERO ? "0" : " ", WIDTH);
 	input = treat_flag_plus(buff, input);
 	treat_htag(buff, input);
-	if (PRECISION >= 0)
+	if (PRECISION >= 0 && !ft_strchr("sS", SPECIF))
 		buff_seqncat(buff, "0", PRECISION);
 	buff_append(buff, input, ft_strlen(input));
 	if (MINUS && WIDTH >= 0)
