@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:03:18 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/14 18:05:33 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/19 16:28:17 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,14 @@ int			get_flags(t_buff *buff, char **input, int i)
 		save_flags(buff, (*input)[i], i);
 		i++;
 	}
-	buff->flags.specifier = (*input)[i];
+	SPECIF = (*input)[i];
+	if (buff->flags.l == 'l')
+	{
+		if (SPECIF == 'c')
+			SPECIF = 'C';
+		else if (SPECIF == 's')
+			SPECIF = 'S';
+	}
 	return (i);
 }
 

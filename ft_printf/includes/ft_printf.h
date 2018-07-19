@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/18 21:06:29 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/19 16:33:16 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,6 @@ long long		get_varg_int(t_buff *buff, char type, va_list ap);
 long long		get_varg_uint(t_buff *buff, char type, va_list ap);
 void			treat_htag(t_buff *buff, char *input);
 char*			treat_flag_plus(t_buff *buff, char *input);
+int			get_width_and_precision(t_buff *buff, char type, int size);
 
 #endif
