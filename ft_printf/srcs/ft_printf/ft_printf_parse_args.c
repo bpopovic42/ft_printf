@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/23 20:48:53 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/23 21:29:14 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,10 +170,7 @@ int			treat_arg_type_base(t_buff *buff, char type, long long value)
 	else
 		size = ft_printf_itoa_base(ptr, type == 'X' ? HEXA_UP : HEXA, value);
 	WIDTH -= HTAG ? (ft_strchr("oO", SPECIF) ? 1 : 2) : 0;
-	if (PRECISION == 0)
-		ptr[0] = '\0';
-	else
-		get_width_and_precision(buff, 'b', size);
+	get_width_and_precision(buff, 'b', size);
 	return (print_arg(buff, ptr, size));
 }
 

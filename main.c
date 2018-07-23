@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:05:25 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/23 20:45:28 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/23 21:31:27 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ int		main()
 	setlocale(LC_ALL, "");
 	//frval = ft_printf("%-2s F\n", "Remember that word: C H A I R");
 	//prval = printf("%-2s P\n", "Remember that word: C H A I R");
-	frval = ft_printf("%-5lu F\n", (unsigned long)-20);
-	prval = printf("%-5lu P\n", (unsigned long)-20);
+	frval = ft_printf("%04.o F\n", 12);
+	prval = printf("%04.o P\n", 12);
 	//frval = ft_printf("{%3*d} F\n", 0, 0);
 	//prval = printf("{%3*d} P\n", 0, 0);
 	//frval = ft_printf("lol %d lala %C F\n", 42, -1);
