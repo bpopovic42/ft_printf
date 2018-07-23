@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:03:18 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/19 16:28:17 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/23 20:50:16 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ int			get_flags(t_buff *buff, char **input, int i)
 			SPECIF = 'C';
 		else if (SPECIF == 's')
 			SPECIF = 'S';
+		else if (SPECIF == 'd')
+			SPECIF = 'D';
+		else if (SPECIF == 'u')
+			SPECIF ='U';
+		buff->flags.l = 0;
 	}
 	return (i);
 }
@@ -39,7 +44,7 @@ int			get_flags(t_buff *buff, char **input, int i)
 void		save_flags(t_buff *buff, int c, int i)
 {
 		buff->flags.htag = c == '#' ? true : buff->flags.htag;
-		buff->flags.zero = c == '0' && ((i == 1 && !buff->flags.htag) || (i == 2 && buff->flags.htag)) ? true : buff->flags.zero;
+		buff->flags.zero = c == '0' && ((i == 1 && !buff->flags.htag) || (i == 2 && (buff->flags.htag || SPACE))) ? true : buff->flags.zero;
 		buff->flags.minus = c == '-' ? true : buff->flags.minus;
 		buff->flags.space = c == ' ' ? true : buff->flags.space;
 		buff->flags.plus = c == '+' ? '+' : buff->flags.plus;
