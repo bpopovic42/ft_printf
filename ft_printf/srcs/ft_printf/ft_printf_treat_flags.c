@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:03:18 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/23 20:50:16 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/24 17:01:36 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,13 @@ int			get_flags(t_buff *buff, char **input, int i)
 			SPECIF = 'D';
 		else if (SPECIF == 'u')
 			SPECIF ='U';
-		buff->flags.l = 0;
+		else if (!(ft_strchr("oOxX", SPECIF)))
+		{
+			buff->flags.l = 0;
+		}
 	}
+	if (PRECISION >= 0 && ft_strchr("dDioOuUxX", SPECIF))
+		ZERO = 0;
 	return (i);
 }
 

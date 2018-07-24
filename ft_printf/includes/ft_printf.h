@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/19 19:27:12 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/24 17:38:05 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int			buff_seqncat(t_buff *buff, char *input, int n);
 long long		get_varg(t_buff *buff, char type, va_list ap);
 long long		get_varg_int(t_buff *buff, char type, va_list ap);
 long long		get_varg_uint(t_buff *buff, char type, va_list ap);
-void				treat_htag(t_buff *buff, char *input);
+void				treat_htag(t_buff *buff, char *input, int arg_size);
 char*			treat_flag_plus(t_buff *buff, char *input);
 int			get_width_and_precision(t_buff *buff, char type, int size);
 

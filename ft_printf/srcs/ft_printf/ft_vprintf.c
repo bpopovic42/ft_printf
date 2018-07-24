@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:06:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/23 20:49:32 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/24 18:25:47 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int			ft_vprintf(const char * restrict format, va_list ap)
 {
 	char	*ptr;
-	size_t	line_size;
+	int		line_size;
 	t_buff	buff;
 
 	ptr = (char*)format;
@@ -23,7 +23,7 @@ int			ft_vprintf(const char * restrict format, va_list ap)
 	buff.pos = 0;
 	buff.read = 0;
 	line_size = parse_input(ptr, &buff, ap);
-	if (buff.pos != 0)
+	if (buff.pos != 0 && line_size >= 0)
 		line_size += write(1, buff.buff, buff.pos);
 	return (line_size);
 }
@@ -43,7 +43,10 @@ int			parse_input(char *fmt, t_buff *buff, va_list ap)
 			if (!*(fmt + 1))
 				fmt++;
 			else
-				treat_arg(buff, &fmt, ap);
+			{
+				if ((treat_arg(buff, &fmt, ap)) < 0)
+					return (-1);
+			}
 		}
 		else
 			i++;
