@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/24 18:32:16 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/24 23:15:05 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int			get_width_and_precision(t_buff *buff, char type, int size)
 	{
 		if (WIDTH > size)
 			WIDTH -= size;
-		else if (type == 'f')
+		else
 			WIDTH = 0;
 	}
 	else
@@ -106,6 +106,8 @@ int			treat_arg_type_str(t_buff *buff, char type, long long value)
 	size = type == 's' ? ft_strlen((char*)value) : ft_wcslen((wchar_t*)value);
 	if (PRECISION >= 0)
 		size = PRECISION;
+	else if (type == 'S')
+		size *= sizeof(wchar_t);
 	get_width_and_precision(buff, 's', size);
 	if (type == 's')
 		size = print_arg(buff, (char*)value, size);
@@ -116,11 +118,13 @@ int			treat_arg_type_str(t_buff *buff, char type, long long value)
 
 int			treat_arg_type_wcstr(t_buff *buff, wchar_t *wcstr, size_t size)
 {
-	unsigned char	ptr[size * sizeof(wchar_t) + 1];
-	size_t			bytes;
+	unsigned char	ptr[size * sizeof(wchar_t)];
+	int				bytes;
 
 	ft_bzero(ptr, size * sizeof(wchar_t) + 1);
-	bytes = ft_wcstombs(ptr, wcstr, size * sizeof(wchar_t));
+	bytes = ft_wcstombs(ptr, wcstr, size);
+	if (bytes < 0)
+		return (-1);
 	return (print_arg(buff, (char*)ptr, bytes));
 }
 
@@ -237,9 +241,9 @@ int			print_arg(t_buff *buff, char *input, int size)
 	if (MINUS && WIDTH >= 0)
 		buff_seqncat(buff, ZERO ? "0" : " ", WIDTH);
 	write(1, buff->buff, buff->pos);
-	ft_bzero(buff->buff, BUFF_SIZE + 1);
 	buff->read += buff->pos;
 	buff->pos = 0;
+	ft_bzero(buff->buff, BUFF_SIZE + 1);
 	return (buff->read);
 }
 

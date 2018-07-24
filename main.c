@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:05:25 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/24 18:26:36 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/24 23:16:25 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,18 @@ int		main()
 	(void)ptrtest;
 	(void)uitest;
 
-	setlocale(LC_ALL, "");
+	wchar_t s[5];
+	s[0] = 0x53;
+	s[1] = 0x3abc;
+	s[2] = 0x3abc;
+	s[3] = 0x3abc;
+	s[4] = '\0';
+
+	setlocale(LC_ALL, "en_US.UTF-8");
 	//frval = ft_printf("%-2s F\n", "Remember that word: C H A I R");
 	//prval = printf("%-2s P\n", "Remember that word: C H A I R");
-	frval = ft_printf("%8C trololol %C F\n", 3250, 0x11ffff);
-	prval = printf("%8C trololol %C P\n", 3250, 0x11ffff);
+	frval = ft_printf("%.6ls F\n", L"S㪼㪼㪼");
+	prval = printf("%.6ls P\n", L"S㪼㪼㪼");
 	//frval = ft_printf("{%3*d} F\n", 0, 0);
 	//prval = printf("{%3*d} P\n", 0, 0);
 	//frval = ft_printf("lol %d lala %C F\n", 42, -1);

@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/24 17:38:05 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/24 19:56:26 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <limits.h>
+#include <locale.h>
 
 #define BUFF_SIZE 64
 #define MAX_INT_LEN 21
