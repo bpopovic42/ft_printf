@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:06:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/24 18:25:47 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/25 18:09:12 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int			treat_arg(t_buff *buff, char **input, va_list ap)
 	else if (buff->flags.specifier == '%')
 	{
 		WIDTH--;
+		PRECISION = -1;
 		size = print_arg(buff, &buff->flags.specifier, 1);
 	}
 	*input += i + 1;
