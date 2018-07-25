@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/24 23:15:05 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/25 17:43:46 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,9 @@ int			get_width_and_precision(t_buff *buff, char type, int size)
 	if (type == 's' || type == 'f')
 	{
 		if (WIDTH > size)
+		{
 			WIDTH -= size;
+		}
 		else
 			WIDTH = 0;
 	}
@@ -108,9 +110,11 @@ int			treat_arg_type_str(t_buff *buff, char type, long long value)
 		size = PRECISION;
 	else if (type == 'S')
 		size *= sizeof(wchar_t);
-	get_width_and_precision(buff, 's', size);
 	if (type == 's')
+	{
+		get_width_and_precision(buff, 's', size);
 		size = print_arg(buff, (char*)value, size);
+	}
 	else
 		size = treat_arg_type_wcstr(buff, (wchar_t*)value, size);
 	return (size);
@@ -125,6 +129,7 @@ int			treat_arg_type_wcstr(t_buff *buff, wchar_t *wcstr, size_t size)
 	bytes = ft_wcstombs(ptr, wcstr, size);
 	if (bytes < 0)
 		return (-1);
+	get_width_and_precision(buff, 's', bytes);
 	return (print_arg(buff, (char*)ptr, bytes));
 }
 
