@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 15:48:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/24 23:15:18 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/25 17:25:42 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,12 @@ int		ft_wcstombs(unsigned char *s, wchar_t *wcs, size_t n)
 		if (mb_len < 0)
 			return (-1);
 		total_b += mb_len;
-		if (total_b < n)
-			ft_strncat((char*)s, (char*)bytes, mb_len);
+		ft_strncat((char*)s, (char*)bytes, mb_len);
 		wcs++;
 	}
+	if (n > total_b - mb_len && n < total_b)
+		s[total_b - mb_len] = '\0';
+	else
+		s[n] = '\0';
 	return (total_b);
 }
