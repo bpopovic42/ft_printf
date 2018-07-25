@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/25 21:03:33 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/25 21:56:47 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int			get_width_and_precision(t_buff *buff, char type, int size)
 int			treat_arg_type_str(t_buff *buff, char type, long long value)
 {
 	int		size;
-	char	s[type == 's' ? value && ft_strlen((char*)value) : 0];
+	//char	s[type == 's' ? value && ft_strlen((char*)value) : 0];
 
 	size = 0;
 	value = !value ? (unsigned long)"(null)" : value;
@@ -115,8 +115,7 @@ int			treat_arg_type_str(t_buff *buff, char type, long long value)
 	{
 		PRECISION = size ? PRECISION : size;
 		get_width_and_precision(buff, 's', size);
-		ft_strcpy(s, (char*)value);
-		size = print_arg(buff, s, size);
+		size = print_arg(buff, (char*)value, size);
 	}
 	else
 		size = treat_arg_type_wcstr(buff, (wchar_t*)value, size);
@@ -228,7 +227,7 @@ int			print_arg(t_buff *buff, char *input, int size)
 				PRECISION = -1;
 			}
 			else if (PRECISION <= size)
-				input[PRECISION] = '\0';
+				size = PRECISION;
 		}
 	}
 	if (WIDTH > 0 && ZERO && HTAG)
@@ -255,7 +254,7 @@ int			print_arg(t_buff *buff, char *input, int size)
 	if ((PRECISION - size) > 0 && !ft_strchr("sS", SPECIF))
 		buff_seqncat(buff, "0", PRECISION - size);
 	if (!(!PRECISION && *input == '0' && ft_strchr("aAdDeEfFgGiuUxXoO", SPECIF)))
-		buff_append(buff, input, SPECIF == 'c' ? size : ft_strlen(input));
+		buff_append(buff, input, SPECIF == 'c'  || SPECIF == 's' ? size : ft_strlen(input));
 	if (MINUS && WIDTH >= 0)
 		buff_seqncat(buff, ZERO ? "0" : " ", WIDTH);
 	write(1, buff->buff, buff->pos);
