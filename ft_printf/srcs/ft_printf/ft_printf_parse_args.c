@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/25 18:38:06 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/25 19:48:00 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ int			treat_arg_type_str(t_buff *buff, char type, long long value)
 		size *= sizeof(wchar_t);
 	if (type == 's')
 	{
+		PRECISION = size ? PRECISION : size;
 		get_width_and_precision(buff, 's', size);
 		size = print_arg(buff, ft_strcpy(s, (char*)value), size);
 	}
@@ -144,7 +145,11 @@ int			treat_arg_type_int(t_buff *buff, char type, long long value)
 	ft_bzero(ptr, 19);
 	ZERO = PRECISION > 0 && ZERO ? 0 : ZERO;
 	if (type == 'c')
+	{
+		if (!value)
+			PRECISION = -1;
 		ptr[0] = value;
+	}
 	else if (type == 'C')
 	{
 		size = !value ? buff_append(buff, "\0", 1) : ft_wctomb(ptr, value);
@@ -153,6 +158,10 @@ int			treat_arg_type_int(t_buff *buff, char type, long long value)
 	}
 	else
 		size = ft_printf_itoa((char*)ptr, value);
+	if (*ptr == '-' && PRECISION > 0)
+		WIDTH--;
+	if (!value && !PRECISION && WIDTH > 0)
+		WIDTH++;
 	if (PRECISION == 0 && ft_strchr("cC", SPECIF))
 		ptr[0] = '\0';
 	else
@@ -244,7 +253,7 @@ int			print_arg(t_buff *buff, char *input, int size)
 		treat_htag(buff, input, size);
 	if ((PRECISION - size) > 0 && !ft_strchr("sS", SPECIF))
 		buff_seqncat(buff, "0", PRECISION - size);
-	if (!(!PRECISION && *input == '0' && ft_strchr("aAdDeEfFgGiuUxX", SPECIF)))
+	if (!(!PRECISION && *input == '0' && ft_strchr("aAdDeEfFgGiuUxXoO", SPECIF)))
 		buff_append(buff, input, SPECIF == 'c' ? size : ft_strlen(input));
 	if (MINUS && WIDTH >= 0)
 		buff_seqncat(buff, ZERO ? "0" : " ", WIDTH);
@@ -278,14 +287,16 @@ char*			treat_flag_plus(t_buff *buff, char *input)
 
 void			treat_htag(t_buff *buff, char *input, int arg_size)
 {
-	if ((*input && *input != '0' && HTAG) || SPECIF == 'p')
+	if ((*input && (*input != '0' || ft_strchr("oO", SPECIF)) && HTAG) || SPECIF == 'p')
 	{
 		if (ft_strchr("oO", SPECIF))
 		{
-			if (PRECISION <= arg_size)
+			if (PRECISION <= arg_size && *input != '0')
 				PRECISION = arg_size + 1;
+			else if (PRECISION <= arg_size)
+				PRECISION = 1;
 		}
-		else if (ft_strchr("xXp", SPECIF))
+		if (ft_strchr("xXp", SPECIF))
 			buff_append(buff, SPECIF == 'X' ? "0X" : "0x", 2);
 	}
 }
