@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/25 19:48:00 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/25 21:03:33 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,8 @@ int			treat_arg_type_str(t_buff *buff, char type, long long value)
 	{
 		PRECISION = size ? PRECISION : size;
 		get_width_and_precision(buff, 's', size);
-		size = print_arg(buff, ft_strcpy(s, (char*)value), size);
+		ft_strcpy(s, (char*)value);
+		size = print_arg(buff, s, size);
 	}
 	else
 		size = treat_arg_type_wcstr(buff, (wchar_t*)value, size);
