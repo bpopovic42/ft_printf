@@ -6,32 +6,31 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/26 21:53:00 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/26 22:44:30 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-long long		get_varg(t_buff *buff, char type, va_list ap)
+long long		get_varg(t_buff *buff, va_list ap)
 {
 	long long value;
 
 	value = 0;
-	if (ft_strchr("fFgGeE", type))
+	if (ft_strchr("fFgGeE", SPECIF))
 		value = va_arg(ap, double);
-	else if (ft_strchr("sSuUxXoOp", type))
-		value = get_varg_uint(buff, type, ap);
-	else if (ft_strchr("dDicC", type))
-		value = get_varg_int(buff, type, ap);
+	else if (ft_strchr("sSuUxXoOp", SPECIF))
+		value = get_varg_uint(buff, ap);
+	else if (ft_strchr("dDicC", SPECIF))
+		value = get_varg_int(buff, ap);
 	return (value);
 }
 
-long long		get_varg_int(t_buff *buff, char type, va_list ap)
+long long		get_varg_int(t_buff *buff, va_list ap)
 {
 	long long value;
 
 	value = 0;
-	(void)type;
 	if (buff->flags.h == 'h')
 		value = (short)va_arg(ap, int);
 	else if (buff->flags.h == 'H')
@@ -49,16 +48,16 @@ long long		get_varg_int(t_buff *buff, char type, va_list ap)
 	return (value);
 }
 
-long long		get_varg_uint(t_buff *buff, char type, va_list ap)
+long long		get_varg_uint(t_buff *buff, va_list ap)
 {
 	long long value;
 
 	value = 0;
-	if (buff->flags.h == 'h' && type != 'U')
+	if (buff->flags.h == 'h' && SPECIF != 'U')
 		value = (unsigned short)va_arg(ap, unsigned);
 	else if (buff->flags.h == 'H')
 		value = (unsigned char)va_arg(ap, unsigned);
-	else if (buff->flags.l == 'l' || ft_strchr("sSUp", type))
+	else if (buff->flags.l == 'l' || ft_strchr("sSUp", SPECIF))
 	{
 		value = va_arg(ap, unsigned long);
 	}
@@ -103,13 +102,13 @@ int			get_width_and_precision(t_buff *buff, char type, int size)
 	return (1);
 }
 
-int			treat_arg_type_str(t_buff *buff, char type, long long value)
+int			treat_arg_type_str(t_buff *buff, long long value)
 {
 	int		size;
 
 	size = 0;
 	value = !value ? (unsigned long)"(null)" : value;
-	if (type == 's')
+	if (SPECIF == 's')
 	{
 		size = ft_strlen((char*)value);
 		if (PRECISION >= 0 && PRECISION < size)
@@ -117,34 +116,30 @@ int			treat_arg_type_str(t_buff *buff, char type, long long value)
 	}
 	else
 	{
-		size = ft_wcslen((wchar_t*)value);
-		if (PRECISION > 0 && size > PRECISION)
+		if (PRECISION > 0)
 			size = ft_wcsnlen((wchar_t*)value, PRECISION);
+		else
+			size = ft_wcslen((wchar_t*)value);
 	}
-	if (size < 0)
-		return (-1);
-	if (type == 's')
-		PRECISION = size ? PRECISION : size;
 	get_width_and_precision(buff, 's', size);
-	size = print_arg(buff, (int*)value, size);
-	return (size);
+	return (print_arg(buff, (int*)value, size));
 }
 
-int			treat_arg_type_int(t_buff *buff, char type, long long value)
+int			treat_arg_type_int(t_buff *buff, long long value)
 {
 	unsigned char	ptr[19];
 	int		size;
 
 	size = 1;
 	ft_bzero(ptr, 19);
-	ZERO = PRECISION > 0 && ZERO ? 0 : ZERO;
-	if (type == 'c')
+	ZERO = PRECISION > 0 && ZERO ? 0 : ZERO; // TO MOVE
+	if (SPECIF == 'c')
 	{
 		if (!value)
 			PRECISION = -1;
 		ptr[0] = value;
 	}
-	else if (type == 'C')
+	else if (SPECIF == 'C')
 	{
 		size = !value ? buff_append(buff, "\0", 1) : ft_wctomb(ptr, value);
 		if (size < 0)
@@ -156,19 +151,18 @@ int			treat_arg_type_int(t_buff *buff, char type, long long value)
 		WIDTH--;
 	if (!value && !PRECISION && WIDTH > 0)
 		WIDTH++;
-	if (PRECISION == 0 && ft_strchr("cC", SPECIF))
+	if (PRECISION == 0 && (SPECIF == 'c' || SPECIF == 'C'))
 		ptr[0] = '\0';
 	else
 		get_width_and_precision(buff, 'd', size);
 	return (print_arg(buff, (int*)ptr, size));
 }
 
-int			treat_arg_type_uint(t_buff *buff, char type, long long value)
+int			treat_arg_type_uint(t_buff *buff, long long value)
 {
 	char	ptr[19];
 	int		size;
 
-	(void)type;
 	size = 1;
 	ft_bzero(ptr, 19);
 	ZERO = PRECISION > 0 && ZERO ? 0 : ZERO;
@@ -177,31 +171,31 @@ int			treat_arg_type_uint(t_buff *buff, char type, long long value)
 	return (print_arg(buff, (int*)ptr, size));
 }
 
-int			treat_arg_type_base(t_buff *buff, char type, long long value)
+int			treat_arg_type_base(t_buff *buff, long long value)
 {
 	char	ptr[65];
 	int		size;
 
 	size = 0;
 	ft_bzero(ptr, 65);
-	if (ft_strchr("oO", type))
+	if (ft_strchr("oO", SPECIF))
 		size = ft_printf_itoa_base(ptr, OCTAL, value);
 	else
-		size = ft_printf_itoa_base(ptr, type == 'X' ? HEXA_UP : HEXA, value);
-	if (type == 'p' || (HTAG && value))
+		size = ft_printf_itoa_base(ptr, SPECIF == 'X' ? HEXA_UP : HEXA, value);
+	if (SPECIF == 'p' || (HTAG && value))
 		WIDTH -= (ft_strchr("oO", SPECIF) ? 1 : 2);
 	get_width_and_precision(buff, 'b', !value && !PRECISION ? 0 : size);
 	return (print_arg(buff, (int*)ptr, size));
 }
 
-int			treat_arg_type_dbl(t_buff *buff, char type, long long value)
+int			treat_arg_type_dbl(t_buff *buff, long long value)
 {
 	char	tmp[MAX_INT_LEN + 1 + (PRECISION >= 0 ? PRECISION : 6)]; // + precision
 	int		size;
 
 	ft_bzero(tmp, MAX_INT_LEN + 1 + (PRECISION >= 0 ? PRECISION : 6));
 	size = 0;
-	if (ft_strchr("fF", type))
+	if (ft_strchr("fF", SPECIF))
 		ft_ftoa(value, (PRECISION >= 0 ? PRECISION : 6), tmp);
 	size = ft_strlen(tmp);
 	get_width_and_precision(buff, 'f', size);
