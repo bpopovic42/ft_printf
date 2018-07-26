@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:05:25 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/25 20:47:45 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/26 21:53:37 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ int		main()
 	(void)uitest;
 
 	setlocale(LC_ALL, "en_US.UTF-8");
-	//frval = ft_printf("%-2s F\n", "Remember that word: C H A I R");
-	//prval = printf("%-2s P\n", "Remember that word: C H A I R");
-	frval = ft_printf("42%40.32s42 F\n", "don’t feed the bugs! (except delicious stacktraces)!");
-	prval = printf("42%40.32s42 P\n", "don’t feed the bugs! (except delicious stacktraces)!");
+	frval = ft_printf("%-2s F\n", "Remember that word: C H A I R");
+	prval = printf("%-2s P\n", "Remember that word: C H A I R");
+	//frval = ft_printf("lool %d %10.4S F\n", 42, wcstest);
+	//prval = printf("lool %d %10.4S P\n", 42, wcstest);
 	//frval = ft_printf("{%3*d} F\n", 0, 0);
 	//prval = printf("{%3*d} P\n", 0, 0);
 	//frval = ft_printf("lol %d lala %C F\n", 42, -1);
