@@ -6,26 +6,26 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:03:18 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/25 20:54:01 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/26 21:25:45 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int			get_flags(t_buff *buff, char **input, int i)
+int			get_flags(t_buff *buff, int i)
 {
-	while ((*input)[i] && !ft_printf_is_fspecif((*input)[i]))
+	while (FMT[i] && !ft_printf_is_fspecif(FMT[i]))
 	{
-		if (!ft_printf_is_flag((*input)[i]))
+		if (!ft_printf_is_flag(FMT[i]))
 			return (i - 1);
-		if ((*input)[i] == '.')
-			i += ft_printf_atoi(*input + i + 1, &(buff->flags.precision));
-		else if (ft_strchr("123456789", (*input)[i]) && !buff->flags.width)
-			i += ft_printf_atoi(*input + i, &(buff->flags.width)) - 1;
-		save_flags(buff, (*input)[i], i);
+		if (FMT[i] == '.')
+			i += ft_printf_atoi(FMT + i + 1, &(buff->flags.precision));
+		else if (ft_strchr("123456789", FMT[i]) && !buff->flags.width)
+			i += ft_printf_atoi(FMT + i, &(buff->flags.width)) - 1;
+		save_flags(buff, FMT[i], i);
 		i++;
 	}
-	SPECIF = (*input)[i];
+	SPECIF = FMT[i];
 	if (buff->flags.l == 'l')
 	{
 		if (SPECIF == 'c')

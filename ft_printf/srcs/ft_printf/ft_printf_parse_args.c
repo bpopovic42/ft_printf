@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/25 21:56:47 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/26 21:53:00 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,44 +96,38 @@ int			get_width_and_precision(t_buff *buff, char type, int size)
 	}
 	if (WIDTH > 0 && SPACE)
 		WIDTH--;
+	if (WIDTH > 0 && !ZERO)
+		buff->spcs = WIDTH;
+	else if (WIDTH > 0 && ZERO)
+		buff->zero += WIDTH;
 	return (1);
 }
 
 int			treat_arg_type_str(t_buff *buff, char type, long long value)
 {
 	int		size;
-	//char	s[type == 's' ? value && ft_strlen((char*)value) : 0];
 
 	size = 0;
 	value = !value ? (unsigned long)"(null)" : value;
-	size = type == 's' ? ft_strlen((char*)value) : ft_wcslen((wchar_t*)value);
-	if (PRECISION >= 0 && (type == 'S' || PRECISION < size))
-		size = PRECISION;
-	else if (type == 'S')
-		size *= sizeof(wchar_t);
 	if (type == 's')
 	{
-		PRECISION = size ? PRECISION : size;
-		get_width_and_precision(buff, 's', size);
-		size = print_arg(buff, (char*)value, size);
+		size = ft_strlen((char*)value);
+		if (PRECISION >= 0 && PRECISION < size)
+			size = PRECISION;
 	}
 	else
-		size = treat_arg_type_wcstr(buff, (wchar_t*)value, size);
-	return (size);
-}
-
-int			treat_arg_type_wcstr(t_buff *buff, wchar_t *wcstr, size_t size)
-{
-	unsigned char	ptr[size * sizeof(wchar_t)];
-	int				bytes;
-
-	ft_bzero(ptr, size * sizeof(wchar_t) + 1);
-	bytes = ft_wcstombs(ptr, wcstr, size);
-	if (bytes < 0)
+	{
+		size = ft_wcslen((wchar_t*)value);
+		if (PRECISION > 0 && size > PRECISION)
+			size = ft_wcsnlen((wchar_t*)value, PRECISION);
+	}
+	if (size < 0)
 		return (-1);
-	get_width_and_precision(buff, 's', bytes);
-	PRECISION = -1;
-	return (print_arg(buff, (char*)ptr, bytes));
+	if (type == 's')
+		PRECISION = size ? PRECISION : size;
+	get_width_and_precision(buff, 's', size);
+	size = print_arg(buff, (int*)value, size);
+	return (size);
 }
 
 int			treat_arg_type_int(t_buff *buff, char type, long long value)
@@ -166,7 +160,7 @@ int			treat_arg_type_int(t_buff *buff, char type, long long value)
 		ptr[0] = '\0';
 	else
 		get_width_and_precision(buff, 'd', size);
-	return (print_arg(buff, (char*)ptr, size));
+	return (print_arg(buff, (int*)ptr, size));
 }
 
 int			treat_arg_type_uint(t_buff *buff, char type, long long value)
@@ -180,7 +174,7 @@ int			treat_arg_type_uint(t_buff *buff, char type, long long value)
 	ZERO = PRECISION > 0 && ZERO ? 0 : ZERO;
 	size = ft_printf_uitoa(ptr, value);
 	get_width_and_precision(buff, 'u', size);
-	return (print_arg(buff, ptr, size));
+	return (print_arg(buff, (int*)ptr, size));
 }
 
 int			treat_arg_type_base(t_buff *buff, char type, long long value)
@@ -197,7 +191,7 @@ int			treat_arg_type_base(t_buff *buff, char type, long long value)
 	if (type == 'p' || (HTAG && value))
 		WIDTH -= (ft_strchr("oO", SPECIF) ? 1 : 2);
 	get_width_and_precision(buff, 'b', !value && !PRECISION ? 0 : size);
-	return (print_arg(buff, ptr, size));
+	return (print_arg(buff, (int*)ptr, size));
 }
 
 int			treat_arg_type_dbl(t_buff *buff, char type, long long value)
@@ -211,10 +205,67 @@ int			treat_arg_type_dbl(t_buff *buff, char type, long long value)
 		ft_ftoa(value, (PRECISION >= 0 ? PRECISION : 6), tmp);
 	size = ft_strlen(tmp);
 	get_width_and_precision(buff, 'f', size);
-	return (print_arg(buff, tmp, size));
+	return (print_arg(buff, (int*)tmp, size));
 }
 
-int			print_arg(t_buff *buff, char *input, int size)
+int				print_arg(t_buff *buff, int *input, int size)
+{
+	if (INDEX > 0)
+		dump_fmt(buff);
+	if (buff->spcs > 0 && !MINUS)
+		buff_seqncat(buff, " ", buff->spcs);
+	//IF HTAG PLUS ETC...
+	if (buff->zero > 0)
+		buff_seqncat(buff, "0", buff->zero);
+	if (SPECIF == 'S')
+		print_wcs(buff, input, size);
+	else
+		buff_append(buff, (char*)input, size);
+	if (buff->spcs > 0 && MINUS)
+		buff_seqncat(buff, " ", buff->spcs);
+	write(1, buff->buff, buff->pos);
+	buff->read += buff->pos;
+	buff->pos = 0;
+	ft_bzero(buff->buff, BUFF_SIZE);
+	return (1);
+}
+
+int				print_wcs(t_buff *buff, int *input, int size)
+{
+	unsigned char	bytes[4];
+	int				total_b;
+	int				len;
+	int				i;
+
+	total_b = 0;
+	i = 0;
+	len = 0;
+	if (SPECIF == 'S')
+	{
+		while (input[i] != L'\0')
+		{
+			ft_bzero(bytes, 4);
+			len = ft_wctomb(bytes, (wchar_t)input[i]);
+			total_b += len;
+			if (total_b <= size)
+				buff_append(buff, (char*)bytes, len);
+			else
+				break;
+			i++;
+		}
+	}
+	return (1);
+}
+
+void			dump_fmt(t_buff *buff)
+{
+	write(1, FMT, buff->fmti);
+	FMT += buff->fmti;
+	buff->read += buff->fmti;
+	buff->fmti = 0;
+}
+
+/*int			print_arg(t_buff *buff, int *input, int size)
 {
 	(void)size;
 	if (ft_strchr("sS", SPECIF))
@@ -262,7 +313,7 @@ int			print_arg(t_buff *buff, char *input, int size)
 	buff->pos = 0;
 	ft_bzero(buff->buff, BUFF_SIZE + 1);
 	return (buff->read);
-}
+}*/
 
 char*			treat_flag_plus(t_buff *buff, char *input)
 {
