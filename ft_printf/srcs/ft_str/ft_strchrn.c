@@ -1,37 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_wcslen.c                                        :+:      :+:    :+:   */
+/*   ft_strchrn.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/26 18:31:39 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/29 21:50:12 by bopopovi         ###   ########.fr       */
+/*   Created: 2018/04/09 15:34:18 by bopopovi          #+#    #+#             */
+/*   Updated: 2018/07/28 02:50:30 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t		ft_wcslen(wchar_t *wcs)
+int		ft_strchrn(const char *s, int c)
 {
-	size_t	i;
-	size_t	bytes;
+	int		occur;
 
-	i = 0;
-	bytes = 0;
-	if (wcs)
+	occur = 0;
+	if (s)
 	{
-		while (wcs[i] != L'\0')
+		while (*s)
 		{
-			if ((wcs[i] > 255 && MB_CUR_MAX != 4) || wcs[i] < 0x0
-				|| (wcs[i] >= 0xd800 && wcs[i] <= 0xdfff) || wcs[i] > 0x10ffff)
-				return (-1);
-			bytes += wcs[i] > 65536;
-			bytes += wcs[i] > 2048;
-			bytes += wcs[i] > 255;
-			bytes++;
-			i++;
+			if (*s == (char)c)
+				occur++;
+			s++;
 		}
 	}
-	return (bytes);
+	return (occur);
 }

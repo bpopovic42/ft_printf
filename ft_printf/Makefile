@@ -6,7 +6,7 @@
 #    By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/03 08:42:00 by bopopovi          #+#    #+#              #
-#*   Updated: 2018/07/26 20:40:59 by bopopovi         ###   ########.fr       *#
+#*   Updated: 2018/07/28 23:33:10 by bopopovi         ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,7 @@ SRC_STR		=	ft_islower.c ft_isupper.c ft_isalpha.c ft_isdigit.c \
 			ft_strsub.c ft_strjoin.c ft_strtrim.c ft_strsplit.c \
 			ft_itoa.c ft_issign.c ft_char_count.c ft_strappend.c \
 			ft_strnappend.c ft_strcinsert.c ft_wctomb.c ft_wcstombs.c \
-			ft_wcslen.c ft_ftoa.c ft_strrev.c ft_wcsnlen.c
+			ft_wcslen.c ft_ftoa.c ft_strrev.c ft_wcsnlen.c ft_strchrn.c
 
 # **************************************************************************** #
 # Hash :
@@ -69,7 +69,9 @@ SRC_BIN		=	ft_toggle_bit.c ft_is_bit_set.c
 SRC_PTF		=	ft_printf.c ft_printf_buffer.c ft_printf_is_fspecif.c \
 			ft_printf_itoa.c ft_printf_parse_args.c ft_printf_itoa_base.c \
 			ft_printf_treat_flags.c ft_vprintf.c ft_printf_uitoa.c \
-			ft_printf_is_flag.c ft_printf_atoi.c
+			ft_printf_is_flag.c ft_printf_atoi.c ft_printf_int.c \
+			ft_printf_str.c ft_printf_char.c ft_printf_float.c \
+			ft_printf_uitoa_base.c
 
 ############################## VAR #############################################
 

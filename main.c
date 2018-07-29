@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:05:25 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/26 22:02:14 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/29 22:07:08 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ int		main()
 	(void)ptrtest;
 	(void)uitest;
 
-	setlocale(LC_ALL, "en_US.UTF-8");
-	frval = ft_printf("%-10s F\n", "Remember");
-	prval = printf("%-10s P\n", "Remember");
+	//setlocale(LC_ALL, "en_US.UTF-8");
+	frval = ft_printf("%#012O F\n", 0);
+	prval = printf("%#012O P\n", 0);
 	//frval = ft_printf("lool %d %10.4S F\n", 42, wcstest);
 	//prval = printf("lool %d %10.4S P\n", 42, wcstest);
 	//frval = ft_printf("{%3*d} F\n", 0, 0);

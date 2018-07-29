@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 16:27:54 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/12 17:27:56 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/28 02:52:15 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ size_t				ft_strlcat(char *dst, const char *src, size_t size);
 char				*ft_strchr(const char *s, int c);
 char				*ft_strrchr(const char *s, int c);
 int					ft_strchri(const char *s, int c);
+int					ft_strchrn(const char *s, int c);
 char				*ft_strstr(const char *src, const char *find);
 char				*ft_strnstr(const char *src, const char *find, size_t len);
 int					ft_strcmp(const char *s1, const char *s2);

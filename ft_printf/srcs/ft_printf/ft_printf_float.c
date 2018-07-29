@@ -1,40 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_itoa_base.c                              :+:      :+:    :+:   */
+/*   ft_printf_float.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/26 19:52:34 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/29 02:04:26 by bopopovi         ###   ########.fr       */
+/*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
+/*   Updated: 2018/07/28 21:29:05 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int			ft_printf_itoa_base(char *buff, char *charset, long long nbr)
+int			treat_arg_type_dbl(t_ptf *ptf, long long param)
 {
-	int		base;
-	int		i;
-	char	*ptr;
-	int		max;
+	char	tmp[MAX_INT_LEN + 56];
+	int		size;
 
-	i = 0;
-	max = 0;
-	ptr = buff;
-	base = ft_strlen(charset);
-	*ptr = nbr < 0 ? '-' : '+';
-	nbr *= nbr < 0 ? -1 : 1;
-	ptr++;
-	if (base > 16 || base < 2)
-		return (-1);
-	while (nbr || i < 1)
-	{
-		ptr[i] = charset[nbr % base];
-		i++;
-		nbr /= base;
-	}
-	ptr[i] = '\0';
-	ptr = ft_strrev(ptr);
-	return (i);
+	ft_bzero(tmp, MAX_INT_LEN + 1 + (PRECISION >= 0 ? PRECISION : 6));
+	size = 0;
+	if (ft_strchr("fF", SPECIF))
+		ft_ftoa(param, (PRECISION >= 0 ? PRECISION : 6), tmp);
+	size = ft_strlen(tmp);
+	//get_width_and_precision(buff, 'f', size);
+	return (print_arg(ptf, (int*)"\0", (int*)tmp, size));
 }
+

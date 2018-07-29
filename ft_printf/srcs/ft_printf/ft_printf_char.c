@@ -1,40 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_itoa_base.c                              :+:      :+:    :+:   */
+/*   ft_printf_char.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/26 19:52:34 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/29 02:04:26 by bopopovi         ###   ########.fr       */
+/*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
+/*   Updated: 2018/07/28 22:21:39 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int			ft_printf_itoa_base(char *buff, char *charset, long long nbr)
+int			treat_arg_type_char(t_ptf *ptf, wchar_t param)
 {
-	int		base;
-	int		i;
-	char	*ptr;
-	int		max;
+	char	mbs[5];
+	int		size;
 
-	i = 0;
-	max = 0;
-	ptr = buff;
-	base = ft_strlen(charset);
-	*ptr = nbr < 0 ? '-' : '+';
-	nbr *= nbr < 0 ? -1 : 1;
-	ptr++;
-	if (base > 16 || base < 2)
-		return (-1);
-	while (nbr || i < 1)
+	ft_bzero(mbs, 5);
+	size = 1;
+	if (ft_strchr(FLAGS, 'l'))
 	{
-		ptr[i] = charset[nbr % base];
-		i++;
-		nbr /= base;
+		if (param && (size = ft_wctomb((unsigned char*)mbs, param)) < 0)
+			return (-1);
 	}
-	ptr[i] = '\0';
-	ptr = ft_strrev(ptr);
-	return (i);
+	else
+		*mbs = (char)param;
+	WIDTH -= size;
+	return (print_arg(ptf, (int*)"\0", (int*)mbs, size));
 }
+
+

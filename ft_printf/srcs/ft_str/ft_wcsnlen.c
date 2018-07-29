@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:31:39 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/26 21:33:12 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/29 21:51:26 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ size_t		ft_wcsnlen(wchar_t *wcs, size_t n)
 			bytes += wcs[i] > 2048 ? 1 : 0;
 			bytes += wcs[i] > 128 ? 1 : 0;
 			bytes++;
-			total_b += bytes;
+			total_b += (MB_CUR_MAX == 4 ? bytes : 1);
 			i++;
 		}
 		total_b -= total_b > n ? bytes : 0;
