@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/30 18:25:40 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/30 23:45:57 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,9 @@ typedef struct		s_ptf
 
 int		ft_printf(const char * restrict format, ...);
 char	*ft_ftoa(double val, int precision, char *buff);
-int		parse_input(t_ptf *ptf, va_list ap);
 int		buff_append(t_ptf *ptf, char *input, int size);
-int		treat_arg(t_ptf *ptf, va_list ap);
 int		ft_printf_is_fspecif(int c);
 int		treat_arg_type_int(t_ptf *ptf, long long param);
-int			treat_arg_type_uint(t_ptf *ptf, long long param);
-int		ft_printf_itoa(char *buff, int64_t val);
-int		ft_printf_uitoa(char *buff, uint64_t val);
 int		treat_arg_type_str(t_ptf *ptf, wchar_t *param);
 int		ft_vprintf(const char * restrict format, va_list ap);
 int		treat_arg_type_wcstr(t_ptf *ptf, wchar_t *wcstr, size_t size);
@@ -80,26 +75,14 @@ int		treat_arg_type_base(t_ptf *ptf, long long param);
 int		ft_printf_itoa_base(char *buff, char *charset, long long nbr);
 int		ft_printf_uitoa_base(char *buff, char *charset, uint64_t nbr);
 size_t	ft_wcslen(wchar_t *wcs);
-int			get_flags(t_ptf *ptf, va_list ap, int i);
-int			treat_precision(t_ptf *ptf, char *input, int arg_size);
+int		ft_printf_get_flags(t_ptf *ptf, va_list ap, int i);
 int				print_arg(t_ptf *ptf, int *prefix, int *input, int size);
-void		reset_flags(t_ptf *ptf);
-int			treat_specifier_by_type(t_ptf *ptf, long long param);
-void		save_flags(t_ptf *ptf, int c, int i);
 int			ft_printf_is_flag(char c);
 int		ft_printf_atoi(const char *str, int *res);
 int			buff_seqncat(t_ptf *ptf, char *input, int n);
-long long		get_varg(t_ptf *ptf, va_list ap);
-long long		get_varg_int(t_ptf *ptf, va_list ap);
-long long		get_varg_uint(t_ptf *ptf, va_list ap);
-void				treat_htag(t_ptf *ptf, char *input, int arg_size);
-char*			treat_flag_plus(t_ptf *ptf, char *input);
-int			get_width_and_precision(t_ptf *ptf, char type, int size);
-
 int				print_wcs(t_ptf *ptf, int *input, int size);
 void			dump_fmt(t_ptf *ptf);
 size_t			ft_wcsnlen(wchar_t *wcs, size_t n);
-int			init_struct(t_ptf *ptf, const char * restrict format);
 int			treat_arg_type_char(t_ptf *ptf, wchar_t param);
 
 #endif
