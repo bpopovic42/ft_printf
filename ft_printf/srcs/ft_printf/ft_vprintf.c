@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:06:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/30 19:20:00 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/30 22:55:22 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,18 @@ int			parse_input(t_ptf *ptf, va_list ap)
 	ret = 0;
 	while (*FMT && FMT[INDEX])
 	{
-		if (FMT[INDEX] == '%')
+		if (FMT[INDEX] == '%' && FMT[INDEX + 1])
 		{
 			if ((ret = treat_arg(ptf, ap)) < 0)
 				return (-1);
 			else if (ret == 0)
 				return (0);
+		}
+		else if (FMT[INDEX] == '%' && !FMT[INDEX + 1])
+		{
+			dump_fmt(ptf);
+			FMT += INDEX + 1;
+			INDEX = 0;
 		}
 		else
 			INDEX++;
@@ -63,7 +69,7 @@ int			treat_arg(t_ptf *ptf, va_list ap)
 
 	i = 1;
 	size = 0;
-	if ((i = get_flags(ptf, ap, i + INDEX) - INDEX) < 0) // Issue here
+	if ((i = get_flags(ptf, ap, i + INDEX) - INDEX) < 0)
 		return (i);
 	else if (i == 0)
 		return (0);

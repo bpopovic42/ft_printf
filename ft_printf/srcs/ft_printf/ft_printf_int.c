@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/30 18:45:24 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/30 23:04:45 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ int		get_arg_unsigned(t_ptf *ptf, char *res, long long param)
 		return (ft_printf_uitoa_base(res, ptf->base, (uint64_t)param));
 	else if (ft_strchr(FLAGS, 'l'))
 		return (ft_printf_uitoa_base(res, ptf->base, (unsigned long)param));
-	else if (ft_strchrn(FLAGS, 'h') == 2)
-		return (ft_printf_uitoa_base(res, ptf->base, (unsigned char)param));
-	else if (ft_strchr(FLAGS, 'h'))
-		return (ft_printf_uitoa_base(res, ptf->base, (unsigned short)param));
 	else if (ft_strchr(FLAGS, 'j'))
 		return (ft_printf_uitoa_base(res, ptf->base, (uintmax_t)param));
 	else if (ft_strchr(FLAGS, 'z'))
 		return (ft_printf_uitoa_base(res, ptf->base, (size_t)param));
+	else if (ft_strchrn(FLAGS, 'h') == 2)
+		return (ft_printf_uitoa_base(res, ptf->base, (unsigned char)param));
+	else if (ft_strchr(FLAGS, 'h'))
+		return (ft_printf_uitoa_base(res, ptf->base, (unsigned short)param));
 	else
 		return (ft_printf_uitoa_base(res, ptf->base, (unsigned)param));
 }
@@ -38,14 +38,14 @@ int			get_arg_signed(t_ptf *ptf, char *res, long long param)
 		return (ft_printf_itoa_base(res, ptf->base, (long long)param));
 	else if (ft_strchr(FLAGS, 'l'))
 		return (ft_printf_itoa_base(res, ptf->base, (long)param));
-	else if (ft_strchrn(FLAGS, 'h') == 2)
-		return (ft_printf_itoa_base(res, ptf->base, (char)param));
-	else if (ft_strchr(FLAGS, 'h'))
-		return (ft_printf_itoa_base(res, ptf->base, (short)param));
 	else if (ft_strchr(FLAGS, 'j'))
 		return (ft_printf_itoa_base(res, ptf->base, (intmax_t)param));
 	else if (ft_strchr(FLAGS, 'z'))
 		return (ft_printf_itoa_base(res, ptf->base, (signed long)param));
+	else if (ft_strchrn(FLAGS, 'h') == 2)
+		return (ft_printf_itoa_base(res, ptf->base, (char)param));
+	else if (ft_strchr(FLAGS, 'h'))
+		return (ft_printf_itoa_base(res, ptf->base, (short)param));
 	else
 		return (ft_printf_itoa_base(res, ptf->base, (int)param));
 }
