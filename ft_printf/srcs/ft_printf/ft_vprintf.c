@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:06:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/30 16:58:06 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/30 17:32:51 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,10 @@ int			treat_arg(t_ptf *ptf, va_list ap)
 	i = get_flags(ptf, i + INDEX) - INDEX;
 	if (i <= 0)
 		return (i);
-	size = treat_specifier_by_type(ptf, (!ft_printf_is_fspecif(SPECIF) || SPECIF == '%' ? 0 : va_arg(ap, long long)));
+	if (ft_strchr("fFeEgGaA", SPECIF))
+		size = treat_arg_type_dbl(ptf, va_arg(ap, double));
+	else
+		size = treat_specifier_by_type(ptf, (!ft_printf_is_fspecif(SPECIF) || SPECIF == '%' ? 0 : va_arg(ap, long long)));
 	FMT += i + 1;
 	INDEX = 0;
 	return (size);
@@ -83,8 +86,6 @@ int		treat_specifier_by_type(t_ptf *ptf, long long param)
 		return (treat_arg_type_char(ptf, (wchar_t)param));
 	else if (ft_strchr("dDioOuUxXp", SPECIF))
 		return (treat_arg_type_int(ptf, param));
-	/*else if (ft_strchr("fFeEgGaA", SPECIF))
-		return (treat_arg_type_dbl(ptf, (double)param));*/
 	else if (SPECIF == '%')
 	{
 		WIDTH--;

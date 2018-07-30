@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/30 16:50:41 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/30 18:02:34 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ int				print_arg(t_ptf *ptf, int *prefix, int *input, int size)
 	}
 	else
 		buff_append(ptf, (char*)input, size);
+	if (ft_strchr("fF", SPECIF) && PRECISION > 0)
+		buff_seqncat(ptf, "0", PRECISION);
 	if (ft_strchr(FLAGS, '-') && WIDTH > 0)
 		buff_seqncat(ptf, " ", WIDTH);
 	write(1, ptf->buff.buff, ptf->buff.pos);

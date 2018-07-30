@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/29 23:21:38 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/30 17:51:27 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int			get_arg_signed(t_ptf *ptf, char *res, long long param)
 		return (ft_printf_itoa_base(res, ptf->base, (int)param));
 }
 
-int			get_prefix(t_ptf *ptf, char *ptr, char *prefix)
+static int			get_prefix(t_ptf *ptf, char *ptr, char *prefix)
 {
 	if (ft_strchr("dDi", SPECIF) && (ft_strchr(FLAGS, '+') || (ptr[0] == '-')))
 		ft_strcat(prefix, ptr[0] == '-' ? "-" : "+");
