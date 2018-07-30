@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:06:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/30 17:32:51 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/30 19:20:00 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int			ft_vprintf(const char * restrict format, va_list ap)
 	line_size = parse_input(&ptf, ap);
 	if (ptf.buff.pos != 0 && line_size >= 0)
 		line_size += write(1, ptf.buff.buff, ptf.buff.pos);
-	return (line_size);
+	return (line_size < 0 ? line_size : ptf.buff.read);
 }
 
 int			init_struct(t_ptf *ptf, const char * restrict format)
@@ -63,10 +63,11 @@ int			treat_arg(t_ptf *ptf, va_list ap)
 
 	i = 1;
 	size = 0;
-	i = get_flags(ptf, i + INDEX) - INDEX;
-	if (i <= 0)
+	if ((i = get_flags(ptf, ap, i + INDEX) - INDEX) < 0) // Issue here
 		return (i);
-	if (ft_strchr("fFeEgGaA", SPECIF))
+	else if (i == 0)
+		return (0);
+	if (ft_strchr("fF", SPECIF))
 		size = treat_arg_type_dbl(ptf, va_arg(ap, double));
 	else
 		size = treat_specifier_by_type(ptf, (!ft_printf_is_fspecif(SPECIF) || SPECIF == '%' ? 0 : va_arg(ap, long long)));
@@ -90,7 +91,7 @@ int		treat_specifier_by_type(t_ptf *ptf, long long param)
 	{
 		WIDTH--;
 		PRECISION = -1;
-		return(print_arg(ptf, (int*)"\0", (int*)"%", 1));
+		return (print_arg(ptf, (int*)"\0", (int*)"%", 1));
 	}
 	else
 	{

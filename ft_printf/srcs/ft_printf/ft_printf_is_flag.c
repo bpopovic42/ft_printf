@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/14 17:11:54 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/14 17:18:19 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/30 18:26:33 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 int		ft_printf_is_flag(char c)
 {
-	return (ft_strchr("0123456789-+ '#.hjlz%", c) != NULL);
+	return (ft_strchr("0123456789-+ '#.hjlz%*", c) != NULL);
 }

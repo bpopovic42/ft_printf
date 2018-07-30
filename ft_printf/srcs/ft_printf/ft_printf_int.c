@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/30 17:51:27 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/30 18:45:24 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int			treat_arg_type_int(t_ptf *ptf, long long param)
 	if (PRECISION > (int)(size))
 		PRECISION -= size;
 	else
-		PRECISION = PRECISION == -1 ? -1 : 0;
+		PRECISION = PRECISION < 0 ? -1 : 0;
 	if (PRECISION <= 0 && ft_strchr("oO", SPECIF) && ft_strchr(FLAGS, '#'))
 		ft_strcat(prefix, ptr[1] == '0' ? "" : "0");
 	if (WIDTH > 0)

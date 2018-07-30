@@ -6,41 +6,11 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/30 18:02:34 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/30 19:00:56 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-/*int			get_width_and_precision(t_ptf *ptf, char type, int size)
-{
-	int precision;
-
-	precision = PRECISION > size ? PRECISION - size : 0;
-	if (type == 's' || type == 'f')
-	{
-		if (WIDTH > size)
-		{
-			WIDTH -= size;
-		}
-		else
-			WIDTH = 0;
-	}
-	else
-	{
-		if (WIDTH > size + (precision > 0 ? precision : 0))
-			WIDTH -= size + (precision > 0 ? precision : 0);
-		else
-			WIDTH = 0;
-	}
-	if (WIDTH > 0 && SPACE)
-		WIDTH--;
-	if (WIDTH > 0 && !ZERO)
-		buff->spcs = WIDTH;
-	else if (WIDTH > 0 && ZERO)
-		buff->zero += WIDTH;
-	return (1);
-}*/
 
 int				print_wcs(t_ptf *ptf, int *input, int size)
 {
