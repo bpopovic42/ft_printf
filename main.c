@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:05:25 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/29 22:07:08 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/30 02:01:35 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,23 @@ int		main()
 	(void)ptrtest;
 	(void)uitest;
 
-	//setlocale(LC_ALL, "en_US.UTF-8");
-	frval = ft_printf("%#012O F\n", 0);
-	prval = printf("%#012O P\n", 0);
+	wchar_t s[4];
+		s[0] = 'a';
+	s[1] = 250;
+	s[2] = 'b';
+	s[3] = '\0';
+
+//	setlocale(LC_ALL, "en_US.UTF-8");
+	frval = ft_printf("%-12ls F\n", s);
+	prval = printf("%-12ls P\n", s);
+	//frval = ft_printf("%-50.36ls F\n", L"°\)");
+	//prval = printf("%-50.36ls P\n", L"°\)");
+	//frval = ft_printf("%-50.36ls F\n", L"(╯°Д°）╯︵ /(.□ . \)");
+	//prval = printf("%-50.36ls P\n", L"(╯°Д°）╯︵ /(.□ . \)");
+	//frval = ft_printf("%C F\n", 0x4e6);
+	//prval = printf("%C P\n", 0x4e6);
+	//frval = ft_printf("%C F\n", L'💖');
+	//prval = printf("%C P\n", L'💖');
 	//frval = ft_printf("lool %d %10.4S F\n", 42, wcstest);
 	//prval = printf("lool %d %10.4S P\n", 42, wcstest);
 	//frval = ft_printf("{%3*d} F\n", 0, 0);

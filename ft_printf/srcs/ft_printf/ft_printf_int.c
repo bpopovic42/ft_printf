@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/29 22:10:38 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/29 23:21:38 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int			get_prefix(t_ptf *ptf, char *ptr, char *prefix)
 {
 	if (ft_strchr("dDi", SPECIF) && (ft_strchr(FLAGS, '+') || (ptr[0] == '-')))
 		ft_strcat(prefix, ptr[0] == '-' ? "-" : "+");
-	else if (ft_strchr("dDi", SPECIF) && ft_strchr(FLAGS, ' ') && PRECISION <= 0)
+	else if (ft_strchr("dDi", SPECIF) && ft_strchr(FLAGS, ' '))
 		ft_strcat(prefix, " ");
 	if (ft_strchr(FLAGS, '#') && ft_strchr("xX", SPECIF) && *(ptr + 1) != '0')
 	{
