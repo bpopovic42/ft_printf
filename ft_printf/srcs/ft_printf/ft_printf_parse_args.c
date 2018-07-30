@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/30 02:39:08 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/30 16:50:41 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,10 @@ int				print_arg(t_ptf *ptf, int *prefix, int *input, int size)
 {
 	char *width;
 
-	width = ft_strchr(FLAGS, '0') && PRECISION < 0 ? "0" : " ";
+	if (ft_strchr(FLAGS, '0') && (PRECISION < 0 || ft_strchr("sScC", SPECIF)))
+		width = "0";
+	else
+		width = " ";
 	if (INDEX > 0)
 		dump_fmt(ptf);
 	if (ft_strlen((char*)prefix) && *width == '0')
@@ -83,7 +86,7 @@ int				print_arg(t_ptf *ptf, int *prefix, int *input, int size)
 		buff_seqncat(ptf, width, WIDTH);
 	if (ft_strlen((char*)prefix) && *width == ' ')
 		buff_append(ptf, (char*)prefix, ft_strlen((char*)prefix));
-	if (ft_strchr("dDioOuUxX", SPECIF) && PRECISION > 0)
+	if (ft_strchr("dDioOuUxXp", SPECIF) && PRECISION > 0)
 		buff_seqncat(ptf, "0", PRECISION);
 	if (SPECIF == 'S')
 	{

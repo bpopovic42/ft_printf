@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:03:18 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/29 21:51:28 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/30 16:56:51 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,9 @@ int			get_flags(t_ptf *ptf, int i)
 	PRECISION = -1;
 	SPECIF = 0;
 	ft_bzero(FLAGS, 12);
-	while (FMT[i] && !ft_printf_is_fspecif(FMT[i]))
+	while (FMT[i] && ft_printf_is_flag(FMT[i]) && !ft_printf_is_fspecif(FMT[i]))
 	{
-		if (!ft_printf_is_flag(FMT[i]))
-			return (i - 1);
-		else if (FMT[i] == '.')
+		if (FMT[i] == '.')
 			i += ft_printf_atoi(FMT + i + 1, (int*)&(PRECISION));
 		else if (ft_strchr("123456789", FMT[i]) && !WIDTH)
 			i += ft_printf_atoi(FMT + i, (int*)&(WIDTH)) - 1;
@@ -43,6 +41,8 @@ int			get_flags(t_ptf *ptf, int i)
 		i++;
 	}
 	SPECIF = FMT[i];
+	if (SPECIF == '\0')
+		return (0);
 	if (ft_strchr("DOUCS", SPECIF) && !ft_strchr(FLAGS, 'l'))
 		ft_strncat(FLAGS, "l", 1);
 	if (SPECIF == 's' && ft_strchr(FLAGS, 'l'))

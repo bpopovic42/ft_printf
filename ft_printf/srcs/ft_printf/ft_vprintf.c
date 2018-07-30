@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:06:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/29 22:03:15 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/30 16:58:06 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,17 @@ int			init_struct(t_ptf *ptf, const char * restrict format)
 
 int			parse_input(t_ptf *ptf, va_list ap)
 {
+	int		ret;
+
+	ret = 0;
 	while (*FMT && FMT[INDEX])
 	{
 		if (FMT[INDEX] == '%')
 		{
-			if ((treat_arg(ptf, ap)) < 0)
+			if ((ret = treat_arg(ptf, ap)) < 0)
 				return (-1);
+			else if (ret == 0)
+				return (0);
 		}
 		else
 			INDEX++;
@@ -59,7 +64,9 @@ int			treat_arg(t_ptf *ptf, va_list ap)
 	i = 1;
 	size = 0;
 	i = get_flags(ptf, i + INDEX) - INDEX;
-	size = treat_specifier_by_type(ptf, va_arg(ap, long long));
+	if (i <= 0)
+		return (i);
+	size = treat_specifier_by_type(ptf, (!ft_printf_is_fspecif(SPECIF) || SPECIF == '%' ? 0 : va_arg(ap, long long)));
 	FMT += i + 1;
 	INDEX = 0;
 	return (size);
@@ -67,6 +74,9 @@ int			treat_arg(t_ptf *ptf, va_list ap)
 
 int		treat_specifier_by_type(t_ptf *ptf, long long param)
 {
+	char invalid;
+
+	invalid = 0;
 	if (ft_strchr("sS", SPECIF))
 		return (treat_arg_type_str(ptf, (wchar_t*)param));
 	else if (ft_strchr("cC", SPECIF))
@@ -79,7 +89,13 @@ int		treat_specifier_by_type(t_ptf *ptf, long long param)
 	{
 		WIDTH--;
 		PRECISION = -1;
-		return(print_arg(ptf, (int*)"\0", (int*)&(SPECIF), 1));
+		return(print_arg(ptf, (int*)"\0", (int*)"%", 1));
+	}
+	else
+	{
+		invalid = SPECIF;
+		SPECIF = 'c';
+		return (treat_arg_type_char(ptf, (wchar_t)invalid));
 	}
 	return (-1);
 }

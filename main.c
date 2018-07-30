@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:05:25 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/30 02:01:35 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/30 17:05:48 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,11 @@ int		main()
 	s[1] = 250;
 	s[2] = 'b';
 	s[3] = '\0';
+	char c = 'A';
 
 //	setlocale(LC_ALL, "en_US.UTF-8");
-	frval = ft_printf("%-12ls F\n", s);
-	prval = printf("%-12ls P\n", s);
+	frval = ft_printf("%lD F\n", -9223372036854775808);
+	prval = printf("%lD P\n", -9223372036854775808);
 	//frval = ft_printf("%-50.36ls F\n", L"°\)");
 	//prval = printf("%-50.36ls P\n", L"°\)");
 	//frval = ft_printf("%-50.36ls F\n", L"(╯°Д°）╯︵ /(.□ . \)");
