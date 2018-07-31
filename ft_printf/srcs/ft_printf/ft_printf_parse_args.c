@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/31 02:57:29 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/31 03:47:09 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int				print_arg(t_ptf *ptf, int *prefix, int *input, int size)
 		buff_seqncat(ptf, width, WIDTH);
 	if (ft_strlen((char*)prefix) && *width == ' ')
 		buff_append(ptf, (char*)prefix, ft_strlen((char*)prefix));
-	if (ft_strchr("dDioOuUxXp", SPECIF) && PRECISION > 0)
+	if (ft_strchr("DIOUXP", ft_toupper(SPECIF)) && PRECISION > 0)
 		buff_seqncat(ptf, "0", PRECISION);
 	if (SPECIF == 'S')
 	{
@@ -65,14 +65,10 @@ int				print_arg(t_ptf *ptf, int *prefix, int *input, int size)
 	}
 	else
 		buff_append(ptf, (char*)input, size);
-	if (ft_strchr("fF", SPECIF) && PRECISION > 0)
+	if (ft_toupper(SPECIF) == 'F' && PRECISION > 0)
 		buff_seqncat(ptf, "0", PRECISION);
 	if (ft_strchr(FLAGS, '-') && WIDTH > 0)
 		buff_seqncat(ptf, " ", WIDTH);
-	/*write(1, ptf->buff.buff, ptf->buff.pos);
-	ptf->buff.read += ptf->buff.pos;
-	ptf->buff.pos = 0;
-	ft_bzero(ptf->buff.buff, BUFF_SIZE);*/
 	return (1);
 }
 

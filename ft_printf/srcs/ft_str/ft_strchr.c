@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 15:34:18 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/05/22 17:01:10 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/31 03:41:30 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,14 @@ char	*ft_strchr(const char *s, int c)
 {
 	if (s)
 	{
-		while ((char)c != *s && *s)
+		while (*s)
+		{
+			if (!(*s ^ c))
+				return ((char*)s);
 			s++;
-		if ((char)c == *s)
+		}
+		if (!(*s ^ c))
 			return ((char*)s);
-		else
-			return (NULL);
 	}
 	return (NULL);
 }
