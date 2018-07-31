@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:06:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/30 23:51:27 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/31 03:12:39 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,13 @@ static int			parse_fmt(t_ptf *ptf, va_list ap)
 		else
 			INDEX++;
 	}
+	if (ptf->buff.pos > 0)
+	{
+		write(1, ptf->buff.buff, ptf->buff.pos);
+		ptf->buff.read += ptf->buff.pos;
+		ptf->buff.pos = 0;
+		ft_bzero(ptf->buff.buff, BUFF_SIZE + 1);
+	}
 	if (!FMT[INDEX] && *FMT)
 		ptf->buff.read += write(1, FMT, INDEX);
 	return (ptf->buff.read);
@@ -97,6 +104,9 @@ int			ft_vprintf(const char * restrict format, va_list ap)
 
 	init_struct(&ptf, format);
 	if ((ret = parse_fmt(&ptf, ap)) < 0)
+	{
+		write(1, ptf.buff.buff, ptf.buff.pos);
 		return (-1);
+	}
 	return (ptf.buff.read);
 }

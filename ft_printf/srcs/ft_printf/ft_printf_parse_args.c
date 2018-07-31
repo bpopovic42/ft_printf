@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/30 19:00:56 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/31 02:57:29 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,16 @@ int				print_arg(t_ptf *ptf, int *prefix, int *input, int size)
 		buff_seqncat(ptf, "0", PRECISION);
 	if (ft_strchr(FLAGS, '-') && WIDTH > 0)
 		buff_seqncat(ptf, " ", WIDTH);
-	write(1, ptf->buff.buff, ptf->buff.pos);
+	/*write(1, ptf->buff.buff, ptf->buff.pos);
 	ptf->buff.read += ptf->buff.pos;
 	ptf->buff.pos = 0;
-	ft_bzero(ptf->buff.buff, BUFF_SIZE);
+	ft_bzero(ptf->buff.buff, BUFF_SIZE);*/
 	return (1);
 }
 
 void			dump_fmt(t_ptf *ptf)
 {
-	write(1, FMT, INDEX);
+	buff_append(ptf, (char*)FMT, INDEX);
 	FMT += INDEX;
-	ptf->buff.read += INDEX;
 	INDEX = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/30 23:45:57 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/31 02:26:24 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 #include <limits.h>
 #include <locale.h>
 
-#define BUFF_SIZE 64
+#define BUFF_SIZE 256
 #define MAX_INT_LEN 21
 #define HEXA "0123456789abcdef"
 #define HEXA_UP "0123456789ABCDEF"
