@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 14:09:53 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/04/14 14:14:38 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/31 03:59:08 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 void	ft_bzero(void *s, size_t n)
 {
-	unsigned char *ptr;
-
-	ptr = s;
 	while (n--)
-		*ptr++ = 0;
+		*(char*)s++ = 0;
 }
