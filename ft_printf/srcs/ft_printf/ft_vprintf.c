@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:06:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/31 03:16:36 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/07/31 17:51:43 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,10 @@ static int			parse_fmt(t_ptf *ptf, va_list ap)
 
 static void		init_struct(t_ptf *ptf, const char * restrict format)
 {
-	ft_bzero(ptf->buff.buff, BUFF_SIZE + 1);
+	char *buff;
+
+	buff = ptf->buff.buff;
+	ft_bzero(buff, BUFF_SIZE + 1);
 	ptf->buff.pos = 0;
 	ptf->buff.read = 0;
 	FMT = format;

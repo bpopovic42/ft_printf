@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/31 03:24:59 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/10 21:32:22 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int		ft_printf_get_flags(t_ptf *ptf, va_list ap, int i);
 int				print_arg(t_ptf *ptf, int *prefix, int *input, int size);
 int			ft_printf_is_flag(char c);
 int		ft_printf_atoi(const char *str, int *res);
-int			buff_seqncat(t_ptf *ptf, char *input, int n);
+void		buff_seqncat(t_ptf *ptf, char *input, int n);
 int				print_wcs(t_ptf *ptf, int *input, int size);
 void			dump_fmt(t_ptf *ptf);
 size_t			ft_wcsnlen(wchar_t *wcs, size_t n);
