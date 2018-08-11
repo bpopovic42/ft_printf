@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/11 00:27:15 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/11 03:15:18 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int			get_prefix(t_ptf *ptf, char *ptr, char *prefix)
 	return (ft_strlen(prefix));
 }
 
-int			treat_arg_type_int(t_ptf *ptf, long long param)
+int			ft_printf_type_int(t_ptf *ptf, long long param)
 {
 	char	ptr[65];
 	char	prefix[5];

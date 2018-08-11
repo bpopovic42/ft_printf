@@ -6,13 +6,13 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:48:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/11 02:57:16 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/11 03:22:34 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int			buff_append(t_ptf *ptf, char *input, int size)
+int			ft_printf_buff_cat(t_ptf *ptf, char *input, int size)
 {
 	int i;
 	char *buff;
@@ -36,7 +36,7 @@ int			buff_append(t_ptf *ptf, char *input, int size)
 	return (i);
 }
 
-void		buff_seqncat(t_ptf *ptf, char *input, long long n)
+void		ft_printf_buff_catn(t_ptf *ptf, char *input, long long n)
 {
 	int i;
 
@@ -61,9 +61,9 @@ void		buff_seqncat(t_ptf *ptf, char *input, long long n)
 	}
 }
 
-void			dump_fmt(t_ptf *ptf)
+void			ft_printf_dump_fmt(t_ptf *ptf)
 {
-	buff_append(ptf, (char*)FMT, INDEX);
+	ft_printf_buff_cat(ptf, (char*)FMT, INDEX);
 	FMT += INDEX;
 	INDEX = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:06:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/11 02:54:03 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/11 03:14:17 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,16 @@ static int		treat_arg_by_type(t_ptf *ptf, va_list ap)
 			return (ft_printf_print_arg(ptf, (int*)"\0", (int*)"%", 1));
 		}
 		else
-			return (treat_arg_type_char(ptf, (wchar_t)invalid));
+			return (ft_printf_type_char(ptf, (wchar_t)invalid));
 	}
 	else if (ft_strchr("sS", SPEC))
-		return (treat_arg_type_str(ptf, (wchar_t*)va_arg(ap, long long)));
+		return (ft_printf_type_str(ptf, (wchar_t*)va_arg(ap, long long)));
 	else if (ft_strchr("cC", SPEC))
-		return (treat_arg_type_char(ptf, (wchar_t)va_arg(ap, long long)));
+		return (ft_printf_type_char(ptf, (wchar_t)va_arg(ap, long long)));
 	else if (ft_strchr("dDioOuUxXp", SPEC))
-		return (treat_arg_type_int(ptf, va_arg(ap, long long)));
+		return (ft_printf_type_int(ptf, va_arg(ap, long long)));
 	else if (ft_strchr("fF", SPEC))
-		return(treat_arg_type_dbl(ptf, va_arg(ap, double)));
+		return(ft_printf_type_dbl(ptf, va_arg(ap, double)));
 	return (-1);
 }
 
@@ -69,7 +69,7 @@ static int			parse_fmt(t_ptf *ptf, va_list ap)
 		}
 		else if (FMT[INDEX] == '%' && !FMT[INDEX + 1])
 		{
-			dump_fmt(ptf);
+			ft_printf_dump_fmt(ptf);
 			FMT += INDEX + 1;
 			INDEX = 0;
 		}
@@ -78,7 +78,7 @@ static int			parse_fmt(t_ptf *ptf, va_list ap)
 	}
 	if (!FMT[INDEX] && *FMT)
 	{
-		buff_append(ptf, (char*)FMT, INDEX);
+		ft_printf_buff_cat(ptf, (char*)FMT, INDEX);
 	}
 	return (ptf->buff.read);
 }
