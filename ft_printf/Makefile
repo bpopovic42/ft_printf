@@ -6,7 +6,7 @@
 #    By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/03 08:42:00 by bopopovi          #+#    #+#              #
-#*   Updated: 2018/08/10 23:40:00 by bopopovi         ###   ########.fr       *#
+#*   Updated: 2018/08/11 02:59:31 by bopopovi         ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,8 +68,7 @@ SRC_BIN		=	ft_toggle_bit.c ft_is_bit_set.c
 
 SRC_PTF		=	ft_printf.c ft_printf_buffer.c ft_printf_tools.c \
 			ft_printf_parse_args.c ft_printf_get_flags.c ft_vprintf.c \
-			ft_printf_atoi.c ft_printf_int.c ft_printf_str.c ft_printf_char.c \
-			ft_printf_float.c
+			ft_printf_int.c ft_printf_str.c ft_printf_char.c ft_printf_float.c
 
 ############################## VAR #############################################
 

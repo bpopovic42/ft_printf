@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:48:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/11 02:20:09 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/11 02:57:16 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,11 @@ void		buff_seqncat(t_ptf *ptf, char *input, long long n)
 		}
 		n--;
 	}
+}
+
+void			dump_fmt(t_ptf *ptf)
+{
+	buff_append(ptf, (char*)FMT, INDEX);
+	FMT += INDEX;
+	INDEX = 0;
 }

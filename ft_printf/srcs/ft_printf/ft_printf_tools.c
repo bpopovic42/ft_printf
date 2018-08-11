@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/14 17:11:54 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/11 02:52:20 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/11 02:59:16 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,23 @@ int			ft_printf_is_spec(int c)
 			|| c == 'o' || c == 'O' || c == 'u' || c == 'U' || c == 'x'
 				|| c == 'X' || c == 'c' || c == 'C' || c == 'f' || c == 'F'
 					|| c == '%');
+}
+
+size_t		ft_printf_atoi(const char *str, int *res)
+{
+	int			flag;
+	size_t		i;
+
+	i = 0;
+	*res = 0;
+	while (ft_isspace(str[i]))
+		i++;
+	flag = str[i] == '-' ? -1 : 1;
+	i += str[i] == '-' || str[i] == '+' ? 1 : 0;
+	while (str[i] && (str[i] >= '0' && str[i] <= '9'))
+		*res = (*res * 10) + (str[i++] - '0');
+	*res *= flag;
+	return (i);
 }
 
 int			ft_printf_itoa_base(char *buff, char *charset, long long nbr)
@@ -78,11 +95,4 @@ int			ft_printf_uitoa_base(char *buff, char *charset, uint64_t nbr)
 	ptr[i] = '\0';
 	ptr = ft_strrev(ptr);
 	return (i);
-}
-
-void			dump_fmt(t_ptf *ptf)
-{
-	buff_append(ptf, (char*)FMT, INDEX);
-	FMT += INDEX;
-	INDEX = 0;
 }

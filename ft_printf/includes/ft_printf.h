@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/11 02:52:03 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/11 02:59:02 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	buff_seqncat(t_ptf *ptf, char *input, long long n);
 
 int		ft_printf_is_flag(int c);
 int		ft_printf_is_spec(int c);
-int		ft_printf_atoi(const char *str, int *res);
+size_t	ft_printf_atoi(const char *str, int *res);
 void	dump_fmt(t_ptf *ptf);
 int		ft_printf_itoa_base(char *buff, char *charset, long long nbr);
 int		ft_printf_uitoa_base(char *buff, char *charset, uint64_t nbr);
