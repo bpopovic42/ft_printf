@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/11 02:27:09 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/11 02:52:03 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@
 
 #define BUFF_SIZE 128
 #define MAX_INT_LEN 21
-#define IS_SPEC "cCdDfFinoOpsSuUxX%"
-#define IS_FLAG "0123456789-+#.hjlz %*"
 #define HEXA "0123456789abcdef"
 #define HEXA_UP "0123456789ABCDEF"
 #define OCTAL "01234567"
@@ -83,9 +81,9 @@ void	buff_seqncat(t_ptf *ptf, char *input, long long n);
 ** FT_PRINTF_TOOLS
 */
 
-int		ft_printf_is_flag(char c);
+int		ft_printf_is_flag(int c);
+int		ft_printf_is_spec(int c);
 int		ft_printf_atoi(const char *str, int *res);
-int		ft_printf_is_fspecif(int c);
 void	dump_fmt(t_ptf *ptf);
 int		ft_printf_itoa_base(char *buff, char *charset, long long nbr);
 int		ft_printf_uitoa_base(char *buff, char *charset, uint64_t nbr);

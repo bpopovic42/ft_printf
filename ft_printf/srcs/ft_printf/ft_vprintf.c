@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:06:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/11 00:21:02 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/11 02:54:03 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int		treat_arg_by_type(t_ptf *ptf, va_list ap)
 	char invalid;
 
 	invalid = SPEC;
-	if (!ft_strchr(IS_SPEC, SPEC) || SPEC == '%')
+	if (!ft_printf_is_spec(SPEC) || SPEC == '%')
 	{
 		SPEC = SPEC == '%' ? '%' : 'c';
 		if (SPEC == '%')

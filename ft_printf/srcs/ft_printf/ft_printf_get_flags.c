@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:03:18 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/11 02:28:14 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/11 02:54:00 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int	get_precision(va_list ap, const char *fmt, int *precision)
 int			ft_printf_get_flags(t_ptf *ptf, va_list ap, int i)
 {
 	init_flags(ptf);
-	while (FMT[i] && ft_strchr(IS_FLAG, FMT[i]) && !ft_strchr(IS_SPEC, FMT[i]))
+	while (FMT[i] && ft_printf_is_flag(FMT[i]) && !ft_printf_is_spec(FMT[i]))
 	{
 		if (FMT[i] == '.')
 			i += get_precision(ap, FMT + i + 1, &(PRECISION)) + 1;

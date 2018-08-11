@@ -6,26 +6,25 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/14 17:11:54 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/11 01:48:47 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/11 02:52:20 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		ft_printf_is_flag(char c)
+int		ft_printf_is_flag(int c)
 {
 	return (ft_isdigit(c) || c == '-' || c == '+' || c == '#' || c == '.'
 		|| c == 'h' || c == 'j' || c == 'l' || c == 'z' || c == ' '
 			|| c == '%' || c == '*');
 }
 
-int			ft_printf_is_fspecif(int c)
+int			ft_printf_is_spec(int c)
 {
 	return (c == 's' || c == 'S' || c == 'p' || c == 'd' || c == 'D' || c == 'i'
 			|| c == 'o' || c == 'O' || c == 'u' || c == 'U' || c == 'x'
 				|| c == 'X' || c == 'c' || c == 'C' || c == 'f' || c == 'F'
-					|| c == 'g' || c == 'G' || c == 'e'
-						|| c == 'E' || c == '%');
+					|| c == '%');
 }
 
 int			ft_printf_itoa_base(char *buff, char *charset, long long nbr)
