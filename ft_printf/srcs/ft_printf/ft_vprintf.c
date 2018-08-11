@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:06:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/11 17:44:13 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/11 19:30:17 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,19 +64,19 @@ static int			parse_fmt(t_ptf *ptf, va_list ap)
 	ret = 0;
 	fmt = &(ptf->fmt.format);
 	i = &(ptf->fmt.i);
-	while (**fmt && (*fmt)[*i])
+	while ((*fmt)[*i])
 	{
 		if ((*fmt)[*i] == '%')
 		{
-			if ((*fmt)[*i + 1] && (ret = treat_arg(ptf, ap)) < 1)
+			if (!(*fmt)[*i + 1])
+				break;
+			else if ((ret = treat_arg(ptf, ap)) < 1)
 				return (ret);
-			else
-				ft_printf_dump_fmt(ptf);
 		}
 		else
 			(*i)++;
 	}
-	if (!(*fmt)[*i] && **fmt)
+	if (**fmt)
 		ft_printf_buff_cat(ptf, (char*)*fmt, *i);
 	return (ptf->buff.read);
 }
