@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 16:27:54 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/28 02:52:15 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/11 03:47:14 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 # define LIBFT_H
 # include <string.h>
 # include <stdlib.h>
+
+# define BASE_HEXA "0123456789abcdef"
+# define BASE_HEXA_UP "0123456789ABCDEF"
+# define BASE_OCTAL "01234567"
+# define BASE_BINARY "01"
+# define BASE_DENARY "0123456789"
 
 typedef unsigned int	t_uint;
 typedef unsigned char	t_uchar;
@@ -137,9 +143,11 @@ char				*ft_itoa_base(int nbr, char *base);
 int					ft_strcinsert(char *str, char ins, size_t pos);
 int					ft_wcstombs(unsigned char *s, wchar_t *wcs, size_t n);
 int					ft_wctomb(unsigned char *s, wchar_t wc);
-size_t				ft_wcslen(wchar_t *wcs);
-char				*ft_ftoa(double val, int precision, char *buff);
 char				*ft_strrev(char *str);
+size_t				ft_wcslen(wchar_t *wcs);
+size_t				ft_wcsnlen(wchar_t *wcs, size_t n);
+char				*ft_ftoa(double val, int precision, char *buff);
+
 
 /*
 ** HASH FUNCTIONS

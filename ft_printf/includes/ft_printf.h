@@ -6,47 +6,35 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/11 03:19:17 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/11 03:45:57 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-#include "./libft.h"
-#include <stdarg.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <limits.h>
-#include <locale.h>
+# include "./libft.h"
+# include <stdarg.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdbool.h>
+# include <limits.h>
+# include <locale.h>
 
-#define BUFF_SIZE 128
-#define MAX_INT_LEN 21
-#define HEXA "0123456789abcdef"
-#define HEXA_UP "0123456789ABCDEF"
-#define OCTAL "01234567"
-#define BINARY "01"
-#define DENARY "0123456789"
-#define SPEC ptf->specifier
-#define WIDTH ptf->width
-#define PRECISION ptf->precision
-#define POS ptf->buff.pos
-#define FMT ptf->fmt.format
-#define INDEX ptf->fmt.index
-#define FLAGS ptf->flags
+# define FT_PRINTF_BUFF_SIZE 128
+# define MAX_INT_LEN 21
 
 typedef struct		s_fmt
 {
 	const char		*format;
-	long long		index;
+	long long		i;
 }					t_fmt;
 
 typedef struct		s_buff
 {
-	char			buff[BUFF_SIZE + 1];
+	char			buff[FT_PRINTF_BUFF_SIZE + 1];
 	size_t			pos;
 	size_t			read;
 }					t_buff;
@@ -57,7 +45,7 @@ typedef struct		s_ptf
 	struct s_fmt	fmt;
 	int				width;
 	int				precision;
-	char			specifier;
+	char			spec;
 	char			flags[11];
 	char			*base;
 }					t_ptf;
@@ -109,9 +97,5 @@ int		ft_printf_is_spec(int c);
 size_t	ft_printf_atoi(const char *str, int *res);
 int		ft_printf_itoa_base(char *buff, char *charset, long long nbr);
 int		ft_printf_uitoa_base(char *buff, char *charset, uint64_t nbr);
-
-size_t	ft_wcslen(wchar_t *wcs);
-size_t	ft_wcsnlen(wchar_t *wcs, size_t n);
-char	*ft_ftoa(double val, int precision, char *buff);
 
 #endif
