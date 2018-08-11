@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:06:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/11 19:30:17 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/11 21:48:28 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ static int			parse_fmt(t_ptf *ptf, va_list ap)
 	i = &(ptf->fmt.i);
 	while ((*fmt)[*i])
 	{
+		while ((*fmt)[*i] && (*fmt)[*i] != '%')
+			(*i)++;
 		if ((*fmt)[*i] == '%')
 		{
 			if (!(*fmt)[*i + 1])
@@ -73,20 +75,14 @@ static int			parse_fmt(t_ptf *ptf, va_list ap)
 			else if ((ret = treat_arg(ptf, ap)) < 1)
 				return (ret);
 		}
-		else
-			(*i)++;
 	}
 	if (**fmt)
 		ft_printf_buff_cat(ptf, (char*)*fmt, *i);
 	return (ptf->buff.read);
 }
 
-static void		init_struct(t_ptf *ptf, const char * restrict format)
+static void inline		init_struct(t_ptf *ptf, const char * restrict format)
 {
-	char *buff;
-
-	buff = ptf->buff.buff;
-	ft_bzero(buff, FT_PRINTF_BUFF_SIZE + 1);
 	ptf->buff.pos = 0;
 	ptf->buff.read = 0;
 	ptf->fmt.format = format;
@@ -101,12 +97,14 @@ int			ft_vprintf(const char * restrict format, va_list ap)
 	init_struct(&ptf, format);
 	if ((ret = parse_fmt(&ptf, ap)) < 0)
 	{
-		write(1, ptf.buff.buff, ptf.buff.pos);
+		if (write(1, ptf.buff.buff, ptf.buff.pos) < 0)
+			exit(-1);
 		return (-1);
 	}
 	if (ptf.buff.pos > 0)
 	{
-		write(1, ptf.buff.buff, ptf.buff.pos);
+		if (write(1, ptf.buff.buff, ptf.buff.pos) < 0)
+			exit(-1);
 		ptf.buff.read += ptf.buff.pos;
 	}
 	return (ptf.buff.read);

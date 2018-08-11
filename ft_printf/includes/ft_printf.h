@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/11 03:45:57 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/11 21:39:45 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int		ft_printf_print_wcs(t_ptf *ptf, int *input, int size);
 ** FT_PRINTF_BUFFER
 */
 
-int		ft_printf_buff_cat(t_ptf *ptf, char *input, int size);
+void	ft_printf_buff_cat(t_ptf *ptf, char *input, int size);
 void	ft_printf_buff_catn(t_ptf *ptf, char *input, long long n);
 void	ft_printf_dump_fmt(t_ptf *ptf);
 
