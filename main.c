@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:05:25 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/11 01:58:39 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/11 17:36:04 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,35 @@ int		main()
 	(void)uitest;
 
 	wchar_t s[4];
-		s[0] = 'a';
-	s[1] = 250;
-	s[2] = 'b';
+	s[0] = 0x53;
+	s[1] = 0xd800;
+	s[2] = 0x81000;
 	s[3] = '\0';
-	char c = 'A';
 
 	setlocale(LC_ALL, "en_US.UTF-8");
-	frval = ft_printf("%*c F\n", -10, 'X');
-	prval = printf("%*c P\n", -10, 'X');
+	int lol = 0;
+	/*while (lol < 100000)
+	{
+		frval = ft_printf("%8C et coco %C titi %lc F\n", 3250, 0x11f, 'a');
+		//prval = printf("%8C et coco %C titi %lc P\n", 3250, 0x11f, 'a');
+		frval = ft_printf("%-50.36ls F\n", L"°\)");
+		//prval = printf("%-50.36ls P\n", L"°\)");
+		frval = ft_printf("%-50.36ls F\n", L"(╯°Д°）╯︵ /(.□ . \)");
+		//prval = printf("%-50.36ls P\n", L"(╯°Д°）╯︵ /(.□ . \)");
+		frval = ft_printf("%C F\n", 0x4e6);
+		//prval = printf("%C P\n", 0x4e6);
+		frval = ft_printf("%C F\n", L'💖');
+		//prval = printf("%C P\n", L'💖');
+		frval = ft_printf("lool %d %10.4S F\n", 42, wcstest);
+		//prval = printf("lool %d %10.4S P\n", 42, wcstest);
+		frval = ft_printf("{%3*d} F\n", 0, 0);
+		//prval = printf("{%3*d} P\n", 0, 0);
+		frval = ft_printf("lol %d lala %C F\n", 42, -1);
+		//prval = printf("lol %d lala %C P\n", 42, -1); // Problematic test case
+		frval = ft_printf("%");
+	}*/
+	frval = ft_printf("%S F\n", s);
+	prval = printf("%S P\n", s);
 	printf("prval = %d, frval = %d\n", prval, frval);
 	//printf(L"%C", wc); // Gives interesting compilation error
 	return (0);

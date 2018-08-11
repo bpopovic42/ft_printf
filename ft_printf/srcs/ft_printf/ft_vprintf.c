@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:06:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/11 03:44:18 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/11 17:44:13 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,29 +57,27 @@ static int			treat_arg(t_ptf *ptf, va_list ap)
 
 static int			parse_fmt(t_ptf *ptf, va_list ap)
 {
-	int		ret;
+	int				ret;
+	const char		**fmt;
+	long long		*i;
 
 	ret = 0;
-	while (*ptf->fmt.format && ptf->fmt.format[ptf->fmt.i])
+	fmt = &(ptf->fmt.format);
+	i = &(ptf->fmt.i);
+	while (**fmt && (*fmt)[*i])
 	{
-		if (ptf->fmt.format[ptf->fmt.i] == '%' && ptf->fmt.format[ptf->fmt.i + 1])
+		if ((*fmt)[*i] == '%')
 		{
-			if ((ret = treat_arg(ptf, ap)) <= 0)
+			if ((*fmt)[*i + 1] && (ret = treat_arg(ptf, ap)) < 1)
 				return (ret);
-		}
-		else if (ptf->fmt.format[ptf->fmt.i] == '%' && !ptf->fmt.format[ptf->fmt.i + 1])
-		{
-			ft_printf_dump_fmt(ptf);
-			ptf->fmt.format += ptf->fmt.i + 1;
-			ptf->fmt.i = 0;
+			else
+				ft_printf_dump_fmt(ptf);
 		}
 		else
-			ptf->fmt.i++;
+			(*i)++;
 	}
-	if (!ptf->fmt.format[ptf->fmt.i] && *ptf->fmt.format)
-	{
-		ft_printf_buff_cat(ptf, (char*)ptf->fmt.format, ptf->fmt.i);
-	}
+	if (!(*fmt)[*i] && **fmt)
+		ft_printf_buff_cat(ptf, (char*)*fmt, *i);
 	return (ptf->buff.read);
 }
 
