@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/30 18:07:04 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/11 00:27:48 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int			treat_arg_type_dbl(t_ptf *ptf, double param)
 	ft_bzero(tmp, MAX_INT_LEN + 56);
 	ft_bzero(prefix, 5);
 	size = 0;
-	if (ft_strchr("fF", SPECIF))
+	if (ft_strchr("fF", SPEC))
 	{
 		if (PRECISION == 0 && ft_strchr(FLAGS, '#'))
 			ft_ftoa(param, 1, tmp);
@@ -48,6 +48,6 @@ int			treat_arg_type_dbl(t_ptf *ptf, double param)
 	else
 		PRECISION = 0;
 	WIDTH -= size + ft_strlen(prefix);
-	return (print_arg(ptf, (int*)prefix, (int*)tmp, size));
+	return (ft_printf_print_arg(ptf, (int*)prefix, (int*)tmp, size));
 }
 

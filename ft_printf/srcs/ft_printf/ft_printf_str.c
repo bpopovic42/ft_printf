@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/30 01:30:46 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/11 00:27:31 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ int			treat_arg_type_str(t_ptf *ptf, wchar_t *param)
 	if (!param || !(char*)param)
 	{
 		param = (wchar_t*)"(null)";
-		SPECIF = 's';
+		SPEC = 's';
 	}
-	if (SPECIF == 's')
+	if (SPEC == 's')
 	{
 		size = ft_strlen((char*)param);
 		if (PRECISION >= 0 && PRECISION < size)
@@ -40,5 +40,5 @@ int			treat_arg_type_str(t_ptf *ptf, wchar_t *param)
 			return (-1);
 	}
 	WIDTH -= size;
-	return (print_arg(ptf, (int*)"\0", (int*)param, size));
+	return (ft_printf_print_arg(ptf, (int*)"\0", (int*)param, size));
 }

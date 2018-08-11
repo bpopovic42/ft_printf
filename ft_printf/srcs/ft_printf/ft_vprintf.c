@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:06:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/31 17:51:43 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/11 00:21:02 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,26 @@ static int		treat_arg_by_type(t_ptf *ptf, va_list ap)
 {
 	char invalid;
 
-	invalid = SPECIF;
-	if (!ft_printf_is_fspecif(SPECIF) || SPECIF == '%')
+	invalid = SPEC;
+	if (!ft_strchr(IS_SPEC, SPEC) || SPEC == '%')
 	{
-		SPECIF = SPECIF == '%' ? '%' : 'c';
-		if (SPECIF == '%')
+		SPEC = SPEC == '%' ? '%' : 'c';
+		if (SPEC == '%')
 		{
 			WIDTH--;
 			PRECISION = -1;
-			return (print_arg(ptf, (int*)"\0", (int*)"%", 1));
+			return (ft_printf_print_arg(ptf, (int*)"\0", (int*)"%", 1));
 		}
 		else
 			return (treat_arg_type_char(ptf, (wchar_t)invalid));
 	}
-	else if (ft_strchr("sS", SPECIF))
+	else if (ft_strchr("sS", SPEC))
 		return (treat_arg_type_str(ptf, (wchar_t*)va_arg(ap, long long)));
-	else if (ft_strchr("cC", SPECIF))
+	else if (ft_strchr("cC", SPEC))
 		return (treat_arg_type_char(ptf, (wchar_t)va_arg(ap, long long)));
-	else if (ft_strchr("dDioOuUxXp", SPECIF))
+	else if (ft_strchr("dDioOuUxXp", SPEC))
 		return (treat_arg_type_int(ptf, va_arg(ap, long long)));
-	else if (ft_strchr("fF", SPECIF))
+	else if (ft_strchr("fF", SPEC))
 		return(treat_arg_type_dbl(ptf, va_arg(ap, double)));
 	return (-1);
 }

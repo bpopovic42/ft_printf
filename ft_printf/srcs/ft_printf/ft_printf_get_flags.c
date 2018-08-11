@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_treat_flags.c                            :+:      :+:    :+:   */
+/*   ft_printf_get_flags.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:03:18 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/31 01:13:23 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/11 02:28:14 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,26 +28,26 @@ static void		init_flags(t_ptf *ptf)
 {
 	WIDTH = 0;
 	PRECISION = -1;
-	SPECIF = 0;
+	SPEC = 0;
 	ft_bzero(FLAGS, 11);
 }
 
-static int	get_width(va_list ap, const char *fmt, int *wd, char *flg)
+static int	get_width(va_list ap, const char *fmt, int *width, char *flg)
 {
 	int i;
 
 	i = 0;
 	if (fmt[i] == '*')
 	{
-		*wd = va_arg(ap, long long);
-		if (*wd < 0)
+		*width = va_arg(ap, int);
+		if (*width < 0)
 		{
 			ft_strncat(flg, (const char*)&"-", 1);
-			*wd *= -1;
+			*width *= -1;
 		}
 	}
 	else
-		i += ft_printf_atoi(fmt, (int*)(wd)) - 1;
+		i += ft_printf_atoi(fmt, width) - 1;
 	return (i);
 }
 
@@ -57,16 +57,16 @@ static int	get_precision(va_list ap, const char *fmt, int *precision)
 
 	i = 0;
 	if (fmt[i] == '*')
-		*precision = va_arg(ap, long long);
+		*precision = va_arg(ap, int);
 	else
-		i += ft_printf_atoi(fmt, (int*)(precision)) - 1;
+		i += ft_printf_atoi(fmt, precision) - 1;
 	return (i);
 }
 
 int			ft_printf_get_flags(t_ptf *ptf, va_list ap, int i)
 {
 	init_flags(ptf);
-	while (FMT[i] && ft_printf_is_flag(FMT[i]) && !ft_printf_is_fspecif(FMT[i]))
+	while (FMT[i] && ft_strchr(IS_FLAG, FMT[i]) && !ft_strchr(IS_SPEC, FMT[i]))
 	{
 		if (FMT[i] == '.')
 			i += get_precision(ap, FMT + i + 1, &(PRECISION)) + 1;
@@ -78,12 +78,12 @@ int			ft_printf_get_flags(t_ptf *ptf, va_list ap, int i)
 	}
 	if (FMT[i] == '\0')
 		return (0);
-	SPECIF = FMT[i];
-	if (ft_strchr("DOUCS", SPECIF) && !ft_strchr(FLAGS, 'l'))
+	SPEC = FMT[i];
+	if (ft_strchr("DOUCS", SPEC) && !ft_strchr(FLAGS, 'l'))
 		ft_strncat(FLAGS, "l", 1);
-	if (SPECIF == 's' && ft_strchr(FLAGS, 'l'))
-		SPECIF = ft_toupper(SPECIF);
-	if (ft_strchr("dDioOuUxXp", SPECIF))
-		ptf->base = get_base(SPECIF);
+	if (SPEC == 's' && ft_strchr(FLAGS, 'l'))
+		SPEC = ft_toupper(SPEC);
+	if (ft_strchr("dDioOuUxXp", SPEC))
+		ptf->base = get_base(SPEC);
 	return (i);
 }

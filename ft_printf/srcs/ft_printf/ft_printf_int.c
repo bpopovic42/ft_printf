@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/30 23:04:45 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/11 00:27:15 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		get_arg_unsigned(t_ptf *ptf, char *res, long long param)
 {
-	if (SPECIF == 'p')
+	if (SPEC == 'p')
 		return(ft_printf_itoa_base(res, ptf->base, (unsigned long long)param));
 	else if (ft_strchrn(FLAGS, 'l') == 2)
 		return (ft_printf_uitoa_base(res, ptf->base, (uint64_t)param));
@@ -52,16 +52,16 @@ int			get_arg_signed(t_ptf *ptf, char *res, long long param)
 
 static int			get_prefix(t_ptf *ptf, char *ptr, char *prefix)
 {
-	if (ft_strchr("dDi", SPECIF) && (ft_strchr(FLAGS, '+') || (ptr[0] == '-')))
+	if (ft_strchr("dDi", SPEC) && (ft_strchr(FLAGS, '+') || (ptr[0] == '-')))
 		ft_strcat(prefix, ptr[0] == '-' ? "-" : "+");
-	else if (ft_strchr("dDi", SPECIF) && ft_strchr(FLAGS, ' '))
+	else if (ft_strchr("dDi", SPEC) && ft_strchr(FLAGS, ' '))
 		ft_strcat(prefix, " ");
-	if (ft_strchr(FLAGS, '#') && ft_strchr("xX", SPECIF) && *(ptr + 1) != '0')
+	if (ft_strchr(FLAGS, '#') && ft_strchr("xX", SPEC) && *(ptr + 1) != '0')
 	{
-		if ((SPECIF == 'x' || SPECIF == 'X' || SPECIF == 'p'))
-			ft_strcat(prefix, SPECIF == 'X' ? "0X" : "0x");
+		if ((SPEC == 'x' || SPEC == 'X' || SPEC == 'p'))
+			ft_strcat(prefix, SPEC == 'X' ? "0X" : "0x");
 	}
-	else if (SPECIF == 'p')
+	else if (SPEC == 'p')
 		ft_strcat(prefix, "0x");
 	return (ft_strlen(prefix));
 }
@@ -75,20 +75,20 @@ int			treat_arg_type_int(t_ptf *ptf, long long param)
 	size = 1;
 	ft_bzero(ptr, 65);
 	ft_bzero(prefix, 5);
-	if (ft_strchr("dDi", SPECIF))
+	if (ft_strchr("dDi", SPEC))
 		size = get_arg_signed(ptf, ptr, param);
 	else
 		size = get_arg_unsigned(ptf, ptr, param);
 	get_prefix(ptf, ptr, prefix);
-	if (!param && !PRECISION && !(ft_strchr("oO", SPECIF) && ft_strchr(FLAGS, '#')))
-		return (print_arg(ptf, (int*)prefix, NULL, 0));
+	if (!param && !PRECISION && !(ft_strchr("oO", SPEC) && ft_strchr(FLAGS, '#')))
+		return (ft_printf_print_arg(ptf, (int*)prefix, NULL, 0));
 	if (PRECISION > (int)(size))
 		PRECISION -= size;
 	else
 		PRECISION = PRECISION < 0 ? -1 : 0;
-	if (PRECISION <= 0 && ft_strchr("oO", SPECIF) && ft_strchr(FLAGS, '#'))
+	if (PRECISION <= 0 && ft_strchr("oO", SPEC) && ft_strchr(FLAGS, '#'))
 		ft_strcat(prefix, ptr[1] == '0' ? "" : "0");
 	if (WIDTH > 0)
 		WIDTH -= (PRECISION > 0 ? PRECISION : 0) + ft_strlen(prefix) + size;
-	return (print_arg(ptf, (int*)prefix, (int*)(ptr + 1), size));
+	return (ft_printf_print_arg(ptf, (int*)prefix, (int*)(ptr + 1), size));
 }

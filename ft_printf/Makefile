@@ -6,7 +6,7 @@
 #    By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/03 08:42:00 by bopopovi          #+#    #+#              #
-#*   Updated: 2018/07/28 23:33:10 by bopopovi         ###   ########.fr       *#
+#*   Updated: 2018/08/10 23:40:00 by bopopovi         ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,12 +66,10 @@ SRC_BIN		=	ft_toggle_bit.c ft_is_bit_set.c
 # **************************************************************************** #
 # Printf :
 
-SRC_PTF		=	ft_printf.c ft_printf_buffer.c ft_printf_is_fspecif.c \
-			ft_printf_itoa.c ft_printf_parse_args.c ft_printf_itoa_base.c \
-			ft_printf_treat_flags.c ft_vprintf.c ft_printf_uitoa.c \
-			ft_printf_is_flag.c ft_printf_atoi.c ft_printf_int.c \
-			ft_printf_str.c ft_printf_char.c ft_printf_float.c \
-			ft_printf_uitoa_base.c
+SRC_PTF		=	ft_printf.c ft_printf_buffer.c ft_printf_tools.c \
+			ft_printf_parse_args.c ft_printf_get_flags.c ft_vprintf.c \
+			ft_printf_atoi.c ft_printf_int.c ft_printf_str.c ft_printf_char.c \
+			ft_printf_float.c
 
 ############################## VAR #############################################
 

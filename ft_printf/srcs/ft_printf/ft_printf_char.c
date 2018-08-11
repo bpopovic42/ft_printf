@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/07/28 22:21:39 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/10 23:57:45 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int			treat_arg_type_char(t_ptf *ptf, wchar_t param)
 	else
 		*mbs = (char)param;
 	WIDTH -= size;
-	return (print_arg(ptf, (int*)"\0", (int*)mbs, size));
+	return (ft_printf_print_arg(ptf, (int*)"\0", (int*)mbs, size));
 }
 
 

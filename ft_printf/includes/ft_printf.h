@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/10 21:32:22 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/11 02:27:09 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,14 @@
 
 #define BUFF_SIZE 128
 #define MAX_INT_LEN 21
+#define IS_SPEC "cCdDfFinoOpsSuUxX%"
+#define IS_FLAG "0123456789-+#.hjlz %*"
 #define HEXA "0123456789abcdef"
 #define HEXA_UP "0123456789ABCDEF"
 #define OCTAL "01234567"
 #define BINARY "01"
 #define DENARY "0123456789"
-#define SPECIF ptf->specifier
+#define SPEC ptf->specifier
 #define WIDTH ptf->width
 #define PRECISION ptf->precision
 #define POS ptf->buff.pos
@@ -41,7 +43,7 @@
 typedef struct		s_fmt
 {
 	const char		*format;
-	int				index;
+	long long		index;
 }					t_fmt;
 
 typedef struct		s_buff
@@ -63,26 +65,55 @@ typedef struct		s_ptf
 }					t_ptf;
 
 int		ft_printf(const char * restrict format, ...);
-char	*ft_ftoa(double val, int precision, char *buff);
-int		buff_append(t_ptf *ptf, char *input, int size);
-int		ft_printf_is_fspecif(int c);
-int		treat_arg_type_int(t_ptf *ptf, long long param);
-int		treat_arg_type_str(t_ptf *ptf, wchar_t *param);
+
+/*
+** FT_VPRINTF
+*/
+
 int		ft_vprintf(const char * restrict format, va_list ap);
-int		treat_arg_type_wcstr(t_ptf *ptf, wchar_t *wcstr, size_t size);
-int		treat_arg_type_dbl(t_ptf *ptf, double param);
-int		treat_arg_type_base(t_ptf *ptf, long long param);
+
+/*
+** FT_PRINTF_BUFFER
+*/
+
+int		buff_append(t_ptf *ptf, char *input, int size);
+void	buff_seqncat(t_ptf *ptf, char *input, long long n);
+
+/*
+** FT_PRINTF_TOOLS
+*/
+
+int		ft_printf_is_flag(char c);
+int		ft_printf_atoi(const char *str, int *res);
+int		ft_printf_is_fspecif(int c);
+void	dump_fmt(t_ptf *ptf);
 int		ft_printf_itoa_base(char *buff, char *charset, long long nbr);
 int		ft_printf_uitoa_base(char *buff, char *charset, uint64_t nbr);
-size_t	ft_wcslen(wchar_t *wcs);
+
+/*
+** FT_PRINTF_PRINT_ARG
+*/
+
+int		ft_printf_print_arg(t_ptf *ptf, int *prfx, int *input, int size);
+int		ft_printf_print_wcs(t_ptf *ptf, int *input, int size);
+
+/*
+** TYPES
+*/
+
+int		treat_arg_type_int(t_ptf *ptf, long long param);
+int		treat_arg_type_str(t_ptf *ptf, wchar_t *param);
+int		treat_arg_type_char(t_ptf *ptf, wchar_t param);
+int		treat_arg_type_dbl(t_ptf *ptf, double param);
+
+
+
 int		ft_printf_get_flags(t_ptf *ptf, va_list ap, int i);
-int				print_arg(t_ptf *ptf, int *prefix, int *input, int size);
-int			ft_printf_is_flag(char c);
-int		ft_printf_atoi(const char *str, int *res);
-void		buff_seqncat(t_ptf *ptf, char *input, int n);
-int				print_wcs(t_ptf *ptf, int *input, int size);
-void			dump_fmt(t_ptf *ptf);
-size_t			ft_wcsnlen(wchar_t *wcs, size_t n);
-int			treat_arg_type_char(t_ptf *ptf, wchar_t param);
+
+
+
+size_t	ft_wcslen(wchar_t *wcs);
+size_t	ft_wcsnlen(wchar_t *wcs, size_t n);
+char	*ft_ftoa(double val, int precision, char *buff);
 
 #endif
