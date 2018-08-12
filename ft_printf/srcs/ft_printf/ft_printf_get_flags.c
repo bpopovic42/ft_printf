@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:03:18 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/12 16:21:11 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/12 16:44:55 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,11 @@ int			ft_printf_get_flags(t_ptf *ptf, va_list ap, int i)
 			ft_strncat(ptf->flags, &fmt[i], 1);
 		i++;
 	}
-	if (fmt[i] == '\0')
-		return (0);
 	ptf->spec = fmt[i];
+	ptf->base = get_base(ptf->spec);
 	if (ft_strchr("DOUCS", ptf->spec) && !ft_strchr(ptf->flags, 'l'))
 		ft_strncat(ptf->flags, "l", 1);
 	if (ptf->spec == 's' && ft_strchr(ptf->flags, 'l'))
-		ptf->spec = ft_toupper(ptf->spec);
-	if (ft_strchr("dDioOuUxXp", ptf->spec))
-		ptf->base = get_base(ptf->spec);
+		ptf->spec = 'S';
 	return (i);
 }
