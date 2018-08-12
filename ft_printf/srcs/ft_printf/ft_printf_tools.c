@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/14 17:11:54 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/12 17:54:55 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/13 00:51:03 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,30 @@ size_t		ft_printf_atoi(const char *str, int *res)
 	return (i);
 }
 
+static long long	bdiv(long long dvd, long long dvs)
+{
+	long long q;
+	long long r;
+	int i;
+
+	q = 0;
+	i = 59;
+	while (i >= 0)
+	{
+		r = (dvs << i);
+		if (r < LLONG_MAX && r >= 0)
+		{
+			if (r <= dvd)
+			{
+				q |= (1LL << i);
+				dvd -= r;
+			}
+		}
+		i--;
+	}
+	return (q);
+}
+
 int			ft_printf_itoa_base(char *buff, char *charset, long long nbr)
 {
 	int		base;
@@ -65,7 +89,7 @@ int			ft_printf_itoa_base(char *buff, char *charset, long long nbr)
 	{
 		ptr[i] = charset[nbr % base];
 		i++;
-		nbr /= base;
+		nbr = bdiv(nbr, base);
 	}
 	ptr[0] += max;
 	ptr[i] = '\0';
