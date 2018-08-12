@@ -6,25 +6,25 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:03:18 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/11 19:20:32 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/12 16:10:16 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static char		*get_base(int specifier)
+static char inline		*get_base(int spec)
 {
-	if (ft_strchr("dDiuU", specifier))
+	if (ft_strchr("dDiuU", spec))
 		return (BASE_DENARY);
-	else if (ft_strchr("oO", specifier))
+	else if (spec == 'o' || spec == 'O')
 		return (BASE_OCTAL);
-	else if (ft_strchr("xXp", specifier))
-		return (specifier == 'X' ? BASE_HEXA_UP : BASE_HEXA);
+	else if (spec == 'p' || spec == 'x' || spec == 'X')
+		return (spec == 'X' ? BASE_HEXA_UP : BASE_HEXA);
 	else
 		return (NULL);
 }
 
-static void		init_flags(t_ptf *ptf)
+static void inline		init_flags(t_ptf *ptf)
 {
 	ptf->width = 0;
 	ptf->precision = -1;
@@ -65,20 +65,23 @@ static int	get_precision(va_list ap, const char *fmt, int *precision)
 
 int			ft_printf_get_flags(t_ptf *ptf, va_list ap, int i)
 {
+	const char *fmt;
+
+	fmt = ptf->fmt.format;
 	init_flags(ptf);
-	while (ptf->fmt.format[i] && ft_printf_is_flag(ptf->fmt.format[i]) && !ft_printf_is_spec(ptf->fmt.format[i]))
+	while (fmt[i] && ft_printf_is_flag(fmt[i]) && !ft_printf_is_spec(fmt[i]))
 	{
-		if (ptf->fmt.format[i] == '.')
-			i += get_precision(ap, ptf->fmt.format + i + 1, &(ptf->precision)) + 1;
-		else if ((ft_strchr("123456789", ptf->fmt.format[i]) || ptf->fmt.format[i] == '*'))
-			i += get_width(ap, ptf->fmt.format + i, &(ptf->width), ptf->flags);
+		if (fmt[i] == '.')
+			i += get_precision(ap, fmt + i + 1, &(ptf->precision)) + 1;
+		else if (ft_strchr("123456789*", fmt[i]))
+			i += get_width(ap, fmt + i, &(ptf->width), ptf->flags);
 		else
-			ft_strncat(ptf->flags, &ptf->fmt.format[i], 1);
+			ft_strncat(ptf->flags, &fmt[i], 1);
 		i++;
 	}
-	if (ptf->fmt.format[i] == '\0')
+	if (fmt[i] == '\0')
 		return (0);
-	ptf->spec = ptf->fmt.format[i];
+	ptf->spec = fmt[i];
 	if (ft_strchr("DOUCS", ptf->spec) && !ft_strchr(ptf->flags, 'l'))
 		ft_strncat(ptf->flags, "l", 1);
 	if (ptf->spec == 's' && ft_strchr(ptf->flags, 'l'))
