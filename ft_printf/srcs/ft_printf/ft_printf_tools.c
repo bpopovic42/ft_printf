@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/14 17:11:54 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/11 02:59:16 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/12 17:54:55 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int		ft_printf_is_flag(int c)
 {
 	return (ft_isdigit(c) || c == '-' || c == '+' || c == '#' || c == '.'
 		|| c == 'h' || c == 'j' || c == 'l' || c == 'z' || c == ' '
-			|| c == '%' || c == '*');
+			|| c == '*');
 }
 
 int			ft_printf_is_spec(int c)
@@ -52,14 +52,14 @@ int			ft_printf_itoa_base(char *buff, char *charset, long long nbr)
 	int		max;
 
 	i = 0;
-	max = nbr == LLONG_MIN ? 1 : 0;
 	ptr = buff;
 	base = ft_strlen(charset);
+	if (base > 16 || base < 2 || !ptr)
+		return (-1);
+	max = nbr == LLONG_MIN ? 1 : 0;
 	*ptr = nbr < 0 ? '-' : '+';
 	nbr = nbr == LLONG_MIN ? 9223372036854775807 : nbr;
 	nbr *= nbr < 0 ? -1 : 1;
-	if (base > 16 || base < 2 || !ptr)
-		return (-1);
 	ptr++;
 	while (nbr || i < 1)
 	{
