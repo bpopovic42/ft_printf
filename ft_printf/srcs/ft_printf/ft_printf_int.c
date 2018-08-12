@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/12 18:35:27 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/12 19:53:47 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,23 +70,23 @@ int			ft_printf_type_int(t_ptf *ptf, long long param)
 {
 	char	ptr[65];
 	char	prefix[5];
-	int				size;
+	int		size;
+	int		htag;
 
-	size = 1;
-	ft_bzero(ptr, 65);
 	ft_bzero(prefix, 5);
+	htag = ft_strchr(ptf->flags, '#') ? 1 : 0;
 	if (ft_strchr("dDi", ptf->spec))
 		size = get_arg_signed(ptf, ptr, param);
 	else
 		size = get_arg_unsigned(ptf, ptr, param);
 	get_prefix(ptf, ptr, prefix);
-	if (!param && !ptf->precision && !(ft_strchr("oO", ptf->spec) && ft_strchr(ptf->flags, '#')))
+	if (!param && !ptf->precision && !(ft_toupper(ptf->spec) == 'O' && htag))
 		return (ft_printf_print_arg(ptf, (int*)prefix, NULL, 0));
 	if (ptf->precision > (int)(size))
 		ptf->precision -= size;
 	else
 		ptf->precision = ptf->precision < 0 ? -1 : 0;
-	if (ptf->precision <= 0 && ft_strchr("oO", ptf->spec) && ft_strchr(ptf->flags, '#'))
+	if (ptf->precision < 1 && ft_toupper(ptf->spec) == 'O' && htag)
 		ft_strcat(prefix, ptr[1] == '0' ? "" : "0");
 	if (ptf->width > 0)
 		ptf->width -= (ptf->precision > 0 ? ptf->precision : 0) + ft_strlen(prefix) + size;
