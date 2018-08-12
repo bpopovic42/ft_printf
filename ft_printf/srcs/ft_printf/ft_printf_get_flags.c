@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:03:18 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/12 16:10:16 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/12 16:21:11 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int			ft_printf_get_flags(t_ptf *ptf, va_list ap, int i)
 			i += get_precision(ap, fmt + i + 1, &(ptf->precision)) + 1;
 		else if (ft_strchr("123456789*", fmt[i]))
 			i += get_width(ap, fmt + i, &(ptf->width), ptf->flags);
-		else
+		else if ((ft_strchrn(ptf->flags, (int)fmt[i])) < 3)
 			ft_strncat(ptf->flags, &fmt[i], 1);
 		i++;
 	}
