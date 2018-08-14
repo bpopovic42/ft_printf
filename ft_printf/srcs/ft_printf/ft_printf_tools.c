@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/14 17:11:54 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/14 19:57:52 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/14 21:03:13 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int			ft_printf_is_spec(int c)
 	return (c == 's' || c == 'S' || c == 'p' || c == 'd' || c == 'D' || c == 'i'
 			|| c == 'o' || c == 'O' || c == 'u' || c == 'U' || c == 'x'
 				|| c == 'X' || c == 'c' || c == 'C' || c == 'f' || c == 'F'
-					|| c == 'b' || c == '%');
+					|| c == 'b' || c == 'B' || c == '%');
 }
 
 size_t		ft_printf_atoi(const char *str, int *res)
@@ -49,28 +49,23 @@ int			ft_printf_itoa_base(char *buff, char *charset, long long nbr)
 	int		base;
 	int		i;
 	char	*ptr;
-	int		max;
+	unsigned long long tmp;
 
 	i = 0;
 	ptr = buff;
 	base = ft_strlen(charset);
 	if (base > 16 || base < 2 || !ptr)
 		return (-1);
-	max = nbr == LLONG_MIN ? 1 : 0;
 	*ptr = nbr < 0 ? '-' : '+';
-	nbr = nbr == LLONG_MIN ? 9223372036854775807 : nbr;
-	nbr *= nbr < 0 ? -1 : 1;
+	tmp = (unsigned long long)nbr * (*ptr == '-' ? -1 : 1);
 	ptr++;
-	while (nbr || i < 1)
+	while (tmp || i < 1)
 	{
-		ptr[i] = charset[nbr % base];
+		ptr[i] = charset[tmp % base];
 		i++;
-		nbr /= base;
+		tmp /= base;
 	}
-	ptr[0] += max;
 	ptr[i] = '\0';
-	ft_putstr(ptr);
-	ft_putchar(' ');
 	ptr = ft_strrev(ptr);
 	return (i);
 }

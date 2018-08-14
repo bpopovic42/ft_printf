@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:03:18 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/14 19:39:29 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/14 21:03:01 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static char inline		*get_base(int spec)
 		return (BASE_OCTAL);
 	else if (spec == 'p' || spec == 'x' || spec == 'X')
 		return (spec == 'X' ? BASE_HEXA_UP : BASE_HEXA);
-	else if (spec == 'b')
+	else if (spec == 'b' || spec == 'B')
 		return (BASE_BINARY);
 	else
 		return (NULL);
