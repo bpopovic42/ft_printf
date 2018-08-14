@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/11 03:42:14 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/14 19:46:33 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int				ft_printf_print_arg(t_ptf *ptf, int *prfx, int *input, int size)
 		ft_printf_buff_catn(ptf, width, ptf->width);
 	if (ft_strlen((char*)prfx) && *width == ' ')
 		ft_printf_buff_cat(ptf, (char*)prfx, ft_strlen((char*)prfx));
-	if (ft_strchr("DIOUXP", ft_toupper(ptf->spec)) && ptf->precision > 0)
+	if (ft_strchr("BDIOUXP", ft_toupper(ptf->spec)) && ptf->precision > 0)
 		ft_printf_buff_catn(ptf, "0", ptf->precision);
 	if (ptf->spec == 'S')
 	{

@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/12 19:53:47 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/14 19:52:45 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int			get_arg_signed(t_ptf *ptf, char *res, long long param)
 
 static int			get_prefix(t_ptf *ptf, char *ptr, char *prefix)
 {
-	if (ft_strchr("dDi", ptf->spec) && (ft_strchr(ptf->flags, '+') || (ptr[0] == '-')))
+	if (ft_strchr("bdDi", ptf->spec) && (ft_strchr(ptf->flags, '+') || (ptr[0] == '-')))
 		ft_strcat(prefix, ptr[0] == '-' ? "-" : "+");
 	else if (ft_strchr("dDi", ptf->spec) && ft_strchr(ptf->flags, ' '))
 		ft_strcat(prefix, " ");
@@ -63,6 +63,8 @@ static int			get_prefix(t_ptf *ptf, char *ptr, char *prefix)
 	}
 	else if (ptf->spec == 'p')
 		ft_strcat(prefix, "0x");
+	else if (ptf->spec == 'b')
+		ft_strcat(prefix, "0b");
 	return (ft_strlen(prefix));
 }
 
@@ -75,7 +77,7 @@ int			ft_printf_type_int(t_ptf *ptf, long long param)
 
 	ft_bzero(prefix, 5);
 	htag = ft_strchr(ptf->flags, '#') ? 1 : 0;
-	if (ft_strchr("dDi", ptf->spec))
+	if (ft_strchr("bdDi", ptf->spec))
 		size = get_arg_signed(ptf, ptr, param);
 	else
 		size = get_arg_unsigned(ptf, ptr, param);
@@ -90,5 +92,7 @@ int			ft_printf_type_int(t_ptf *ptf, long long param)
 		ft_strcat(prefix, ptr[1] == '0' ? "" : "0");
 	if (ptf->width > 0)
 		ptf->width -= (ptf->precision > 0 ? ptf->precision : 0) + ft_strlen(prefix) + size;
+	if (ptf->spec == 'b' && ptf->precision < 0)
+		ptf->precision = 8 - (size % 8 > 0 ? size % 8 : 8);
 	return (ft_printf_print_arg(ptf, (int*)prefix, (int*)(ptr + 1), size));
 }

@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/14 17:11:54 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/12 17:54:55 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/14 19:57:52 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int			ft_printf_is_spec(int c)
 	return (c == 's' || c == 'S' || c == 'p' || c == 'd' || c == 'D' || c == 'i'
 			|| c == 'o' || c == 'O' || c == 'u' || c == 'U' || c == 'x'
 				|| c == 'X' || c == 'c' || c == 'C' || c == 'f' || c == 'F'
-					|| c == '%');
+					|| c == 'b' || c == '%');
 }
 
 size_t		ft_printf_atoi(const char *str, int *res)
@@ -69,6 +69,8 @@ int			ft_printf_itoa_base(char *buff, char *charset, long long nbr)
 	}
 	ptr[0] += max;
 	ptr[i] = '\0';
+	ft_putstr(ptr);
+	ft_putchar(' ');
 	ptr = ft_strrev(ptr);
 	return (i);
 }

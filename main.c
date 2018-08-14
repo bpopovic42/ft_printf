@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:05:25 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/12 16:29:06 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/14 19:57:16 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,9 @@ int		main()
 		//prval = printf("lol %d lala %C P\n", 42, -1); // Problematic test case
 		frval = ft_printf("%");
 	}*/
-	frval = ft_printf("{%05.Z} F\n", 0);
-	prval = printf("{%05.Z} P\n", 0);
+	frval = ft_printf("%llb F\n", LLONG_MIN);
+	frval = ft_printf("%i F\n", -2);
+	prval = printf("%d P\n", -25);
 	printf("prval = %d, frval = %d\n", prval, frval);
 	//printf(L"%C", wc); // Gives interesting compilation error
 	return (0);
