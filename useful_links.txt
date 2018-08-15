@@ -1,0 +1,17 @@
+floats
+
+ftoa implementation
+https://www.microchip.com/forums/m183763.aspx
+
+IEEE754 Converter
+https://www.h-schmidt.net/FloatConverter/IEEE754.html
+
+IEEE754 Tutorial
+https://ryanstutorials.net/binary-tutorial/binary-floating-point.php#activities
+
+Union & bit fields tutorial
+http://www.squalenet.net/fr/ti/tutorial_c/14-structures-unions.php5
+
+Floats bitfield union implementation & associated header file
+https://github.com/f32c/arduino/blob/master/hardware/fpga/f32c/system/src/math/isfinite.c
+https://github.com/f32c/arduino/blob/master/hardware/fpga/f32c/system/include/mips/_fpmath.h
