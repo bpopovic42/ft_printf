@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:05:25 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/14 21:26:24 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/15 19:29:21 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,15 @@ int		main()
 		//prval = printf("lol %d lala %C P\n", 42, -1); // Problematic test case
 		frval = ft_printf("%");
 	}*/
-	long long test = 0;
-	printf("looool %lln P\n", &test);
-	ft_putnbr(test);
-	printf("prval = %d, frval = %d\n", prval, frval);
-	//prval = printf("%f P\n", 1.0 / 0.0); // INFINITY TEST CASE
+	t_flt test;
+	test.nbr = 1.0 / 0.0;
+	ft_printf("%ld %ld %llb ", test.bits.sign, test.bits.expn, test.bits.mant);
+
+	//ft_printf("%f F\n", -1 / 0.45);
+	//printf("%f P\n", test.nbr);
+	//printf("prval = %d, frval = %d\n", prval, frval);
+	prval = printf("%f P\n", 1.0 / 0.0); // INFINITY TEST CASE
+	frval = ft_printf("%f F\n", 1.0 / 0.0); // INFINITY TEST CASE
 	//printf(L"%C", wc); // Gives interesting compilation error
 	return (0);
 }
