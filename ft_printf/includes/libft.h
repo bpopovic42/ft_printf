@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 16:27:54 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/11 03:47:14 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/17 19:26:48 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,12 @@ typedef struct		s_hash
 typedef union		u_dbl
 {
 	double			val;
-	uint64_t		u64;
+	struct
+	{
+		unsigned long	mant: 52;
+		unsigned int	expn: 11;
+		unsigned int	sign: 1;
+	}					bits;
 }					t_dbl;
 
 /*
@@ -146,7 +151,8 @@ int					ft_wctomb(unsigned char *s, wchar_t wc);
 char				*ft_strrev(char *str);
 size_t				ft_wcslen(wchar_t *wcs);
 size_t				ft_wcsnlen(wchar_t *wcs, size_t n);
-char				*ft_ftoa(double val, int precision, char *buff);
+char				*ft_dtoa(double val, int precision, char *buff);
+int					ft_ccat(char *dst, char app);
 
 
 /*

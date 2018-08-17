@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/15 19:27:42 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/17 17:11:44 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,6 @@ typedef struct		s_ptf
 	char			flags[11];
 	char			*base;
 }					t_ptf;
-
-typedef union		u_flt
-{
-	double			nbr;
-	struct
-	{
-		unsigned long	mant: 52;
-		unsigned int	expn: 11;
-		unsigned int	sign: 1;
-	} bits;
-}					t_flt;
 
 /*
 ** FT_PRINTF
