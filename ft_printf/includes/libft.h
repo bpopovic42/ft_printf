@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 16:27:54 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/17 19:26:48 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/17 22:25:59 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,8 +152,9 @@ char				*ft_strrev(char *str);
 size_t				ft_wcslen(wchar_t *wcs);
 size_t				ft_wcsnlen(wchar_t *wcs, size_t n);
 char				*ft_dtoa(double val, int precision, char *buff);
+int					ft_dtoas(double val, int precision, char *buff);
 int					ft_ccat(char *dst, char app);
-
+char				*ft_strtoupper(char *str);
 
 /*
 ** HASH FUNCTIONS

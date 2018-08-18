@@ -1,44 +1,58 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_dtoa.c                                          :+:      :+:    :+:   */
+/*   ft_dtoas.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/18 02:49:07 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/17 23:30:09 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		write_intpart(double *val, char *buff, int size, int i)
+static int		write_intpart(uint64_t val, char *buff, int size)
 {
-	while (i > 0)
-	{
-		ft_ccat(buff, (long long)(*val) % 10 + '0');
-		*val /= 10;
-		*val -= (long long)(*val);
-		*val *= 100;
-		i--;
-	}
+	if (val >= 10)
+		size = write_intpart(val / 10, buff, size + 1);
+	ft_ccat(buff, val % 10 + '0');
 	return (size);
 }
 
-static char		*calc_dbl(t_dbl dbl, int precision, char *buff)
+static int		adjust(double *val)
 {
-	int tmp;
 	int i;
 
 	i = 0;
+	if (*val >= 10)
+	{
+		while (*val >= 10)
+		{
+			*val /= 10;
+			i++;
+		}
+	}
+	else if (*val < 0)
+	{
+		while (*val < 0)
+		{
+			*val *= 10;
+			i--;
+		}
+	}
+	return (i);
+}
+
+int		calc_dbl(t_dbl dbl, int precision, char *buff)
+{
+	int tmp;
+	int expn;
+
 	buff[0] = dbl.bits.sign ? '-' : buff[0];
 	dbl.bits.sign = 0;
-	while (dbl.val >= 10)
-	{
-		dbl.val /= 10;
-		i++;
-	}
-	write_intpart(&dbl.val, buff, 1, i);
+	expn = adjust(&(dbl.val));
+	write_intpart((uint64_t)dbl.val, buff, 1);
 	ft_ccat(buff, precision ? '.' : '\0');
 	dbl.val -= (uint64_t)dbl.val;
 	while (precision)
@@ -55,7 +69,7 @@ static char		*calc_dbl(t_dbl dbl, int precision, char *buff)
 		ft_ccat(buff, tmp + '0');
 		precision--;
 	}
-	return (buff);
+	return (expn);
 }
 
 static char		*is_finite(t_dbl dbl, char *buff)
@@ -70,12 +84,17 @@ static char		*is_finite(t_dbl dbl, char *buff)
 	return (buff);
 }
 
-char			*ft_dtoa(double val, int precision, char *buff)
+int		ft_dtoas(double val, int precision, char *buff)
 {
 	t_dbl		dbl;
+	int			expn;
 
 	dbl.val = val;
 	if (dbl.bits.expn == 2047)
-		return (is_finite(dbl, buff));
-	return (calc_dbl(dbl, precision, buff));
+	{
+		is_finite(dbl, buff);
+		return (0);
+	}
+	expn = calc_dbl(dbl, precision, buff);
+	return (expn);
 }
