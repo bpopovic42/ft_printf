@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/18 02:49:07 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/18 17:24:25 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,20 @@
 
 static int		write_intpart(double *val, char *buff, int size, int i)
 {
-	while (i > 0)
+	double test;
+
+	test = *val;
+	while (i >= 0)
 	{
-		ft_ccat(buff, (long long)(*val) % 10 + '0');
-		*val /= 10;
-		*val -= (long long)(*val);
-		*val *= 100;
+		ft_ccat(buff, (long long)(test) % 10 + '0');
+		test -= (long long)(test);
+		test /= 10;
+		test *= 100;
+		*val *= 10;
 		i--;
 	}
+	*val /= 10;
+	*val -= (long long)*val;
 	return (size);
 }
 

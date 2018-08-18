@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/17 23:30:09 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/18 17:28:56 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ static int		adjust(double *val)
 			i++;
 		}
 	}
-	else if (*val < 0)
+	else if (*val < 1)
 	{
-		while (*val < 0)
+		while (*val < 1)
 		{
 			*val *= 10;
 			i--;
