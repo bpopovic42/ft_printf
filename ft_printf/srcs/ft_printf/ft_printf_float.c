@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/17 23:34:14 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/20 20:48:25 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int			ft_printf_type_dbl(t_ptf *ptf, double param)
 	int		ret;
 	int		suffix_size;
 	unsigned int expn;
+	t_dbl		test;
 
 	ft_bzero(tmp, MAX_DBL_LEN + MAX_DBL_PRECISION + 1);
 	ft_bzero(prefix, 5);
@@ -67,6 +68,30 @@ int			ft_printf_type_dbl(t_ptf *ptf, double param)
 	ret = 0;
 	suffix_size = 0;
 	expn = 0;
+	test.val = param;
+	int exp_res = 0;
+	while (test.val < 1 || test.val > 9)
+	{
+		if (test.val < 1)
+		{
+			test.val *= 10;
+			exp_res++;
+		}
+		else if (test.val > 9)
+		{
+			test.val /= 10;
+			exp_res--;
+		}
+	}
+	if (ft_strchr("gG", ptf->spec))
+	{
+		if (ptf->precision == 0)
+			ptf->precision = 1;
+		if (exp_res < -4 || exp_res >= ptf->precision)
+			ptf->spec = ptf->spec == 'G' ? 'E' : 'e';
+		else
+			ptf->spec = ptf->spec == 'G' ? 'F' : 'f';
+	}
 	if (ft_strchr("fF", ptf->spec))
 	{
 		if (ptf->precision == 0 && ft_strchr(ptf->flags, '#'))
