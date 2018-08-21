@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/20 21:17:10 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/21 16:47:45 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,11 @@ int			ft_printf_type_dbl(t_ptf *ptf, double param)
 	if (ft_strchr("fF", ptf->spec) || (ft_strchr("gG", ptf->spec) && (exp_res > -4 && exp_res < ptf->precision)))
 	{
 		if (ptf->precision == 0 && ft_strchr(ptf->flags, '#'))
-			ft_dtoa(param, 1, tmp);
+			ft_dtoa(param, 1, tmp, ptf->spec);
 		else if (ptf->precision > MAX_DBL_PRECISION)
-			ft_dtoa(param, MAX_DBL_PRECISION, tmp);
+			ft_dtoa(param, MAX_DBL_PRECISION, tmp, ptf->spec);
 		else
-			ft_dtoa(param, (ptf->precision >= 0 ? ptf->precision : 6), tmp);
+			ft_dtoa(param, (ptf->precision >= 0 ? ptf->precision : 6), tmp, ptf->spec);
 		if (ft_strstr(tmp, "inf") || ft_strstr(tmp, "nan"))
 			ptf->precision = 0;
 	}
@@ -116,7 +116,7 @@ int			ft_printf_type_dbl(t_ptf *ptf, double param)
 			i = ft_strlen(tmp) - 1;
 			while (tmp[i] == '0')
 				i--;
-			tmp[i + 1] = '\0';
+			tmp[tmp[i] == '.' ? i : i + 1] = '\0';
 			ptf->spec = ptf->spec == 'G' ? 'E' : 'e';
 		}
 		if (ft_strstr(tmp, "inf") || ft_strstr(tmp, "nan"))
@@ -124,7 +124,7 @@ int			ft_printf_type_dbl(t_ptf *ptf, double param)
 		if (ft_strstr(tmp, "inf") || ft_strstr(tmp, "nan"))
 			ptf->precision = 0;
 		else
-			suffix_size = get_suffix(suffix, ptf->spec, (int)expn);
+			suffix_size = get_suffix(suffix, 'e', (int)expn);
 	}
 	if (ft_strchr(ptf->flags, '#') && ptf->precision == 0)
 		tmp[2] = '\0';

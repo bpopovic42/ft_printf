@@ -6,17 +6,19 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/18 17:24:25 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/21 16:50:14 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		write_intpart(double *val, char *buff, int size, int i)
+static int		write_intpart(double *val, char *buff, int i)
 {
 	double test;
+	int		ret;
 
 	test = *val;
+	ret = 0;
 	while (i >= 0)
 	{
 		ft_ccat(buff, (long long)(test) % 10 + '0');
@@ -25,13 +27,14 @@ static int		write_intpart(double *val, char *buff, int size, int i)
 		test *= 100;
 		*val *= 10;
 		i--;
+		ret++;
 	}
 	*val /= 10;
 	*val -= (long long)*val;
-	return (size);
+	return (ret - 1);
 }
 
-static char		*calc_dbl(t_dbl dbl, int precision, char *buff)
+static char		*calc_dbl(t_dbl dbl, int precision, char *buff, char spec)
 {
 	int tmp;
 	int i;
@@ -44,7 +47,10 @@ static char		*calc_dbl(t_dbl dbl, int precision, char *buff)
 		dbl.val /= 10;
 		i++;
 	}
-	write_intpart(&dbl.val, buff, 1, i);
+	if ((spec == 'G' || spec == 'g'))
+		precision -= write_intpart(&dbl.val, buff, precision < i ? precision : i);
+	else
+		write_intpart(&dbl.val, buff, i);
 	ft_ccat(buff, precision ? '.' : '\0');
 	dbl.val -= (uint64_t)dbl.val;
 	while (precision)
@@ -76,12 +82,12 @@ static char		*is_finite(t_dbl dbl, char *buff)
 	return (buff);
 }
 
-char			*ft_dtoa(double val, int precision, char *buff)
+char			*ft_dtoa(double val, int precision, char *buff, char spec)
 {
 	t_dbl		dbl;
 
 	dbl.val = val;
 	if (dbl.bits.expn == 2047)
 		return (is_finite(dbl, buff));
-	return (calc_dbl(dbl, precision, buff));
+	return (calc_dbl(dbl, precision, buff, spec));
 }
