@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/21 17:53:59 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/21 19:24:38 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,17 @@ static int		write_intpart(double *val, char *buff, int i)
 
 	test = *val;
 	ret = 0;
-	while (i >= 0)
+	while (i)
 	{
 		ft_ccat(buff, (long long)(test) % 10 + '0');
 		test -= (long long)(test);
 		test /= 10;
 		test *= 100;
 		*val *= 10;
-		i--;
+		if (i < 0)
+			i++;
+		else
+			i--;
 		ret++;
 	}
 	*val /= 10;
@@ -46,6 +49,7 @@ static int		adjust(double *val)
 			*val /= 10;
 			i++;
 		}
+		i++;
 	}
 	else if (*val < 1)
 	{
@@ -54,8 +58,28 @@ static int		adjust(double *val)
 			*val *= 10;
 			i--;
 		}
+		i--;
 	}
 	return (i);
+}
+
+static void		rounding(t_dbl *dbl, int precision)
+{
+	int i;
+
+	i = precision;
+	while (i)
+	{
+		dbl->val *= 10;
+		i--;
+	}
+	if ((int)(dbl->val) % 10 > 5)
+		dbl->val += 5;
+	while (i < precision)
+	{
+		dbl->val /= 10;
+		i++;
+	}
 }
 
 static int		calc_dbl(t_dbl dbl, int precision, char *buff, char spec)
@@ -65,18 +89,23 @@ static int		calc_dbl(t_dbl dbl, int precision, char *buff, char spec)
 
 	buff[0] = dbl.bits.sign ? '-' : buff[0];
 	dbl.bits.sign = 0;
-	expn = adjust(&(dbl.val));
+	if (!(ft_toupper(spec) == 'F' && (int)dbl.val == 0))
+		expn = adjust(&(dbl.val));
+	else
+		expn = 1;
+	if (precision < 6)
+		rounding(&dbl, precision);
 	if ((spec == 'G' || spec == 'g'))
 	{
 		if (expn > -4 && expn < precision)
 			precision -= write_intpart(&dbl.val, buff, precision < expn ? precision : expn);
 		else
-			precision -= write_intpart(&dbl.val, buff, 0);
+			precision -= write_intpart(&dbl.val, buff, 1);
 	}
 	else if ((spec == 'F' || spec == 'f'))
 		write_intpart(&dbl.val, buff, expn);
 	else if ((spec == 'E' || spec == 'e'))
-		write_intpart(&dbl.val, buff, 0);
+		write_intpart(&dbl.val, buff, 1);
 	ft_ccat(buff, precision ? '.' : '\0');
 	dbl.val -= (uint64_t)dbl.val;
 	while (precision)
@@ -94,7 +123,7 @@ static int		calc_dbl(t_dbl dbl, int precision, char *buff, char spec)
 		ft_ccat(buff, tmp + '0');
 		precision--;
 	}
-	return (expn);
+	return (expn < 0 ? expn - 1 : expn + 1);
 }
 
 static char		*is_finite(t_dbl dbl, char *buff)
@@ -103,7 +132,8 @@ static char		*is_finite(t_dbl dbl, char *buff)
 		ft_strcat(buff, "nan");
 	else
 	{
-		ft_strcat(buff, "-");
+		if (dbl.bits.sign)
+			ft_strcat(buff, "-");
 		ft_strcat(buff, "inf");
 	}
 	return (buff);
