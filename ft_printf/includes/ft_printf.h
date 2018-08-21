@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/17 23:41:38 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/21 17:51:40 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 # define FT_PRINTF_BUFF_SIZE 128
 # define MAX_INT_LEN 21
-# define MAX_DBL_PRECISION 55
+# define MAX_DBL_PRECISION 200
 # define MAX_DBL_LEN 500
 
 typedef struct		s_fmt

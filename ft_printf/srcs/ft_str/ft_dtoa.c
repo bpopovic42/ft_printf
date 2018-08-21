@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/21 17:39:03 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/21 17:53:59 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ static int		calc_dbl(t_dbl dbl, int precision, char *buff, char spec)
 	dbl.val -= (uint64_t)dbl.val;
 	while (precision)
 	{
-		dbl.val *= 10;
+		dbl.val /= 10;
+		dbl.val *= 100;
 		tmp = (int)dbl.val;
 		dbl.val -= tmp;
 		if (precision == 1)
