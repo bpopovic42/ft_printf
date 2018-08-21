@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/21 19:24:38 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/21 20:29:04 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ static int		adjust(double *val)
 			*val /= 10;
 			i++;
 		}
-		i++;
 	}
 	else if (*val < 1)
 	{
@@ -58,56 +57,40 @@ static int		adjust(double *val)
 			*val *= 10;
 			i--;
 		}
-		i--;
 	}
 	return (i);
 }
 
-static void		rounding(t_dbl *dbl, int precision)
+static int		get_intpart(t_dbl *dbl, int *precision, char *buff, char spec)
 {
-	int i;
-
-	i = precision;
-	while (i)
-	{
-		dbl->val *= 10;
-		i--;
-	}
-	if ((int)(dbl->val) % 10 > 5)
-		dbl->val += 5;
-	while (i < precision)
-	{
-		dbl->val /= 10;
-		i++;
-	}
-}
-
-static int		calc_dbl(t_dbl dbl, int precision, char *buff, char spec)
-{
-	int tmp;
 	int expn;
 
-	buff[0] = dbl.bits.sign ? '-' : buff[0];
-	dbl.bits.sign = 0;
-	if (!(ft_toupper(spec) == 'F' && (int)dbl.val == 0))
-		expn = adjust(&(dbl.val));
+	buff[0] = dbl->bits.sign ? '-' : buff[0];
+	dbl->bits.sign = 0;
+	if (!(ft_toupper(spec) == 'F' && (int)dbl->val == 0))
+		expn = adjust(&(dbl->val));
 	else
 		expn = 1;
-	if (precision < 6)
-		rounding(&dbl, precision);
+	if ((*precision == 0 || (ft_toupper(spec) == 'G' && *precision == 1)) && (int)(dbl->val * 10) % 10 > 5)
+		dbl->val += 0.5;
 	if ((spec == 'G' || spec == 'g'))
 	{
-		if (expn > -4 && expn < precision)
-			precision -= write_intpart(&dbl.val, buff, precision < expn ? precision : expn);
+		if (expn > -4 && expn < *precision)
+			*precision -= write_intpart(&dbl->val, buff, *precision < expn ? *precision : expn);
 		else
-			precision -= write_intpart(&dbl.val, buff, 1);
+			*precision -= write_intpart(&dbl->val, buff, 1);
 	}
-	else if ((spec == 'F' || spec == 'f'))
-		write_intpart(&dbl.val, buff, expn);
-	else if ((spec == 'E' || spec == 'e'))
-		write_intpart(&dbl.val, buff, 1);
-	ft_ccat(buff, precision ? '.' : '\0');
-	dbl.val -= (uint64_t)dbl.val;
+	else
+		write_intpart(&dbl->val, buff, ft_strchr("fF", spec) ? expn : 1);
+	ft_ccat(buff, *precision ? '.' : '\0');
+	dbl->val -= (uint64_t)dbl->val;
+	return (expn);
+}
+
+static void		get_decpart(t_dbl dbl, int precision, char *buff)
+{
+	int tmp;
+
 	while (precision)
 	{
 		dbl.val /= 10;
@@ -123,20 +106,6 @@ static int		calc_dbl(t_dbl dbl, int precision, char *buff, char spec)
 		ft_ccat(buff, tmp + '0');
 		precision--;
 	}
-	return (expn < 0 ? expn - 1 : expn + 1);
-}
-
-static char		*is_finite(t_dbl dbl, char *buff)
-{
-	if (dbl.bits.mant)
-		ft_strcat(buff, "nan");
-	else
-	{
-		if (dbl.bits.sign)
-			ft_strcat(buff, "-");
-		ft_strcat(buff, "inf");
-	}
-	return (buff);
 }
 
 int			ft_dtoa(double val, int precision, char *buff, char spec)
@@ -147,9 +116,17 @@ int			ft_dtoa(double val, int precision, char *buff, char spec)
 	dbl.val = val;
 	if (dbl.bits.expn == 2047)
 	{
-		is_finite(dbl, buff);
+		if (dbl.bits.mant)
+			ft_strcat(buff, "nan");
+		else
+		{
+			if (dbl.bits.sign)
+				ft_strcat(buff, "-");
+			ft_strcat(buff, "inf");
+		}
 		return (0);
 	}
-	expn = calc_dbl(dbl, precision, buff, spec);
+	expn = get_intpart(&dbl, &precision, buff, spec);
+	get_decpart(dbl, precision, buff);
 	return (expn);
 }
