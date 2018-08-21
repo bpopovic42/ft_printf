@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/21 20:29:04 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/21 20:36:53 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static int		get_intpart(t_dbl *dbl, int *precision, char *buff, char spec)
 	buff[0] = dbl->bits.sign ? '-' : buff[0];
 	dbl->bits.sign = 0;
 	if (!(ft_toupper(spec) == 'F' && (int)dbl->val == 0))
-		expn = adjust(&(dbl->val));
+		expn = adjust(&(dbl->val)) + (ft_strchr("fF", spec) ? 1 : 0);
 	else
 		expn = 1;
 	if ((*precision == 0 || (ft_toupper(spec) == 'G' && *precision == 1)) && (int)(dbl->val * 10) % 10 > 5)
