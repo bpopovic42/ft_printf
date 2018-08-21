@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/21 17:24:19 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/21 17:30:59 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int		write_intpart(double *val, char *buff, int i)
 	}
 	*val /= 10;
 	*val -= (long long)*val;
-	return (ret - 1);
+	return (ret);
 }
 
 static int		adjust(double *val)

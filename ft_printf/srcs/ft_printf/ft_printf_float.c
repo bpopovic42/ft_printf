@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/21 17:20:43 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/21 17:30:20 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int			ft_printf_type_dbl(t_ptf *ptf, double param)
 	expn = 0;
 	i = 0;
 	if (ft_strchr("gG", ptf->spec))
-		ptf->precision -= ptf->precision == 0 ? (ptf->precision - 1) : 1;
+		ptf->precision = ptf->precision == 0 ? 1 : ptf->precision;
 	if (ptf->precision == 0 && ft_strchr(ptf->flags, '#'))
 		expn = ft_dtoa(param, 1, tmp, ptf->spec);
 	else if (ptf->precision > MAX_DBL_PRECISION)
