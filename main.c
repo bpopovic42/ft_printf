@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:05:25 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/20 21:15:21 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/21 17:22:50 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ int		main()
 	t_dbl test;
 	test.bits.mant = 12345;
 	test.bits.expn = -1000;
-	frval = ft_printf("%.10g F\n", test.val); // INFINITY TEST CASE
-	prval = printf("%.10g P\n", test.val); // INFINITY TEST CASE
+	frval = ft_printf("%.3g F\n", test.val); // INFINITY TEST CASE
+	prval = printf("%.3g P\n", test.val); // INFINITY TEST CASE
 	//printf(L"%C", wc); // Gives interesting compilation error
 	return (0);
 }
