@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/21 17:30:59 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/21 17:39:03 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ static int		calc_dbl(t_dbl dbl, int precision, char *buff, char spec)
 	}
 	else if ((spec == 'F' || spec == 'f'))
 		write_intpart(&dbl.val, buff, expn);
-	else if ((spec == 'E' || spec == 'E'))
-		write_intpart(&dbl.val, buff, 1);
+	else if ((spec == 'E' || spec == 'e'))
+		write_intpart(&dbl.val, buff, 0);
 	ft_ccat(buff, precision ? '.' : '\0');
 	dbl.val -= (uint64_t)dbl.val;
 	while (precision)
