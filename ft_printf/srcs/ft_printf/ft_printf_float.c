@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/22 17:41:15 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/22 19:10:02 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,7 @@ static void			get_arg(t_ptf *ptf, double param, char *tmp, char *suffix)
 	else
 		expn = ft_dtoa(param, (ptf->precision >= 0 ? ptf->precision : 6), tmp, ptf->spec);
 	if (tmp[0] == 0)
-	{
 		tmp = ft_strcpy(tmp, tmp + 1);
-	}
 	if (ft_strchr("gG", ptf->spec))
 	{
 		i = ft_strlen(tmp) - 1;
@@ -73,7 +71,7 @@ static void			get_arg(t_ptf *ptf, double param, char *tmp, char *suffix)
 	}
 	if (ft_strstr(tmp, "inf") || ft_strstr(tmp, "nan"))
 		ptf->precision = 0;
-	else if (ptf->spec == 'e' || ptf->spec == 'E' || (ft_strchr("gG", ptf->spec) && (expn < -4 || (expn > ptf->precision && ptf->precision != 0))))
+	else if (ft_strchr("eE", ptf->spec) || (ft_strchr("gG", ptf->spec) && (expn < -4 || (expn > ptf->precision && ptf->precision != 0))))
 		get_suffix(suffix, ft_isupper(ptf->spec) ? 'E' : 'e', (int)expn);
 	if (ft_strchr(ptf->flags, '#') && ptf->precision == 0)
 		tmp[2] = '\0';
@@ -99,8 +97,8 @@ int			ft_printf_type_dbl(t_ptf *ptf, double param)
 		ptf->precision -= MAX_DBL_PRECISION;
 	else
 		ptf->precision = 0;
-	ptf->width -= size + ft_strlen(prefix);
-	ret = ft_printf_print_arg(ptf, (int*)prefix, ft_strchr("EFG", ptf->spec) ? (int*)ft_strtoupper(tmp) : (int*)tmp, size);
+	ptf->width -= size + ft_strlen(prefix) + ft_strlen(suffix);
+	ret = ft_printf_print_arg(ptf, (int*)prefix, (int*)tmp, size);
 	ft_printf_buff_cat(ptf, suffix, ft_strlen(suffix));
 	return (ret);
 }

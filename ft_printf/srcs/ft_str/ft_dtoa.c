@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/22 18:23:52 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/22 19:02:09 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ static int		get_intpart(t_dbl *dbl, int *precision, char *buff, char spec)
 		expn = 1;
 	if ((spec == 'G' || spec == 'g'))
 	{
-		if (expn > -4 && expn < *precision)
-			*precision -= write_intpart(&dbl->val, buff, *precision < expn ? *precision : expn);
+		if (expn > -4 && expn < *precision && expn != 0)
+			*precision -= write_intpart(&dbl->val, buff, expn);
 		else
 			*precision -= write_intpart(&dbl->val, buff, 1);
 	}

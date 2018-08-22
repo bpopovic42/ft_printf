@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:05:25 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/22 18:15:54 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/22 19:10:12 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,9 @@ int		main()
 	test.bits.mant = 82345;
 	test.bits.expn = 1000;
 	test.val = 1.42;
-	frval = ft_printf("%.18f %.17f %.16f %.15f F\n", test.val, test.val, test.val, test.val); // INFINITY TEST CASE
-	prval = printf("%.18f %.17f %.16f %.15f P\n", test.val, test.val, test.val, test.val); // INFINITY TEST CASE
+	frval = ft_printf("%25.18E F\n", test.val); // INFINITY TEST CASE
+	prval = printf("%25.18E P\n", test.val); // INFINITY TEST CASE
+	printf("prval = %d, frval = %d\n", prval, frval);
 	//printf(L"%C", wc); // Gives interesting compilation error
 	return (0);
 }
