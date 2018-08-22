@@ -6,11 +6,32 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/21 20:36:53 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/22 17:58:46 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+static void		get_decpart(t_dbl *dbl, int precision, char *buff)
+{
+	int tmp;
+
+	while (precision)
+	{
+		dbl->val /= 10;
+		dbl->val *= 100;
+		tmp = (int)dbl->val;
+		dbl->val -= tmp;
+		if (precision == 1)
+		{
+			dbl->val *= 10;
+			if ((int)dbl->val >= 5)
+				tmp += tmp < 9 ? 1 : 0;
+		}
+		ft_ccat(buff, tmp + '0');
+		precision--;
+	}
+}
 
 static int		write_intpart(double *val, char *buff, int i)
 {
@@ -87,24 +108,26 @@ static int		get_intpart(t_dbl *dbl, int *precision, char *buff, char spec)
 	return (expn);
 }
 
-static void		get_decpart(t_dbl dbl, int precision, char *buff)
-{
-	int tmp;
 
-	while (precision)
+
+static void round_dbl(char *buff)
+{
+	int i;
+
+	i = ft_strlen(buff + 1);
+	while (i)
 	{
-		dbl.val /= 10;
-		dbl.val *= 100;
-		tmp = (int)dbl.val;
-		dbl.val -= tmp;
-		if (precision == 1)
+		if (buff[i] == '9')
+			buff[i] = '0';
+		else if (buff[i] != '.')
 		{
-			dbl.val *= 10;
-			if ((int)dbl.val >= 5)
-				tmp += tmp < 9 ? 1 : 0;
+			if (i == 0)
+				buff[i] = '1';
+			else
+				buff[i]++;
+			break;
 		}
-		ft_ccat(buff, tmp + '0');
-		precision--;
+		i--;
 	}
 }
 
@@ -126,7 +149,9 @@ int			ft_dtoa(double val, int precision, char *buff, char spec)
 		}
 		return (0);
 	}
-	expn = get_intpart(&dbl, &precision, buff, spec);
-	get_decpart(dbl, precision, buff);
+	expn = get_intpart(&dbl, &precision, buff + 1, spec);
+	get_decpart(&dbl, precision, buff + 1);
+	if ((int)(dbl.val) % 10 > 5)
+		round_dbl(buff);
 	return (expn);
 }

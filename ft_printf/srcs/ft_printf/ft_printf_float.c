@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/21 20:54:29 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/22 17:41:15 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,10 @@ static void			get_arg(t_ptf *ptf, double param, char *tmp, char *suffix)
 		expn = ft_dtoa(param, MAX_DBL_PRECISION, tmp, ptf->spec);
 	else
 		expn = ft_dtoa(param, (ptf->precision >= 0 ? ptf->precision : 6), tmp, ptf->spec);
+	if (tmp[0] == 0)
+	{
+		tmp = ft_strcpy(tmp, tmp + 1);
+	}
 	if (ft_strchr("gG", ptf->spec))
 	{
 		i = ft_strlen(tmp) - 1;
