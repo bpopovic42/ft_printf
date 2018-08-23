@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/23 16:51:33 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/23 17:30:17 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void			get_prefix(t_ptf *ptf, char *ptr, char *prefix)
 		ft_strcat(prefix, " ");
 }
 
-static void			get_suffix(char *suffix, char spec, int expn)
+static int			get_suffix(char *buff, char *suffix, char spec, int expn)
 {
 	int min;
 	int i;
@@ -29,19 +29,13 @@ static void			get_suffix(char *suffix, char spec, int expn)
 	i = 0;
 	if (!(ft_strcasestr(buff, "nan") || ft_strcasestr(buff, "inf")))
 	{
-		if (expn < 0)
+		min = expn < 0 ? 1 : 0;
+		expn = expn < 0 ? -expn : expn;
+		while (expn || i < 2)
 		{
-			expn = -expn;
-			min = 1;
-		}
-		if (expn)
-		{
-			while (expn && i < 2)
-			{
-				ft_ccat(suffix, expn % 10 + '0');
-				expn /= 10;
-				i++;
-			}
+			ft_ccat(suffix, expn % 10 + '0');
+			expn /= 10;
+			i++;
 		}
 		/*else
 			ft_strcat(suffix, "00");
@@ -49,7 +43,9 @@ static void			get_suffix(char *suffix, char spec, int expn)
 		ft_ccat(suffix, min ? '-' : '+');
 		ft_ccat(suffix, spec);
 		suffix = ft_strrev(suffix);
+		return (1);
 	}
+	return (0);
 }
 
 static void			get_arg(t_ptf *ptf, double param, char *tmp, char *suffix)
@@ -75,8 +71,7 @@ static void			get_arg(t_ptf *ptf, double param, char *tmp, char *suffix)
 		if (expn < -4 || (expn > ptf->precision && ptf->precision != 0))
 			ptf->spec = ptf->spec == 'G' ? 'E' : 'e';
 	}
-	ptf->precision = get_suffix(suffix, ptf->spec, expn);
-	ptf->precision = (ft_strstr(tmp, "inf") || ft_strstr(tmp, "nan")) ? : 0;
+	ptf->precision = get_suffix(tmp, suffix, ptf->spec, expn) ? : 0;
 	tmp[2] = ft_strchr(ptf->flags, '#') && ptf->precision == 0 ? '\0' : tmp[2];
 }
 
