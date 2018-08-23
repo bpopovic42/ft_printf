@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 14:57:38 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/23 16:57:00 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/23 17:25:42 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,5 @@ int		ft_strcasenequ(char const *s1, char const *s2, size_t n)
 		s1++;
 		s2++;
 	}
-	return (*s1 == *s2 ? 1 : 0);
+	return (ft_toupper(*s1) == ft_toupper(*s2) ? 1 : 0);
 }
