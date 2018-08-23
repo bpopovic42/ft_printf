@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/23 17:30:17 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/23 17:35:28 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,6 @@ static int			get_suffix(char *buff, char *suffix, char spec, int expn)
 			expn /= 10;
 			i++;
 		}
-		/*else
-			ft_strcat(suffix, "00");
-		ft_ccat(suffix, ft_strlen(suffix) == 1 ? '0' : '\0');*/
 		ft_ccat(suffix, min ? '-' : '+');
 		ft_ccat(suffix, spec);
 		suffix = ft_strrev(suffix);
@@ -71,7 +68,8 @@ static void			get_arg(t_ptf *ptf, double param, char *tmp, char *suffix)
 		if (expn < -4 || (expn > ptf->precision && ptf->precision != 0))
 			ptf->spec = ptf->spec == 'G' ? 'E' : 'e';
 	}
-	ptf->precision = get_suffix(tmp, suffix, ptf->spec, expn) ? : 0;
+	if (ft_strchr("eE", ptf->spec))
+		ptf->precision = get_suffix(tmp, suffix, ptf->spec, expn) ? : 0;
 	tmp[2] = ft_strchr(ptf->flags, '#') && ptf->precision == 0 ? '\0' : tmp[2];
 }
 
