@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/22 19:02:09 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/23 16:18:45 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,8 @@ int			ft_dtoa(double val, int precision, char *buff, char spec)
 			ft_strcat(buff, "nan");
 		else
 			ft_strcat(buff, dbl.bits.sign ? "-inf" : "inf");
+		if (ft_isupper(spec))
+			buff = ft_strtoupper(buff);
 		return (0);
 	}
 	expn = get_intpart(&dbl, &precision, buff + 1, spec);

@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 16:27:54 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/21 16:58:58 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/23 16:57:46 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ char				*ft_strrchr(const char *s, int c);
 int					ft_strchri(const char *s, int c);
 int					ft_strchrn(const char *s, int c);
 char				*ft_strstr(const char *src, const char *find);
+char				*ft_strcasestr(const char *src, const char *find);
 char				*ft_strnstr(const char *src, const char *find, size_t len);
 int					ft_strcmp(const char *s1, const char *s2);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -132,6 +133,7 @@ char				*ft_strmap(char const *s, char (*f)(char));
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 int					ft_strequ(char const *s1, char const *s2);
 int					ft_strnequ(char const *s1, char const *s2, size_t n);
+int					ft_strcasenequ(char const *s1, char const *s2, size_t n);
 char				*ft_strsub(char const *s, unsigned int start, size_t len);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strtrim(char const *s);
