@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/27 18:21:18 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/27 18:34:29 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,26 +124,22 @@ int			ft_dtoa(double val, int precision, char *buff, char spec)
 	char		*base_str;
 
 	dbl.val = val;
+	base_str = BASE_DENARY;
 	if (spec == 'a' || spec == 'A')
 		base_str = spec == 'A' ? BASE_HEXA_UP : BASE_HEXA;
-	else
-		base_str = BASE_DENARY;
 	base = ft_strlen(base_str);
 	if (dbl.bits.expn == 2047)
 	{
-		if (dbl.bits.mant)
-			ft_strcat(buff, "nan");
-		else
+		ft_strcat(buff, dbl.bits.mant ? "nan" : "\0");
+		if (!dbl.bits.mant)
 			ft_strcat(buff, dbl.bits.sign ? "-inf" : "inf");
-		if (ft_isupper(spec))
-			buff = ft_strtoupper(buff);
+		buff = ft_isupper(spec) ? ft_strtoupper(buff) : buff;
 		return (0);
 	}
 	expn = get_intpart(&dbl, &precision, buff + 1, spec, base_str);
 	while (precision)
 	{
-		dbl.val /= base;
-		dbl.val *= (base * base);
+		dbl.val = (dbl.val / base) * (base * base);
 		if (((int)dbl.val % base) > base || ((int)dbl.val < 0))
 			ft_ccat(buff + 1, (int)dbl.val < 0 ? '0' : (int)dbl.val + '0');
 		else
