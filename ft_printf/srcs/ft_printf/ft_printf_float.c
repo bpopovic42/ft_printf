@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/27 17:27:42 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/27 17:45:26 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int			get_suffix(char *buff, char *suffix, char spec, int expn)
 	{
 		min = expn < 0 ? 1 : 0;
 		expn = expn < 0 ? -expn : expn;
-		while (expn || i < 2)
+		while (expn || (i < (spec == 'a' || spec == 'A' ? 1 : 2)))
 		{
 			ft_ccat(suffix, expn % 10 + '0');
 			expn /= 10;
@@ -92,7 +92,8 @@ int			ft_printf_type_dbl(t_ptf *ptf, double param)
 	size = 0;
 	ret = 0;
 	get_arg(ptf, param, tmp, suffix);
-	get_prefix(ptf, tmp, prefix);
+	if (!(ft_strcasestr(tmp, "nan") || ft_strcasestr(tmp, "inf")))
+		get_prefix(ptf, tmp, prefix);
 	size = ft_strlen(tmp);
 	if (ptf->precision > MAX_DBL_PRECISION)
 		ptf->precision -= MAX_DBL_PRECISION;
