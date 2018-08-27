@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/27 16:40:10 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/27 16:43:24 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ int			ft_dtoa(double val, int precision, char *buff, char spec)
 		dbl.val -= (int)dbl.val;
 		precision--;
 	}
-	if ((int)(dbl.val * base) % base > 5)
+	if ((int)(dbl.val * base) % base > (base / 2))
 		round_dbl(buff);
 	return (expn);
 }
