@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/27 16:43:24 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/27 17:33:44 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ static void round_dbl(char *buff)
 		i--;
 	}
 }
-
-#include <stdio.h>
 
 static int		write_intpart(double *val, char *buff, int i, char *base_str)
 {
@@ -146,6 +144,8 @@ int			ft_dtoa(double val, int precision, char *buff, char spec)
 	{
 		dbl.val /= base;
 		dbl.val *= (base * base);
+		if (precision < 0 && (int)dbl.val == 0 && (int)(dbl.val * 10) == 0)
+			break;
 		if (((int)dbl.val % base) > base || ((int)dbl.val < 0))
 			ft_ccat(buff + 1, (int)dbl.val < 0 ? '0' : (int)dbl.val + '0');
 		else

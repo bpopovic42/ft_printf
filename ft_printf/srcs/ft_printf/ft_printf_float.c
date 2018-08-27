@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/27 16:40:35 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/27 17:27:42 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void			get_arg(t_ptf *ptf, double param, char *tmp, char *suffix)
 		ptf->precision = !ptf->precision ? 1 : ptf->precision;
 	if (ptf->precision > MAX_DBL_PRECISION)
 		expn = ft_dtoa(param, MAX_DBL_PRECISION, tmp, ptf->spec);
-	else if (ptf->precision < 0)
+	else if (ptf->precision < 0 && !(ptf->spec == 'a' || ptf->spec == 'A'))
 		expn = ft_dtoa(param, 6, tmp, ptf->spec);
 	else
 		expn = ft_dtoa(param, ptf->precision, tmp, ptf->spec);
