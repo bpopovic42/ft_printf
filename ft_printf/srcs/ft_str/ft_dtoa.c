@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/27 18:34:29 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/27 18:37:27 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,10 +140,7 @@ int			ft_dtoa(double val, int precision, char *buff, char spec)
 	while (precision)
 	{
 		dbl.val = (dbl.val / base) * (base * base);
-		if (((int)dbl.val % base) > base || ((int)dbl.val < 0))
-			ft_ccat(buff + 1, (int)dbl.val < 0 ? '0' : (int)dbl.val + '0');
-		else
-			ft_ccat(buff + 1, base_str[(int)dbl.val]);
+		ft_ccat(buff + 1, (int)dbl.val < 0 ? '0' : base_str[(int)dbl.val]);
 		dbl.val -= (int)dbl.val;
 		precision--;
 	}

@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:05:25 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/27 18:29:52 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/27 18:36:03 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ int		main()
 	//printf("%f P\n", test.nbr);
 	//printf("prval = %d, frval = %d\n", prval, frval);
 	t_dbl test;
-	test.bits.mant = 95;
-	test.bits.expn = 500;
+	test.bits.mant = 954;
+	test.bits.expn = 1000;
 	frval = ft_printf("%a %g %e %f F\n", test.val, test.val, test.val, test.val); // INFINITY TEST CASE
 	prval = printf("%a %g %e %f P\n", test.val, test.val, test.val, test.val); // INFINITY TEST CASE
 	printf("prval = %d, frval = %d\n", prval, frval);
