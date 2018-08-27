@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/27 17:45:26 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/27 18:27:01 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,19 +57,20 @@ static void			get_arg(t_ptf *ptf, double param, char *tmp, char *suffix)
 
 	if ((ft_strchr(ptf->flags, '#') || ft_strchr("gG", ptf->spec)))
 		ptf->precision = !ptf->precision ? 1 : ptf->precision;
-	if (ptf->precision > MAX_DBL_PRECISION)
+	if (ptf->precision > MAX_DBL_PRECISION || (ptf->precision < 0 && ft_strchr("aA", ptf->spec)))
 		expn = ft_dtoa(param, MAX_DBL_PRECISION, tmp, ptf->spec);
-	else if (ptf->precision < 0 && !(ptf->spec == 'a' || ptf->spec == 'A'))
+	else if (ptf->precision < 0)
 		expn = ft_dtoa(param, 6, tmp, ptf->spec);
 	else
 		expn = ft_dtoa(param, ptf->precision, tmp, ptf->spec);
 	tmp = !tmp[0] ? ft_strcpy(tmp, tmp + 1) : tmp;
-	i = ft_strlen(tmp);
+	i = ft_strlen(tmp) - 1;
 	while (tmp[i] == '0')
 		i--;
+	if (ft_strchr("aAgG", ptf->spec) && ptf->precision < 0)
+		tmp[tmp[i] == '.' ? i : i + 1] = '\0';
 	if (ft_strchr("gG", ptf->spec))
 	{
-		tmp[tmp[i] == '.' ? i : i + 1] = '\0';
 		if (expn < -4 || (expn > ptf->precision && ptf->precision != 0))
 			ptf->spec = ptf->spec == 'G' ? 'E' : 'e';
 	}
