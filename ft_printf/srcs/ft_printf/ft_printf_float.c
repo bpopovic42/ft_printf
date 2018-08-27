@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/23 17:35:28 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/27 16:40:35 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static void			get_prefix(t_ptf *ptf, char *ptr, char *prefix)
 		ft_strcat(prefix, ptr[0] == '-' ? "" : "+");
 	else if (ft_strchr(ptf->flags, ' '))
 		ft_strcat(prefix, " ");
+	if (ptf->spec == 'a' || ptf->spec == 'A')
+		ft_strcat(prefix, ptf->spec == 'A' ? "0X" : "0x");
 }
 
 static int			get_suffix(char *buff, char *suffix, char spec, int expn)
@@ -38,7 +40,10 @@ static int			get_suffix(char *buff, char *suffix, char spec, int expn)
 			i++;
 		}
 		ft_ccat(suffix, min ? '-' : '+');
-		ft_ccat(suffix, spec);
+		if (ft_strchr("eE", spec))
+			ft_ccat(suffix, spec);
+		else
+			ft_ccat(suffix, spec == 'A' ? 'P' : 'p');
 		suffix = ft_strrev(suffix);
 		return (1);
 	}
@@ -68,7 +73,7 @@ static void			get_arg(t_ptf *ptf, double param, char *tmp, char *suffix)
 		if (expn < -4 || (expn > ptf->precision && ptf->precision != 0))
 			ptf->spec = ptf->spec == 'G' ? 'E' : 'e';
 	}
-	if (ft_strchr("eE", ptf->spec))
+	if (ft_strchr("aAeE", ptf->spec))
 		ptf->precision = get_suffix(tmp, suffix, ptf->spec, expn) ? : 0;
 	tmp[2] = ft_strchr(ptf->flags, '#') && ptf->precision == 0 ? '\0' : tmp[2];
 }
