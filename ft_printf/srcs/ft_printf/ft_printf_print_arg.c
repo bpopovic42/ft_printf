@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/17 21:48:21 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/28 19:44:34 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int				ft_printf_print_arg(t_ptf *ptf, int *prfx, int *input, int size)
 	}
 	else
 		ft_printf_buff_cat(ptf, (char*)input, size);
-	if (ft_strchr("FE", ft_toupper(ptf->spec)) && ptf->precision > 0)
+	if (ft_strchr("AEF", ft_toupper(ptf->spec)) && ptf->precision > 0)
 		ft_printf_buff_catn(ptf, "0", ptf->precision);
 	if (ft_strchr(ptf->flags, '-') && (int)ptf->width > 0)
 		ft_printf_buff_catn(ptf, " ", ptf->width);

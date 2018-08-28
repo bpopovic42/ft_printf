@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/28 19:28:30 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/28 22:57:26 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,32 +50,44 @@ static int			get_suffix(char *buff, char *suffix, char spec, int expn)
 	return (0);
 }
 
-static void			get_arg(t_ptf *ptf, double param, char *tmp, char *suffix)
+static void			get_arg_2(t_ptf *ptf, double param, char *tmp, int expn)
 {
-	int		expn;
-	int		i;
-
-	if ((ft_strchr(ptf->flags, '#') || ft_strchr("gG", ptf->spec)))
-		ptf->precision = !ptf->precision ? 1 : ptf->precision;
-	if (ptf->precision > MAX_DBL_PRECISION || (ptf->precision < 0 && ft_strchr("aA", ptf->spec)))
+	if (ptf->precision > MAX_DBL_PRECISION)
+		expn = ft_printf_dtoa(param, MAX_DBL_PRECISION, tmp, ptf->spec);
+	else if (ptf->precision < 0 && ft_strchr("aA", ptf->spec))
 		expn = ft_printf_dtoa(param, MAX_DBL_PRECISION, tmp, ptf->spec);
 	else if (ptf->precision < 0)
 		expn = ft_printf_dtoa(param, 6, tmp, ptf->spec);
 	else
 		expn = ft_printf_dtoa(param, ptf->precision, tmp, ptf->spec);
 	tmp = !tmp[0] ? ft_strcpy(tmp, tmp + 1) : tmp;
+}
+
+static void			get_arg(t_ptf *ptf, double param, char *tmp, char *suffix)
+{
+	int		expn;
+	int		i;
+
+	expn = 0;
+	if ((ft_strchr(ptf->flags, '#') || ft_strchr("gG", ptf->spec)))
+		ptf->precision = !ptf->precision ? 1 : ptf->precision;
+	get_arg_2(ptf, param, tmp, expn);
 	i = ft_strlen(tmp) - 1;
 	while (tmp[i] == '0')
 		i--;
-	if (ft_strchr("aAgG", ptf->spec) && ptf->precision < 0)
+	if (ft_strchr("aAgG", ptf->spec)/* && ptf->precision < 0*/)
 		tmp[tmp[i] == '.' ? i : i + 1] = '\0';
 	if (ft_strchr("gG", ptf->spec))
 	{
 		if (expn < -4 || (expn > ptf->precision && ptf->precision != 0))
 			ptf->spec = ptf->spec == 'G' ? 'E' : 'e';
+		ptf->precision = 0;
 	}
 	if (ft_strchr("aAeE", ptf->spec))
-		ptf->precision = get_suffix(tmp, suffix, ptf->spec, expn) ? : 0;
+	{
+		if (!(get_suffix(tmp, suffix, ptf->spec, expn)))
+			ptf->precision = 0;
+	}
 	tmp[2] = ft_strchr(ptf->flags, '#') && ptf->precision == 0 ? '\0' : tmp[2];
 }
 
