@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/21 17:51:40 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/28 19:22:21 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,6 @@ int		ft_printf_is_spec(int c);
 size_t	ft_printf_atoi(const char *str, int *res);
 int		ft_printf_itoa_base(char *buff, char *charset, long long nbr);
 int		ft_printf_uitoa_base(char *buff, char *charset, uint64_t nbr);
+int		ft_printf_dtoa(double val, int prec, char *buff, char spec);
 
 #endif

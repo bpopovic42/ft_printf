@@ -6,7 +6,7 @@
 #    By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/03 08:42:00 by bopopovi          #+#    #+#              #
-#*   Updated: 2018/08/23 16:57:31 by bopopovi         ###   ########.fr       *#
+#*   Updated: 2018/08/28 19:26:09 by bopopovi         ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,8 +50,8 @@ SRC_STR		=	ft_islower.c ft_isupper.c ft_isalpha.c ft_isdigit.c \
 			ft_strsub.c ft_strjoin.c ft_strtrim.c ft_strsplit.c \
 			ft_itoa.c ft_issign.c ft_char_count.c ft_strappend.c \
 			ft_strnappend.c ft_strcinsert.c ft_wctomb.c ft_wcstombs.c \
-			ft_wcslen.c ft_dtoa.c ft_strrev.c ft_wcsnlen.c ft_strchrn.c \
-			ft_ccat.c ft_strtoupper.c ft_strcasestr.c ft_strcasenequ.c
+			ft_wcslen.c ft_strrev.c ft_wcsnlen.c ft_strchrn.c ft_ccat.c \
+			ft_strtoupper.c ft_strcasestr.c ft_strcasenequ.c
 
 # **************************************************************************** #
 # Hash :
@@ -69,7 +69,8 @@ SRC_BIN		=	ft_toggle_bit.c ft_is_bit_set.c
 
 SRC_PTF		=	ft_printf.c ft_printf_buffer.c ft_printf_tools.c \
 			ft_printf_print_arg.c ft_printf_get_flags.c ft_vprintf.c \
-			ft_printf_int.c ft_printf_str.c ft_printf_char.c ft_printf_float.c
+			ft_printf_type_int.c ft_printf_type_str.c ft_printf_type_char.c \
+			ft_printf_type_dbl.c ft_printf_dtoa.c
 
 ############################## VAR #############################################
 

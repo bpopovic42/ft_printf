@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 16:27:54 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/23 16:57:46 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/28 19:22:23 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,8 +153,6 @@ int					ft_wctomb(unsigned char *s, wchar_t wc);
 char				*ft_strrev(char *str);
 size_t				ft_wcslen(wchar_t *wcs);
 size_t				ft_wcsnlen(wchar_t *wcs, size_t n);
-int					ft_dtoa(double val, int precision, char *buff, char spec);
-int					ft_dtoas(double val, int precision, char *buff);
 int					ft_ccat(char *dst, char app);
 char				*ft_strtoupper(char *str);
 

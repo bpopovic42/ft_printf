@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_dtoa.c                                          :+:      :+:    :+:   */
+/*   ft_printf_dtoa.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/27 18:37:27 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/28 19:20:51 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void round_dbl(char *buff)
 	}
 }
 
-static int		write_intpart(double *val, char *buff, int i, char *base_str)
+static int		dtoa_base(double *val, char *buff, int i, char *bstr)
 {
 	double	tmp;
 	int		ret;
@@ -41,10 +41,10 @@ static int		write_intpart(double *val, char *buff, int i, char *base_str)
 
 	tmp = *val;
 	ret = 0;
-	base = ft_strlen(base_str);
+	base = ft_strlen(bstr);
 	while (i)
 	{
-		ft_ccat(buff, base_str[(long long)(tmp)]);
+		ft_ccat(buff, bstr[(long long)(tmp)]);
 		tmp -= (long long)(tmp);
 		tmp /= base;
 		tmp *= (base * base);
@@ -87,13 +87,13 @@ static int		adjust(double *val, char spec)
 }
 
 
-static int		get_intpart(t_dbl *dbl, int *precision, char *buff, char spec, char *base_str)
+static int		getint(t_dbl *dbl, int *prec, char *buff, char spec, char *bstr)
 {
 	int expn;
 	int base;
 	int intpart_size;
 
-	base = ft_strlen(base_str);
+	base = ft_strlen(bstr);
 	buff[0] = dbl->bits.sign ? '-' : buff[0];
 	dbl->bits.sign = 0;
 	intpart_size = 0;
@@ -103,31 +103,33 @@ static int		get_intpart(t_dbl *dbl, int *precision, char *buff, char spec, char 
 		expn = 1;
 	if ((spec == 'G' || spec == 'g') || (spec == 'a' || spec == 'A'))
 	{
-		if (expn > -4 && expn < *precision && expn != 0 && ft_toupper(spec) != 'A')
-			intpart_size = write_intpart(&dbl->val, buff, expn, base_str);
+		if (expn > -4 && expn < *prec && expn != 0 && ft_toupper(spec) != 'A')
+			intpart_size = dtoa_base(&dbl->val, buff, expn, bstr);
 		else
-			intpart_size = write_intpart(&dbl->val, buff, 1, base_str);
-		*precision -= (spec == 'G' || spec == 'g' ? intpart_size : 0);
+			intpart_size = dtoa_base(&dbl->val, buff, 1, bstr);
+		*prec -= (spec == 'G' || spec == 'g' ? intpart_size : 0);
 	}
 	else
-		write_intpart(&dbl->val, buff, ft_strchr("fF", spec) ? expn : 1, base_str);
-	ft_ccat(buff, *precision ? '.' : '\0');
+		dtoa_base(&dbl->val, buff, ft_strchr("fF", spec) ? expn : 1, bstr);
+	ft_ccat(buff, *prec ? '.' : '\0');
 	dbl->val -= (long long)dbl->val;
 	return (expn);
 }
 
-int			ft_dtoa(double val, int precision, char *buff, char spec)
+#include <stdio.h>
+
+int			ft_printf_dtoa(double val, int prec, char *buff, char spec)
 {
 	t_dbl		dbl;
 	int			expn;
 	int			base;
-	char		*base_str;
+	char		*bstr;
 
 	dbl.val = val;
-	base_str = BASE_DENARY;
+	bstr = BASE_DENARY;
 	if (spec == 'a' || spec == 'A')
-		base_str = spec == 'A' ? BASE_HEXA_UP : BASE_HEXA;
-	base = ft_strlen(base_str);
+		bstr = spec == 'A' ? BASE_HEXA_UP : BASE_HEXA;
+	base = ft_strlen(bstr);
 	if (dbl.bits.expn == 2047)
 	{
 		ft_strcat(buff, dbl.bits.mant ? "nan" : "\0");
@@ -136,15 +138,10 @@ int			ft_dtoa(double val, int precision, char *buff, char spec)
 		buff = ft_isupper(spec) ? ft_strtoupper(buff) : buff;
 		return (0);
 	}
-	expn = get_intpart(&dbl, &precision, buff + 1, spec, base_str);
-	while (precision)
-	{
-		dbl.val = (dbl.val / base) * (base * base);
-		ft_ccat(buff + 1, (int)dbl.val < 0 ? '0' : base_str[(int)dbl.val]);
-		dbl.val -= (int)dbl.val;
-		precision--;
-	}
-	if ((int)(dbl.val * base) % base > (base / 2))
+	expn = getint(&dbl, &prec, buff + 1, spec, bstr);
+	dbl.val *= base;
+	dtoa_base(&dbl.val, buff + 1, prec, bstr);
+	if ((int)(dbl.val) > (base / 2))
 		round_dbl(buff);
 	return (expn);
 }
