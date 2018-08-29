@@ -6,13 +6,31 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:06:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/29 03:05:14 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/29 04:13:40 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-#include <stdio.h>
+static void		ft_printf_color(t_ptf *ptf)
+{
+	int color_size;
+
+	color_size = 1;
+	ft_printf_dump_fmt(ptf);
+	if (ft_strnstr(ptf->fmt.format, "{cyan}", ft_strlen("{cyan}")))
+	{
+		color_size = ft_strlen("{cyan}");
+		ft_printf_buff_cat(ptf, "\033[34;5m", 7);
+	}
+	else if (ft_strnstr(ptf->fmt.format, "{eoc}", ft_strlen("{eoc}")))
+	{
+		color_size = ft_strlen("{eoc}");
+		ft_printf_buff_cat(ptf, "\033[32;5m", 7);
+	}
+	ptf->fmt.format += color_size;
+	ptf->fmt.i = 0;
+}
 
 static int		ft_printf_type_n(t_ptf *ptf, int *n)
 {
@@ -80,7 +98,7 @@ static int			parse_fmt(t_ptf *ptf, va_list ap)
 	i = &(ptf->fmt.i);
 	while ((*fmt)[*i])
 	{
-		while ((*fmt)[*i] && (*fmt)[*i] != '%')
+		while ((*fmt)[*i] && (*fmt)[*i] != '%' && (*fmt)[*i] != '{')
 			(*i)++;
 		if ((*fmt)[*i] == '%')
 		{
@@ -89,6 +107,8 @@ static int			parse_fmt(t_ptf *ptf, va_list ap)
 			else if ((ret = treat_arg(ptf, ap)) < 1)
 				return (ret);
 		}
+		else if ((*fmt)[*i] == '{')
+			ft_printf_color(ptf);
 	}
 	if (**fmt)
 		ft_printf_buff_cat(ptf, (char*)*fmt, *i);
