@@ -6,11 +6,20 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:06:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/29 01:34:36 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/29 03:05:14 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+#include <stdio.h>
+
+static int		ft_printf_type_n(t_ptf *ptf, int *n)
+{
+	ft_printf_dump_fmt(ptf);
+	*n = (int)(ptf->buff.read + ptf->buff.pos + ptf->fmt.i);
+	return (1);
+}
 
 static int		treat_arg_by_type(t_ptf *ptf, va_list ap)
 {
@@ -36,7 +45,9 @@ static int		treat_arg_by_type(t_ptf *ptf, va_list ap)
 	else if (spec == 'c' || spec == 'C')
 		return (ft_printf_type_char(ptf, (wchar_t)va_arg(ap, long long)));
 	else if (ft_strchr("aAeEfFgG", spec))
-		return(ft_printf_type_dbl(ptf, va_arg(ap, double)));
+		return (ft_printf_type_dbl(ptf, va_arg(ap, double)));
+	else if (spec == 'n')
+		return (ft_printf_type_n(ptf, va_arg(ap, int*)));
 	return (-1);
 }
 
