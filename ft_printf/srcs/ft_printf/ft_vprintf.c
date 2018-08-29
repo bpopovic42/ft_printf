@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:06:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/28 19:50:54 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/29 01:34:36 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int		treat_arg_by_type(t_ptf *ptf, va_list ap)
 	}
 	else if (ft_strchr("bBdDioOuUxXp", spec))
 		return (ft_printf_type_int(ptf, va_arg(ap, long long)));
-	else if (spec == 's' || spec == 'S')
+	else if (spec == 'r' || spec == 's' || spec == 'S')
 		return (ft_printf_type_str(ptf, (wchar_t*)va_arg(ap, long long)));
 	else if (spec == 'c' || spec == 'C')
 		return (ft_printf_type_char(ptf, (wchar_t)va_arg(ap, long long)));
