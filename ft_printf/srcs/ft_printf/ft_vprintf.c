@@ -6,17 +6,17 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:06:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/29 04:13:40 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/29 04:23:34 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void		ft_printf_color(t_ptf *ptf)
+static int		ft_printf_color(t_ptf *ptf)
 {
 	int color_size;
 
-	color_size = 1;
+	color_size = 0;
 	ft_printf_dump_fmt(ptf);
 	if (ft_strnstr(ptf->fmt.format, "{cyan}", ft_strlen("{cyan}")))
 	{
@@ -30,6 +30,7 @@ static void		ft_printf_color(t_ptf *ptf)
 	}
 	ptf->fmt.format += color_size;
 	ptf->fmt.i = 0;
+	return (color_size);
 }
 
 static int		ft_printf_type_n(t_ptf *ptf, int *n)
@@ -108,7 +109,11 @@ static int			parse_fmt(t_ptf *ptf, va_list ap)
 				return (ret);
 		}
 		else if ((*fmt)[*i] == '{')
-			ft_printf_color(ptf);
+		{
+			if (!(ft_printf_color(ptf)))
+				(*i)++;
+		}
+
 	}
 	if (**fmt)
 		ft_printf_buff_cat(ptf, (char*)*fmt, *i);
