@@ -1,0 +1,5 @@
+Run some further tests against potential crashes and re-check floats
+Make a run through the whole code
+Check and add some more typedefs where needed
+Rename functions (ex : lltoa), and check naming conventions for variables etc..
+Norm
