@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/28 22:57:26 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/30 18:46:59 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static void			get_arg(t_ptf *ptf, double param, char *tmp, char *suffix)
 	i = ft_strlen(tmp) - 1;
 	while (tmp[i] == '0')
 		i--;
-	if (ft_strchr("aAgG", ptf->spec)/* && ptf->precision < 0*/)
+	if (ft_strchr("aAgG", ptf->spec))
 		tmp[tmp[i] == '.' ? i : i + 1] = '\0';
 	if (ft_strchr("gG", ptf->spec))
 	{
@@ -91,7 +91,7 @@ static void			get_arg(t_ptf *ptf, double param, char *tmp, char *suffix)
 	tmp[2] = ft_strchr(ptf->flags, '#') && ptf->precision == 0 ? '\0' : tmp[2];
 }
 
-int			ft_printf_type_dbl(t_ptf *ptf, double param)
+int					ft_printf_type_dbl(t_ptf *ptf, double param)
 {
 	char	tmp[MAX_DBL_LEN + MAX_DBL_PRECISION + 1];
 	int		size;

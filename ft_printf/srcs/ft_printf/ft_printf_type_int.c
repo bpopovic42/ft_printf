@@ -6,16 +6,16 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/30 18:30:46 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/30 18:47:58 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		get_arg_unsigned(t_ptf *ptf, char *res, long long param)
+int					get_arg_unsigned(t_ptf *ptf, char *res, long long param)
 {
 	if (ptf->spec == 'p')
-		return(ft_printf_itoa_base(res, ptf->base, (unsigned long long)param));
+		return (ft_printf_itoa_base(res, ptf->base, (unsigned long long)param));
 	else if (ft_strchrn(ptf->flags, 'l') == 2)
 		return (ft_printf_uitoa_base(res, ptf->base, (uint64_t)param));
 	else if (ft_strchr(ptf->flags, 'l'))
@@ -32,7 +32,7 @@ int		get_arg_unsigned(t_ptf *ptf, char *res, long long param)
 		return (ft_printf_uitoa_base(res, ptf->base, (unsigned)param));
 }
 
-int			get_arg_signed(t_ptf *ptf, char *res, long long param)
+int					get_arg_signed(t_ptf *ptf, char *res, long long param)
 {
 	if (ft_strchrn(ptf->flags, 'l') == 2)
 		return (ft_printf_itoa_base(res, ptf->base, (long long)param));
@@ -71,7 +71,7 @@ static int			get_prefix(t_ptf *ptf, char *ptr, char *prefix)
 	return (ft_strlen(prefix));
 }
 
-int			ft_printf_type_int(t_ptf *ptf, long long param)
+int					ft_printf_type_int(t_ptf *ptf, long long param)
 {
 	char	ptr[65];
 	char	prefix[5];

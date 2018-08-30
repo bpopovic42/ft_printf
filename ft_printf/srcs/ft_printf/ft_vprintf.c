@@ -6,13 +6,13 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:06:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/30 17:22:22 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/30 18:48:32 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int		treat_arg_by_type(t_ptf *ptf, va_list ap)
+static int			treat_arg_by_type(t_ptf *ptf, va_list ap)
 {
 	char spec;
 
@@ -59,7 +59,7 @@ static int			treat_arg(t_ptf *ptf, va_list ap)
 	return (size);
 }
 
-static int			parse_fmt(t_ptf *ptf, va_list ap)
+static int				parse_fmt(t_ptf *ptf, va_list ap)
 {
 	int				ret;
 	const char		**fmt;
@@ -95,7 +95,7 @@ static void inline		init_struct(t_ptf *ptf, const char * restrict format)
 	ptf->fmt.i = 0;
 }
 
-int			ft_vprintf(const char * restrict format, va_list ap)
+int						ft_vprintf(const char * restrict format, va_list ap)
 {
 	long long		ret;
 	t_ptf			ptf;
