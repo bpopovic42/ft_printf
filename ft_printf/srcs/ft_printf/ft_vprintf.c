@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:06:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/29 04:23:34 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/30 16:34:45 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,27 @@
 
 static int		ft_printf_color(t_ptf *ptf)
 {
-	int color_size;
-
-	color_size = 0;
 	ft_printf_dump_fmt(ptf);
-	if (ft_strnstr(ptf->fmt.format, "{cyan}", ft_strlen("{cyan}")))
-	{
-		color_size = ft_strlen("{cyan}");
-		ft_printf_buff_cat(ptf, "\033[34;5m", 7);
-	}
-	else if (ft_strnstr(ptf->fmt.format, "{eoc}", ft_strlen("{eoc}")))
-	{
-		color_size = ft_strlen("{eoc}");
-		ft_printf_buff_cat(ptf, "\033[32;5m", 7);
-	}
-	ptf->fmt.format += color_size;
-	ptf->fmt.i = 0;
-	return (color_size);
+	if (!ft_strncmp(ptf->fmt.format, "{eoc}", 5))
+		ft_printf_buff_cat(ptf, FT_PRINTF_EOC, 5);
+	else if (!ft_strncmp(ptf->fmt.format, "{red}", 5))
+		ft_printf_buff_cat(ptf, FT_PRINTF_RED, 5);
+	else if (!ft_strncmp(ptf->fmt.format, "{green}", 7))
+		ft_printf_buff_cat(ptf, FT_PRINTF_GRN, 5);
+	else if (!ft_strncmp(ptf->fmt.format, "{blue}", 6))
+		ft_printf_buff_cat(ptf, FT_PRINTF_BLU, 5);
+	else if (!ft_strncmp(ptf->fmt.format, "{yellow}", 8))
+		ft_printf_buff_cat(ptf, FT_PRINTF_YLW, 5);
+	else if (!ft_strncmp(ptf->fmt.format, "{cyan}", 6))
+		ft_printf_buff_cat(ptf, FT_PRINTF_CYA, 5);
+	else if (!ft_strncmp(ptf->fmt.format, "{magenta}", 9))
+		ft_printf_buff_cat(ptf, FT_PRINTF_MAG, 5);
+	else
+		return (0);
+	while (*(ptf->fmt.format) != '}')
+		ptf->fmt.format++;
+	ptf->fmt.format++;
+	return (1);
 }
 
 static int		ft_printf_type_n(t_ptf *ptf, int *n)

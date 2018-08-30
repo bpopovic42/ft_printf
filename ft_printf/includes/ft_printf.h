@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/29 01:54:28 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/30 16:33:50 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,14 @@
 # define MAX_INT_LEN 21
 # define MAX_DBL_PRECISION 200
 # define MAX_DBL_LEN 500
+# define FT_PRINTF_EOC "\e[39m"
+# define FT_PRINTF_BLK "\e[30m"
+# define FT_PRINTF_RED "\e[31m"
+# define FT_PRINTF_GRN "\e[32m"
+# define FT_PRINTF_YLW "\e[33m"
+# define FT_PRINTF_BLU "\e[34m"
+# define FT_PRINTF_MAG "\e[35m"
+# define FT_PRINTF_CYA "\e[36m"
 
 typedef struct		s_fmt
 {

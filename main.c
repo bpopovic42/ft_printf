@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:05:25 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/29 04:23:47 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/30 16:28:21 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int		main()
 	//prval = printf("%.201g\n%.201e\n%.201f P\n", test.val, test.val, test.val);
 	int fnts = 0;
 	int pnts = 0;
-	frval = ft_printf("%n{{{eoc}lol{cyan}F\n", &fnts);
+	frval = ft_printf("{red}H{green}e{blue}l{yellow}l{cyan}o{magenta} !{{eoc}} F\n", &fnts);
 	prval = printf("lol %n P\n", &pnts);
 	printf("prval = %d, frval = %d\n", prval, frval);
 	printf("pnts = %d, fnts = %d\n", pnts, fnts);
