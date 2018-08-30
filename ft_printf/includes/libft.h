@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 16:27:54 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/28 19:22:23 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/30 18:41:35 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef union		u_dbl
 		unsigned long	mant: 52;
 		unsigned int	expn: 11;
 		unsigned int	sign: 1;
-	}					bits;
+	}				bits;
 }					t_dbl;
 
 /*
@@ -66,7 +66,6 @@ void				ft_putstr_npr(char *str);
 int					ft_putnbr_base(int n, char *base);
 void				*ft_print_memory(void *addr, unsigned int size);
 void				ft_print_bits(uint64_t val, size_t type);
-
 
 /*
 ** LIST FUNCTIONS

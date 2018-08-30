@@ -6,13 +6,13 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:03:18 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/14 21:03:01 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/30 18:03:49 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static char inline		*get_base(int spec)
+static char	*get_base(int spec)
 {
 	if (ft_strchr("dDiuU", spec))
 		return (BASE_DENARY);
@@ -26,7 +26,7 @@ static char inline		*get_base(int spec)
 		return (NULL);
 }
 
-static void inline		init_flags(t_ptf *ptf)
+static void	init_flags(t_ptf *ptf)
 {
 	ptf->width = 0;
 	ptf->precision = -1;
@@ -67,8 +67,8 @@ static int	get_precision(va_list ap, const char *fmt, int *precision)
 
 int			ft_printf_get_flags(t_ptf *ptf, va_list ap, int i)
 {
-	const char *fmt;
-	char *flags;
+	const char	*fmt;
+	char		*flags;
 
 	init_flags(ptf);
 	fmt = ptf->fmt.format;

@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/30 16:33:50 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/30 18:40:44 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ typedef struct		s_ptf
 ** FT_PRINTF
 */
 
-int		ft_printf(const char * restrict format, ...);
-int		ft_vprintf(const char * restrict format, va_list ap);
+int		ft_printf(const char *restrict format, ...);
+int		ft_vprintf(const char *restrict format, va_list ap);
 
 /*
 ** FT_PRINTF_TYPE
@@ -75,6 +75,7 @@ int		ft_printf_type_int(t_ptf *ptf, long long param);
 int		ft_printf_type_str(t_ptf *ptf, wchar_t *param);
 int		ft_printf_type_char(t_ptf *ptf, wchar_t param);
 int		ft_printf_type_dbl(t_ptf *ptf, double param);
+int		ft_printf_type_n(t_ptf *ptf, int *n);
 
 /*
 ** FT_PRINTF_GET_FLAGS
@@ -108,5 +109,11 @@ size_t	ft_printf_atoi(const char *str, int *res);
 int		ft_printf_itoa_base(char *buff, char *charset, long long nbr);
 int		ft_printf_uitoa_base(char *buff, char *charset, uint64_t nbr);
 int		ft_printf_dtoa(double val, int prec, char *buff, char spec);
+
+/*
+** MISC
+*/
+
+int		ft_printf_color(t_ptf *ptf);
 
 #endif

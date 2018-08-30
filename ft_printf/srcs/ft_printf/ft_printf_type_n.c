@@ -1,31 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_type_char.c                              :+:      :+:    :+:   */
+/*   ft_printf_type_n.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/30 18:44:42 by bopopovi         ###   ########.fr       */
+/*   Created: 2018/08/30 17:05:27 by bopopovi          #+#    #+#             */
+/*   Updated: 2018/08/30 17:06:00 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int			ft_printf_type_char(t_ptf *ptf, wchar_t param)
+int		ft_printf_type_n(t_ptf *ptf, int *n)
 {
-	char	mbs[5];
-	int		size;
-
-	ft_bzero(mbs, 5);
-	size = 1;
-	if (ft_strchr(ptf->flags, 'l'))
-	{
-		if (param && (size = ft_wctomb((unsigned char*)mbs, param)) < 0)
-			return (-1);
-	}
-	else
-		*mbs = (char)param;
-	ptf->width -= size;
-	return (ft_printf_print_arg(ptf, (int*)"\0", (int*)mbs, size));
+	ft_printf_dump_fmt(ptf);
+	*n = (int)(ptf->buff.read + ptf->buff.pos + ptf->fmt.i);
+	return (1);
 }

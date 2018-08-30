@@ -6,13 +6,13 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/14 17:11:54 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/29 02:39:45 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/30 18:45:18 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		ft_printf_is_flag(int c)
+int			ft_printf_is_flag(int c)
 {
 	return (ft_isdigit(c) || c == '-' || c == '+' || c == '#' || c == '.'
 		|| c == 'h' || c == 'j' || c == 'l' || c == 'z' || c == ' '
@@ -48,10 +48,10 @@ size_t		ft_printf_atoi(const char *str, int *res)
 
 int			ft_printf_itoa_base(char *buff, char *charset, long long nbr)
 {
-	int		base;
-	int		i;
-	char	*ptr;
-	unsigned long long tmp;
+	int					base;
+	int					i;
+	char				*ptr;
+	unsigned long long	tmp;
 
 	i = 0;
 	ptr = buff;

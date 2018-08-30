@@ -6,43 +6,11 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:06:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/30 16:34:45 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/30 17:22:22 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-static int		ft_printf_color(t_ptf *ptf)
-{
-	ft_printf_dump_fmt(ptf);
-	if (!ft_strncmp(ptf->fmt.format, "{eoc}", 5))
-		ft_printf_buff_cat(ptf, FT_PRINTF_EOC, 5);
-	else if (!ft_strncmp(ptf->fmt.format, "{red}", 5))
-		ft_printf_buff_cat(ptf, FT_PRINTF_RED, 5);
-	else if (!ft_strncmp(ptf->fmt.format, "{green}", 7))
-		ft_printf_buff_cat(ptf, FT_PRINTF_GRN, 5);
-	else if (!ft_strncmp(ptf->fmt.format, "{blue}", 6))
-		ft_printf_buff_cat(ptf, FT_PRINTF_BLU, 5);
-	else if (!ft_strncmp(ptf->fmt.format, "{yellow}", 8))
-		ft_printf_buff_cat(ptf, FT_PRINTF_YLW, 5);
-	else if (!ft_strncmp(ptf->fmt.format, "{cyan}", 6))
-		ft_printf_buff_cat(ptf, FT_PRINTF_CYA, 5);
-	else if (!ft_strncmp(ptf->fmt.format, "{magenta}", 9))
-		ft_printf_buff_cat(ptf, FT_PRINTF_MAG, 5);
-	else
-		return (0);
-	while (*(ptf->fmt.format) != '}')
-		ptf->fmt.format++;
-	ptf->fmt.format++;
-	return (1);
-}
-
-static int		ft_printf_type_n(t_ptf *ptf, int *n)
-{
-	ft_printf_dump_fmt(ptf);
-	*n = (int)(ptf->buff.read + ptf->buff.pos + ptf->fmt.i);
-	return (1);
-}
 
 static int		treat_arg_by_type(t_ptf *ptf, va_list ap)
 {
@@ -58,8 +26,7 @@ static int		treat_arg_by_type(t_ptf *ptf, va_list ap)
 			ptf->precision = -1;
 			return (ft_printf_print_arg(ptf, (int*)"\0", (int*)"%", 1));
 		}
-		else
-			return (ft_printf_type_char(ptf, (wchar_t)spec));
+		return (ft_printf_type_char(ptf, (wchar_t)spec));
 	}
 	else if (ft_strchr("bBdDioOuUxXp", spec))
 		return (ft_printf_type_int(ptf, va_arg(ap, long long)));
@@ -113,11 +80,7 @@ static int			parse_fmt(t_ptf *ptf, va_list ap)
 				return (ret);
 		}
 		else if ((*fmt)[*i] == '{')
-		{
-			if (!(ft_printf_color(ptf)))
-				(*i)++;
-		}
-
+			*i += ft_printf_color(ptf);
 	}
 	if (**fmt)
 		ft_printf_buff_cat(ptf, (char*)*fmt, *i);

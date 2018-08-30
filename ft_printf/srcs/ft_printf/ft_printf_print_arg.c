@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/29 01:55:29 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/30 18:02:42 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int				ft_printf_print_wcs(t_ptf *ptf, int *input, int size)
 				return (1);
 		}
 		else
-			break;
+			break ;
 		i++;
 	}
 	return (1);
@@ -44,12 +44,10 @@ int				ft_printf_print_arg(t_ptf *ptf, int *prfx, int *input, int size)
 {
 	char *width;
 
-	if (ft_strchr(ptf->flags, '0') && (ptf->precision < 0 || ft_strchr("sScC", ptf->spec)))
-		width = "0";
-	else
-		width = " ";
-	if (ptf->fmt.i > 0)
-		ft_printf_dump_fmt(ptf);
+	ft_printf_dump_fmt(ptf);
+	width = " ";
+	if (ft_strchr(ptf->flags, '0'))
+		width = ptf->precision < 0 || ft_strchr("rsScC", ptf->spec) ? "0" : " ";
 	if (ft_strlen((char*)prfx) && *width == '0')
 		ft_printf_buff_cat(ptf, (char*)prfx, ft_strlen((char*)prfx));
 	if (!ft_strchr(ptf->flags, '-') && ptf->width > 0)
@@ -58,14 +56,11 @@ int				ft_printf_print_arg(t_ptf *ptf, int *prfx, int *input, int size)
 		ft_printf_buff_cat(ptf, (char*)prfx, ft_strlen((char*)prfx));
 	if (ft_strchr("BDIOUXP", ft_toupper(ptf->spec)) && ptf->precision > 0)
 		ft_printf_buff_catn(ptf, "0", ptf->precision);
-	if (ptf->spec == 'S')
-	{
-		if ((ft_printf_print_wcs(ptf, input, size)) < 0)
-			return (-1);
-	}
+	if (ptf->spec == 'S' && (ft_printf_print_wcs(ptf, input, size)) < 0)
+		return (-1);
 	else if (ptf->spec == 'r')
 		ft_printf_buff_cat_npr(ptf, (char*)input, size);
-	else
+	else if (ptf->spec != 'S')
 		ft_printf_buff_cat(ptf, (char*)input, size);
 	if (ft_strchr("AEF", ft_toupper(ptf->spec)) && ptf->precision > 0)
 		ft_printf_buff_catn(ptf, "0", ptf->precision);

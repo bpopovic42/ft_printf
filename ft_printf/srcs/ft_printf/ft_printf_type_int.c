@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/28 19:29:05 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/30 18:30:46 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,16 @@ int			get_arg_signed(t_ptf *ptf, char *res, long long param)
 
 static int			get_prefix(t_ptf *ptf, char *ptr, char *prefix)
 {
-	if (ft_strchr("bBdDi", ptf->spec) && (ft_strchr(ptf->flags, '+') || (ptr[0] == '-')))
-		ft_strcat(prefix, ptr[0] == '-' ? "-" : "+");
-	else if (ft_strchr("dDi", ptf->spec) && ft_strchr(ptf->flags, ' '))
-		ft_strcat(prefix, " ");
-	if (ft_strchr(ptf->flags, '#') && ft_strchr("xX", ptf->spec) && *(ptr + 1) != '0')
+	if (ft_strchr("bBdDi", ptf->spec))
 	{
-		if ((ptf->spec == 'x' || ptf->spec == 'X' || ptf->spec == 'p'))
+		if (ft_strchr(ptf->flags, '+') || (ptr[0] == '-'))
+			ft_strcat(prefix, ptr[0] == '-' ? "-" : "+");
+		else if (ft_strchr("dDi", ptf->spec) && ft_strchr(ptf->flags, ' '))
+			ft_strcat(prefix, " ");
+	}
+	if (ft_strchr(ptf->flags, '#') && ft_strchr("xX", ptf->spec))
+	{
+		if (ptr[1] != '0')
 			ft_strcat(prefix, ptf->spec == 'X' ? "0X" : "0x");
 	}
 	else if (ptf->spec == 'p')
@@ -90,8 +93,8 @@ int			ft_printf_type_int(t_ptf *ptf, long long param)
 		ptf->precision = ptf->precision < 0 ? -1 : 0;
 	if (ptf->precision < 1 && ft_toupper(ptf->spec) == 'O' && htag)
 		ft_strcat(prefix, ptr[1] == '0' ? "" : "0");
-	if (ptf->width > 0)
-		ptf->width -= (ptf->precision > 0 ? ptf->precision : 0) + ft_strlen(prefix) + size;
+	ptf->width -= (ptf->width > 0) ? ft_strlen(prefix) + size : 0;
+	ptf->width -= (ptf->width > 0) && ptf->precision > 0 ? ptf->precision : 0;
 	if (ft_toupper(ptf->spec) == 'B' && ptf->precision < 0)
 		ptf->precision = 8 - (size % 8 > 0 ? size % 8 : 8);
 	return (ft_printf_print_arg(ptf, (int*)prefix, (int*)(ptr + 1), size));

@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:48:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/29 02:06:16 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/30 18:42:52 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static int	local_putnbr_octal(t_ptf *ptf, char value)
 {
-	char tmp[4];
-	int i;
+	char	tmp[4];
+	int		i;
 
 	i = 0;
 	while (value)
@@ -43,8 +43,8 @@ static int	local_putnbr_octal(t_ptf *ptf, char value)
 
 void		ft_printf_buff_cat_npr(t_ptf *ptf, char *input, int size)
 {
-	int i;
-	char *buff;
+	int		i;
+	char	*buff;
 
 	i = 0;
 	buff = ptf->buff.buff;
@@ -69,8 +69,8 @@ void		ft_printf_buff_cat_npr(t_ptf *ptf, char *input, int size)
 
 void		ft_printf_buff_cat(t_ptf *ptf, char *input, int size)
 {
-	int i;
-	char *buff;
+	int		i;
+	char	*buff;
 
 	i = 0;
 	buff = ptf->buff.buff;

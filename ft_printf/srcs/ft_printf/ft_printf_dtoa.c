@@ -6,13 +6,13 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/29 01:28:50 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/08/30 18:44:05 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void round_dbl(char *buff)
+static void		round_dbl(char *buff)
 {
 	int i;
 
@@ -27,7 +27,7 @@ static void round_dbl(char *buff)
 				buff[i] = '1';
 			else
 				buff[i]++;
-			break;
+			break ;
 		}
 		i--;
 	}
@@ -46,7 +46,7 @@ static int		dtoa_base(double *val, char *buff, int i, char *bstr)
 	{
 		ft_ccat(buff, bstr[(long long)(tmp)]);
 		tmp -= (long long)(tmp);
-		tmp = tmp * base;/*(tmp / base) * (base * base);*/
+		tmp = tmp * base;
 		*val *= base;
 		if (i < 0)
 			i++;
@@ -85,7 +85,6 @@ static int		adjust(double *val, char spec)
 	return (i);
 }
 
-
 static int		getint(t_dbl *dbl, int *prec, char *buff, char spec, char *bstr)
 {
 	int expn;
@@ -114,8 +113,6 @@ static int		getint(t_dbl *dbl, int *prec, char *buff, char spec, char *bstr)
 	dbl->val -= (long long)dbl->val;
 	return (expn);
 }
-
-#include <stdio.h>
 
 int			ft_printf_dtoa(double val, int prec, char *buff, char spec)
 {
