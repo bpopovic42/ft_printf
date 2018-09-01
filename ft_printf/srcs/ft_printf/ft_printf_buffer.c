@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:48:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/01 17:39:26 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/01 19:15:22 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void		ft_printf_buff_cat_npr(t_ptf *ptf, char *input, int size)
 			ptf->buff.read += ptf->buff.pos;
 			ptf->buff.pos = 0;
 		}
-		if (input[i] > 31)
+		if (input[i] > 31 && input[i] < 127)
 			buff[ptf->buff.pos] = input[i];
 		else
 			ptf->buff.pos += local_putnbr_octal(ptf, input[i]);
