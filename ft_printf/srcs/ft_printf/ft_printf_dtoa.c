@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/30 18:44:05 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/01 18:01:48 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,20 +85,21 @@ static int		adjust(double *val, char spec)
 	return (i);
 }
 
-static int		getint(t_dbl *dbl, int *prec, char *buff, char spec, char *bstr)
+static int		getint(t_dbl *dbl, int *prec, char *buff, char spec)
 {
-	int expn;
-	int base;
-	int intpart_size;
+	int		expn;
+	int		intpart_size;
+	char	*bstr;
 
-	base = ft_strlen(bstr);
 	buff[0] = dbl->bits.sign ? '-' : buff[0];
 	dbl->bits.sign = 0;
 	intpart_size = 0;
+	bstr = BASE_DENARY;
+	if (spec == 'a' || spec == 'A')
+		bstr = spec == 'A' ? BASE_HEXA_UP : BASE_HEXA;
+	expn = 1;
 	if (!(ft_toupper(spec) == 'F' && (int)dbl->val == 0))
 		expn = adjust(&(dbl->val), spec) + (ft_strchr("fF", spec) ? 1 : 0);
-	else
-		expn = 1;
 	if ((spec == 'G' || spec == 'g') || (spec == 'a' || spec == 'A'))
 	{
 		if (expn > -4 && expn < *prec && expn != 0 && ft_toupper(spec) != 'A')
@@ -110,11 +111,11 @@ static int		getint(t_dbl *dbl, int *prec, char *buff, char spec, char *bstr)
 	else
 		dtoa_base(&dbl->val, buff, ft_strchr("fF", spec) ? expn : 1, bstr);
 	ft_ccat(buff, *prec ? '.' : '\0');
-	dbl->val -= (long long)dbl->val;
+	/*dbl->val -= (long long)dbl->val;*/
 	return (expn);
 }
 
-int			ft_printf_dtoa(double val, int prec, char *buff, char spec)
+int				ft_printf_dtoa(double val, int prec, char *buff, char spec)
 {
 	t_dbl		dbl;
 	int			expn;
@@ -134,7 +135,7 @@ int			ft_printf_dtoa(double val, int prec, char *buff, char spec)
 		buff = ft_isupper(spec) ? ft_strtoupper(buff) : buff;
 		return (0);
 	}
-	expn = getint(&dbl, &prec, buff + 1, spec, bstr);
+	expn = getint(&dbl, &prec, buff + 1, spec);
 	dbl.val *= base;
 	dtoa_base(&dbl.val, buff + 1, prec, bstr);
 	dbl.val *= base;

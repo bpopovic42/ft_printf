@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:48:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/30 18:42:52 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/01 17:39:26 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void		ft_printf_buff_catn(t_ptf *ptf, char *input, long long n)
 		ft_printf_buff_cat(ptf, input, len);
 }
 
-void			ft_printf_dump_fmt(t_ptf *ptf)
+void		ft_printf_dump_fmt(t_ptf *ptf)
 {
 	ft_printf_buff_cat(ptf, (char*)ptf->fmt.format, ptf->fmt.i);
 	ptf->fmt.format += ptf->fmt.i;
