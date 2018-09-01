@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/01 18:04:50 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/01 18:24:48 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int			get_suffix(char *buff, char *suffix, char spec, int expn)
 	return (0);
 }
 
-static void			get_arg_2(t_ptf *ptf, double param, char *tmp, int expn)
+static int			get_arg_2(t_ptf *ptf, double param, char *tmp, int expn)
 {
 	if (ptf->precision > MAX_DBL_PRECISION)
 		expn = ft_printf_dtoa(param, MAX_DBL_PRECISION, tmp, ptf->spec);
@@ -61,6 +61,7 @@ static void			get_arg_2(t_ptf *ptf, double param, char *tmp, int expn)
 	else
 		expn = ft_printf_dtoa(param, ptf->precision, tmp, ptf->spec);
 	tmp = !tmp[0] ? ft_strcpy(tmp, tmp + 1) : tmp;
+	return (expn);
 }
 
 static void			get_arg(t_ptf *ptf, double param, char *tmp, char *suffix)
@@ -68,19 +69,19 @@ static void			get_arg(t_ptf *ptf, double param, char *tmp, char *suffix)
 	int		expn;
 	int		i;
 
-	expn = 0;
 	if ((ft_strchr(ptf->flags, '#') || ft_strchr("gG", ptf->spec)))
 		ptf->precision = !ptf->precision ? 1 : ptf->precision;
-	get_arg_2(ptf, param, tmp, expn);
+	expn = get_arg_2(ptf, param, tmp, 0);
 	i = ft_strlen(tmp) - 1;
 	while (tmp[i] == '0')
 		i--;
-	if (ft_strchr("aAgG", ptf->spec))
+	if (ft_strchr("aA", ptf->spec) && ptf->precision < 0)
 		tmp[tmp[i] == '.' ? i : i + 1] = '\0';
 	if (ft_strchr("gG", ptf->spec))
 	{
 		if (expn < -4 || (expn >= ptf->precision && ptf->precision >= 0))
 			ptf->spec = ptf->spec == 'G' ? 'E' : 'e';
+		tmp[tmp[i] == '.' ? i : i + 1] = '\0';
 		ptf->precision = 0;
 	}
 	if (ft_strchr("aAeE", ptf->spec))
@@ -117,4 +118,3 @@ int					ft_printf_type_dbl(t_ptf *ptf, double param)
 	ft_printf_buff_cat(ptf, suffix, ft_strlen(suffix));
 	return (ret);
 }
-

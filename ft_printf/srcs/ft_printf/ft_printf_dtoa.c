@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/01 18:01:48 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/01 18:24:09 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ static int		getint(t_dbl *dbl, int *prec, char *buff, char spec)
 	else
 		dtoa_base(&dbl->val, buff, ft_strchr("fF", spec) ? expn : 1, bstr);
 	ft_ccat(buff, *prec ? '.' : '\0');
-	/*dbl->val -= (long long)dbl->val;*/
 	return (expn);
 }
 
