@@ -6,13 +6,13 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:06:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/30 18:48:32 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/01 18:26:36 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int			treat_arg_by_type(t_ptf *ptf, va_list ap)
+static int				treat_arg_by_type(t_ptf *ptf, va_list ap)
 {
 	char spec;
 
@@ -41,7 +41,7 @@ static int			treat_arg_by_type(t_ptf *ptf, va_list ap)
 	return (-1);
 }
 
-static int			treat_arg(t_ptf *ptf, va_list ap)
+static int				treat_arg(t_ptf *ptf, va_list ap)
 {
 	int			i;
 	int			size;
@@ -75,7 +75,7 @@ static int				parse_fmt(t_ptf *ptf, va_list ap)
 		if ((*fmt)[*i] == '%')
 		{
 			if (!(*fmt)[*i + 1])
-				break;
+				break ;
 			else if ((ret = treat_arg(ptf, ap)) < 1)
 				return (ret);
 		}
@@ -87,7 +87,7 @@ static int				parse_fmt(t_ptf *ptf, va_list ap)
 	return (ptf->buff.read);
 }
 
-static void inline		init_struct(t_ptf *ptf, const char * restrict format)
+static void inline		init_struct(t_ptf *ptf, const char *restrict format)
 {
 	ptf->buff.pos = 0;
 	ptf->buff.read = 0;
@@ -95,7 +95,7 @@ static void inline		init_struct(t_ptf *ptf, const char * restrict format)
 	ptf->fmt.i = 0;
 }
 
-int						ft_vprintf(const char * restrict format, va_list ap)
+int						ft_vprintf(const char *restrict format, va_list ap)
 {
 	long long		ret;
 	t_ptf			ptf;

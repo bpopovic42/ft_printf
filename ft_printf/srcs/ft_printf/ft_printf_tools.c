@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/14 17:11:54 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/30 18:45:18 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/01 18:37:25 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ size_t		ft_printf_atoi(const char *str, int *res)
 	return (i);
 }
 
-int			ft_printf_itoa_base(char *buff, char *charset, long long nbr)
+int			ft_printf_itoa_base(char *buff, char *chrst, long long nbr)
 {
 	int					base;
 	int					i;
@@ -55,7 +55,7 @@ int			ft_printf_itoa_base(char *buff, char *charset, long long nbr)
 
 	i = 0;
 	ptr = buff;
-	base = ft_strlen(charset);
+	base = ft_strlen(chrst);
 	if (base > 16 || base < 2 || !ptr)
 		return (-1);
 	*ptr = nbr < 0 ? '-' : '+';
@@ -63,7 +63,7 @@ int			ft_printf_itoa_base(char *buff, char *charset, long long nbr)
 	ptr++;
 	while (tmp || i < 1)
 	{
-		ptr[i] = charset[tmp % base];
+		ptr[i] = chrst[tmp % base];
 		i++;
 		tmp /= base;
 	}
@@ -72,7 +72,7 @@ int			ft_printf_itoa_base(char *buff, char *charset, long long nbr)
 	return (i);
 }
 
-int			ft_printf_uitoa_base(char *buff, char *charset, uint64_t nbr)
+int			ft_printf_uitoa_base(char *buff, char *chrst, uint64_t nbr)
 {
 	int		base;
 	int		i;
@@ -80,14 +80,14 @@ int			ft_printf_uitoa_base(char *buff, char *charset, uint64_t nbr)
 
 	i = 0;
 	ptr = buff;
-	base = ft_strlen(charset);
+	base = ft_strlen(chrst);
 	*ptr = '+';
 	ptr++;
 	if (base > 16 || base < 2)
 		return (-1);
 	while (nbr || i < 1)
 	{
-		ptr[i] = charset[nbr % base];
+		ptr[i] = chrst[nbr % base];
 		i++;
 		nbr /= base;
 	}

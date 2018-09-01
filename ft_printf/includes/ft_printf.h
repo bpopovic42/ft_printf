@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/30 18:40:44 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/01 18:38:59 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,56 +64,56 @@ typedef struct		s_ptf
 ** FT_PRINTF
 */
 
-int		ft_printf(const char *restrict format, ...);
-int		ft_vprintf(const char *restrict format, va_list ap);
+int					ft_printf(const char *restrict format, ...);
+int					ft_vprintf(const char *restrict format, va_list ap);
 
 /*
 ** FT_PRINTF_TYPE
 */
 
-int		ft_printf_type_int(t_ptf *ptf, long long param);
-int		ft_printf_type_str(t_ptf *ptf, wchar_t *param);
-int		ft_printf_type_char(t_ptf *ptf, wchar_t param);
-int		ft_printf_type_dbl(t_ptf *ptf, double param);
-int		ft_printf_type_n(t_ptf *ptf, int *n);
+int					ft_printf_type_int(t_ptf *ptf, long long param);
+int					ft_printf_type_str(t_ptf *ptf, wchar_t *param);
+int					ft_printf_type_char(t_ptf *ptf, wchar_t param);
+int					ft_printf_type_dbl(t_ptf *ptf, double param);
+int					ft_printf_type_n(t_ptf *ptf, int *n);
 
 /*
 ** FT_PRINTF_GET_FLAGS
 */
 
-int		ft_printf_get_flags(t_ptf *ptf, va_list ap, int i);
+int					ft_printf_get_flags(t_ptf *ptf, va_list ap, int i);
 
 /*
 ** FT_PRINTF_PRINT_ARG
 */
 
-int		ft_printf_print_arg(t_ptf *ptf, int *prfx, int *input, int size);
-int		ft_printf_print_wcs(t_ptf *ptf, int *input, int size);
+int					ft_printf_print_arg(t_ptf *ptf, int *prfx, int *inp, int n);
+int					ft_printf_print_wcs(t_ptf *ptf, int *input, int n);
 
 /*
 ** FT_PRINTF_BUFFER
 */
 
-void	ft_printf_buff_cat(t_ptf *ptf, char *input, int size);
-void	ft_printf_buff_catn(t_ptf *ptf, char *input, long long n);
-void	ft_printf_buff_cat_npr(t_ptf *ptf, char *input, int size);
-void	ft_printf_dump_fmt(t_ptf *ptf);
+void				ft_printf_buff_cat(t_ptf *ptf, char *input, int size);
+void				ft_printf_buff_catn(t_ptf *ptf, char *input, long long n);
+void				ft_printf_buff_cat_npr(t_ptf *ptf, char *input, int size);
+void				ft_printf_dump_fmt(t_ptf *ptf);
 
 /*
 ** FT_PRINTF_TOOLS
 */
 
-int		ft_printf_is_flag(int c);
-int		ft_printf_is_spec(int c);
-size_t	ft_printf_atoi(const char *str, int *res);
-int		ft_printf_itoa_base(char *buff, char *charset, long long nbr);
-int		ft_printf_uitoa_base(char *buff, char *charset, uint64_t nbr);
-int		ft_printf_dtoa(double val, int prec, char *buff, char spec);
+int					ft_printf_is_flag(int c);
+int					ft_printf_is_spec(int c);
+size_t				ft_printf_atoi(const char *str, int *res);
+int					ft_printf_itoa_base(char *buff, char *chrst, long long nbr);
+int					ft_printf_uitoa_base(char *buff, char *chrst, uint64_t nbr);
+int					ft_printf_dtoa(double val, int prec, char *buff, char spec);
 
 /*
 ** MISC
 */
 
-int		ft_printf_color(t_ptf *ptf);
+int					ft_printf_color(t_ptf *ptf);
 
 #endif
