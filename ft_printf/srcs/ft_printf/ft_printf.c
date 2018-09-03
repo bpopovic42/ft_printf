@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:26:54 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/03 18:31:27 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/03 14:54:56 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ int			ft_printf(const char *restrict format, ...)
 	va_list		ap;
 	int			ret;
 
-	if (!format)
-		return (-1);
 	va_start(ap, format);
 	ret = ft_vprintf(format, ap);
 	va_end(ap);
