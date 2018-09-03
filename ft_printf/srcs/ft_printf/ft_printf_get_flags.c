@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:03:18 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/30 18:03:49 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/03 15:52:39 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,6 @@ static char	*get_base(int spec)
 		return (BASE_BINARY);
 	else
 		return (NULL);
-}
-
-static void	init_flags(t_ptf *ptf)
-{
-	ptf->width = 0;
-	ptf->precision = -1;
-	ptf->spec = 0;
-	ft_bzero(ptf->flags, 11);
 }
 
 static int	get_width(va_list ap, const char *fmt, int *width, char *flg)
@@ -63,6 +55,14 @@ static int	get_precision(va_list ap, const char *fmt, int *precision)
 	else
 		i += ft_printf_atoi(fmt, precision) - 1;
 	return (i);
+}
+
+static void	init_flags(t_ptf *ptf)
+{
+	ptf->width = 0;
+	ptf->precision = -1;
+	ptf->spec = 0;
+	ft_bzero(ptf->flags, 11);
 }
 
 int			ft_printf_get_flags(t_ptf *ptf, va_list ap, int i)

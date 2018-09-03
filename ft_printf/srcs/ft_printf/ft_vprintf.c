@@ -6,11 +6,18 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:06:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/01 18:26:36 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/03 17:15:40 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+/*
+** Check wether provided specifier exists or if it is a '%'
+** If specifier isn't recognized it is treated as the arg to a 'c' conversion
+** Else send specifier's corresponding va_arg to the associated function
+** Returns size of treated argument in case of success, -1 otherwise
+*/
 
 static int				treat_arg_by_type(t_ptf *ptf, va_list ap)
 {
@@ -41,6 +48,12 @@ static int				treat_arg_by_type(t_ptf *ptf, va_list ap)
 	return (-1);
 }
 
+/*
+** Called if a '%' has been encountered and that it wasn't followed by a '\0'
+** Returns size of treated argument if flags weren't directly followed by '\0'
+** Returns 0 otherwise
+*/
+
 static int				treat_arg(t_ptf *ptf, va_list ap)
 {
 	int			i;
@@ -48,8 +61,7 @@ static int				treat_arg(t_ptf *ptf, va_list ap)
 
 	i = 1;
 	size = 0;
-	if ((i = ft_printf_get_flags(ptf, ap, i + ptf->fmt.i) - ptf->fmt.i) < 1)
-		return (i);
+	i = ft_printf_get_flags(ptf, ap, i + ptf->fmt.i) - ptf->fmt.i;
 	if (ptf->spec)
 	{
 		size = treat_arg_by_type(ptf, ap);
@@ -58,6 +70,12 @@ static int				treat_arg(t_ptf *ptf, va_list ap)
 	}
 	return (size);
 }
+
+/*
+** Parse the format string for '%' or '{' until its end
+** Add rest of the format string to buffer if anything's left
+** Returns totabl nbr of characters written in case of success, -1 otherwise
+*/
 
 static int				parse_fmt(t_ptf *ptf, va_list ap)
 {
@@ -87,30 +105,29 @@ static int				parse_fmt(t_ptf *ptf, va_list ap)
 	return (ptf->buff.read);
 }
 
-static void inline		init_struct(t_ptf *ptf, const char *restrict format)
-{
-	ptf->buff.pos = 0;
-	ptf->buff.read = 0;
-	ptf->fmt.format = format;
-	ptf->fmt.i = 0;
-}
+/*
+** Initialize ptf structure and send input to parse_fmt
+** Write what's left in the buffer and terminate
+** Returns total nbr of characters written in case of success, -1 otherwise
+*/
 
 int						ft_vprintf(const char *restrict format, va_list ap)
 {
-	long long		ret;
+	int				ret;
 	t_ptf			ptf;
 
-	init_struct(&ptf, format);
+	ptf.buff.pos = 0;
+	ptf.buff.read = 0;
+	ptf.fmt.format = format;
+	ptf.fmt.i = 0;
 	if ((ret = parse_fmt(&ptf, ap)) < 0)
 	{
-		if (write(1, ptf.buff.buff, ptf.buff.pos) < 0)
-			exit(-1);
+		write(1, ptf.buff.buff, ptf.buff.pos);
 		return (-1);
 	}
 	if (ptf.buff.pos > 0)
 	{
-		if (write(1, ptf.buff.buff, ptf.buff.pos) < 0)
-			exit(-1);
+		write(1, ptf.buff.buff, ptf.buff.pos);
 		ptf.buff.read += ptf.buff.pos;
 	}
 	return (ptf.buff.read);
