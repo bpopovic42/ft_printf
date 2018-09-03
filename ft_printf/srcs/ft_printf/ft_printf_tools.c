@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/14 17:11:54 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/01 18:37:25 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/03 18:25:50 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,16 @@ size_t		ft_printf_atoi(const char *str, int *res)
 	flag = str[i] == '-' ? -1 : 1;
 	i += str[i] == '-' || str[i] == '+' ? 1 : 0;
 	while (str[i] && (str[i] >= '0' && str[i] <= '9'))
+	{
+		if ((long)(((long)*res * 10) + str[i] - '0') > 2147483647L)
+		{
+			*res = 0;
+			while (str[i] && (str[i] >= '0' && str[i] <= '9'))
+				i++;
+			break ;
+		}
 		*res = (*res * 10) + (str[i++] - '0');
+	}
 	*res *= flag;
 	return (i);
 }
