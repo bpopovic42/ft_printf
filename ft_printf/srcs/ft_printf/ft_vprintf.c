@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:06:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/03 17:15:40 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/03 19:18:29 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int				treat_arg_by_type(t_ptf *ptf, va_list ap)
 		{
 			ptf->width--;
 			ptf->precision = -1;
-			return (ft_printf_print_arg(ptf, (int*)"\0", (int*)"%", 1));
+			return (ft_printf_print_arg(ptf, "\0", "%", 1));
 		}
 		return (ft_printf_type_char(ptf, (wchar_t)spec));
 	}

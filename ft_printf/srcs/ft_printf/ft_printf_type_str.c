@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/08/30 18:36:05 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/03 19:19:35 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,5 @@ int			ft_printf_type_str(t_ptf *ptf, wchar_t *param)
 			return (-1);
 	}
 	ptf->width -= size;
-	return (ft_printf_print_arg(ptf, (int*)"\0", (int*)param, size));
+	return (ft_printf_print_arg(ptf, "\0", (char*)param, size));
 }

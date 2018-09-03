@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/03 17:02:30 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/03 19:20:22 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int					ft_printf_type_dbl(t_ptf *ptf, double param)
 	else
 		ptf->precision = ptf->precision < 0 ? -1 : 0;
 	ptf->width -= size + ft_strlen(prefix) + ft_strlen(suffix);
-	ret = ft_printf_print_arg(ptf, (int*)prefix, (int*)tmp, size);
+	ret = ft_printf_print_arg(ptf, prefix, tmp, size);
 	ft_printf_buff_cat(ptf, suffix, ft_strlen(suffix));
 	return (ret);
 }
