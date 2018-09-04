@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:06:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/04 15:49:24 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/04 19:25:12 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,36 +16,35 @@
 ** Check wether provided specifier exists or if it is a '%'
 ** If specifier isn't recognized it is treated as the arg to a 'c' conversion
 ** Else send specifier's corresponding va_arg to the associated function
-** Returns size of treated argument in case of success, -1 otherwise
+** Returns 1 in case of success, -1 otherwise
 */
 
 static int				treat_arg_by_type(t_ptf *ptf, va_list ap)
 {
-	char spec;
+	char	spec;
+	int		ret;
 
 	spec = ptf->spec;
+	ret = -1;
 	if (!ft_printf_is_spec(spec) || spec == '%')
 	{
 		ptf->spec = 'c';
 		if (spec == '%')
-		{
-			ptf->width--;
-			ptf->precision = -1;
-			return (ft_printf_print_arg(ptf, "\0", "%", 1));
-		}
-		return (ft_printf_type_char(ptf, (wchar_t)spec));
+			ret = ft_printf_type_mod(ptf);
+		else
+			ret = ft_printf_type_char(ptf, (wchar_t)spec);
 	}
 	else if (ft_strchr("bBdDioOuUxXp", spec))
-		return (ft_printf_type_int(ptf, va_arg(ap, long long)));
+		ret = ft_printf_type_int(ptf, va_arg(ap, long long));
 	else if (spec == 'r' || spec == 's' || spec == 'S')
-		return (ft_printf_type_str(ptf, (wchar_t*)va_arg(ap, long long)));
+		ret = ft_printf_type_str(ptf, (wchar_t*)va_arg(ap, long long));
 	else if (spec == 'c' || spec == 'C')
-		return (ft_printf_type_char(ptf, (wchar_t)va_arg(ap, long long)));
+		ret = ft_printf_type_char(ptf, (wchar_t)va_arg(ap, long long));
 	else if (ft_strchr("aAeEfFgG", spec))
-		return (ft_printf_type_dbl(ptf, va_arg(ap, double)));
+		ret = ft_printf_type_dbl(ptf, va_arg(ap, double));
 	else if (spec == 'n')
-		return (ft_printf_type_n(ptf, va_arg(ap, int*)));
-	return (-1);
+		ret = ft_printf_type_n(ptf, va_arg(ap, int*));
+	return (ret);
 }
 
 /*
@@ -57,18 +56,18 @@ static int				treat_arg_by_type(t_ptf *ptf, va_list ap)
 static int				treat_arg(t_ptf *ptf, va_list ap)
 {
 	int			i;
-	int			size;
+	int			ret;
 
 	i = 1;
-	size = 0;
+	ret = 0;
 	i = ft_printf_get_flags(ptf, ap, i + ptf->fmt.i) - ptf->fmt.i;
 	if (ptf->spec)
 	{
-		size = treat_arg_by_type(ptf, ap);
+		ret = treat_arg_by_type(ptf, ap);
 		ptf->fmt.format += i + 1;
 		ptf->fmt.i = 0;
 	}
-	return (size);
+	return (ret);
 }
 
 /*

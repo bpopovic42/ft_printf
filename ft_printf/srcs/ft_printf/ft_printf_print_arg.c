@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/04 16:39:02 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/04 17:45:05 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void			ft_printf_print_wcs(t_ptf *ptf, wchar_t *input, int n)
 ** Functions returns 1 in case of success and -1 if 'S' returns an error
 */
 
-int				ft_printf_print_arg(t_ptf *ptf, char *prfx, char *input, int n)
+void			ft_printf_print_arg(t_ptf *ptf, char *prfx, char *input, int n)
 {
 	char *width;
 
@@ -78,5 +78,4 @@ int				ft_printf_print_arg(t_ptf *ptf, char *prfx, char *input, int n)
 		ft_printf_buff_catn(ptf, "0", ptf->precision);
 	if (ft_strchr(ptf->flags, '-') && (int)ptf->width > 0)
 		ft_printf_buff_catn(ptf, " ", ptf->width);
-	return (1);
 }

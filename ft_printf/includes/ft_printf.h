@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/03 19:49:39 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/04 19:03:44 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int					ft_printf_type_str(t_ptf *ptf, wchar_t *param);
 int					ft_printf_type_char(t_ptf *ptf, wchar_t param);
 int					ft_printf_type_dbl(t_ptf *ptf, double param);
 int					ft_printf_type_n(t_ptf *ptf, int *n);
+int					ft_printf_type_mod(t_ptf *ptf);
 
 /*
 ** FT_PRINTF_GET_FLAGS
@@ -87,8 +88,8 @@ int					ft_printf_get_flags(t_ptf *ptf, va_list ap, int i);
 ** FT_PRINTF_PRINT_ARG
 */
 
-int					ft_printf_print_arg(t_ptf *ptf, char *prfx, char *inp, int n);
-int					ft_printf_print_wcs(t_ptf *ptf, wchar_t *input, int n);
+void				ft_printf_print_arg(t_ptf *ptf, char *prfx, char *inp, int n);
+void				ft_printf_print_wcs(t_ptf *ptf, wchar_t *input, int n);
 
 /*
 ** FT_PRINTF_BUFFER

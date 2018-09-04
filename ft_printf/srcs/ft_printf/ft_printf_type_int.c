@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/03 19:18:50 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/04 17:59:04 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,10 @@ int					ft_printf_type_int(t_ptf *ptf, long long param)
 		size = get_arg_unsigned(ptf, ptr, param);
 	get_prefix(ptf, ptr, prefix);
 	if (!param && !ptf->precision && !(ft_toupper(ptf->spec) == 'O' && htag))
-		return (ft_printf_print_arg(ptf, prefix, NULL, 0));
+	{
+		ft_printf_print_arg(ptf, prefix, NULL, 0);
+		return (1);
+	}
 	if (ptf->precision > (int)(size))
 		ptf->precision -= size;
 	else
@@ -97,5 +100,6 @@ int					ft_printf_type_int(t_ptf *ptf, long long param)
 	ptf->width -= (ptf->width > 0) && ptf->precision > 0 ? ptf->precision : 0;
 	if (ft_toupper(ptf->spec) == 'B' && ptf->precision < 0)
 		ptf->precision = 8 - (size % 8 > 0 ? size % 8 : 8);
-	return (ft_printf_print_arg(ptf, prefix, (ptr + 1), size));
+	ft_printf_print_arg(ptf, prefix, (ptr + 1), size);
+	return (1);
 }
