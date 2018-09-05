@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/05 20:41:13 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/05 20:54:25 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void				local_format_arg(t_ptf *ptf, char *prfx, char *ptr, int siz)
 		ft_strcat(prfx, ptr[1] == '0' ? "" : "0");
 	ptf->width -= (ptf->width > 0) ? ft_strlen(prfx) + siz : 0;
 	if (ptf->width > 0 && ptf->precision > 0)
-	ptf->width -= ptf->precision;
+		ptf->width -= ptf->precision;
 	if (ft_toupper(ptf->spec) == 'B' && ptf->precision < 0)
 		ptf->precision = 8 - (siz % 8 > 0 ? siz % 8 : 8);
 	ft_printf_print_arg(ptf, prfx, (ptr + 1), siz);
@@ -104,7 +104,7 @@ int					ft_printf_type_int(t_ptf *ptf, long long param)
 	get_prefix(ptf, ptr, prfx);
 	if (!(ft_toupper(ptf->spec) == 'O' && ft_strchr(ptf->flags, '#'))
 		&& !param && !ptf->precision)
-			ft_printf_print_arg(ptf, prfx, NULL, 0);
+		ft_printf_print_arg(ptf, prfx, NULL, 0);
 	else
 		local_format_arg(ptf, prfx, ptr, siz);
 	return (1);
