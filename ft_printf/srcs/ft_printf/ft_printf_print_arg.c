@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/04 17:45:05 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/05 19:08:09 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /*
 ** Used to print the 'S' argument in regard to wchar_t handling rules
-** Function
+** Function prints no more than n bytes
 */
 
 void			ft_printf_print_wcs(t_ptf *ptf, wchar_t *input, int n)
@@ -48,8 +48,7 @@ void			ft_printf_print_wcs(t_ptf *ptf, wchar_t *input, int n)
 ** Dump parsed part of the format string
 ** Decides wether width should be space or zero
 ** Then proceeds to print formated arg and its computed prefix and or suffix
-** If the specifier is 'S' or 'r' arg are send to their dedicated functions
-** Functions returns 1 in case of success and -1 if 'S' returns an error
+** If the specifier is 'S' or 'r' args are send to their dedicated functions
 */
 
 void			ft_printf_print_arg(t_ptf *ptf, char *prfx, char *input, int n)
