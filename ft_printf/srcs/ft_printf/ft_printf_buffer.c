@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:48:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/06 16:56:23 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/06 17:55:32 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	local_putnbr_octal(t_ptf *ptf, char value)
 	{
 		if (ptf->buff.pos == FT_PRINTF_BUFF_SIZE)
 		{
-			if (write(1, ptf->buff.buff, ptf->buff.pos) < 0)
+			if (write(ptf->fd, ptf->buff.buff, ptf->buff.pos) < 0)
 				exit(-1);
 			ptf->buff.read += ptf->buff.pos;
 			ptf->buff.pos = 0;
@@ -64,7 +64,7 @@ void		ft_printf_buff_cat_npr(t_ptf *ptf, char *input, int size)
 	{
 		if (ptf->buff.pos == FT_PRINTF_BUFF_SIZE)
 		{
-			if (write(1, buff, ptf->buff.pos) < 0)
+			if (write(ptf->fd, buff, ptf->buff.pos) < 0)
 				exit(-1);
 			ptf->buff.read += ptf->buff.pos;
 			ptf->buff.pos = 0;
@@ -95,7 +95,7 @@ void		ft_printf_buff_cat(t_ptf *ptf, char *input, int size)
 	{
 		if (ptf->buff.pos == FT_PRINTF_BUFF_SIZE)
 		{
-			if (write(1, buff, ptf->buff.pos) < 0)
+			if (write(ptf->fd, buff, ptf->buff.pos))
 				exit(-1);
 			ptf->buff.read += ptf->buff.pos;
 			ptf->buff.pos = 0;

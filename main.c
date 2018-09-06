@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:05:25 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/06 15:39:04 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/06 17:52:05 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ int		main()
 	//prval = printf("%.201g\n%.201e\n%.201f P\n", test.val, test.val, test.val);
 	int fnts = 0;
 	int pnts = 0;
-	prval = printf("%a P\n", test.val);
-	frval = ft_printf("%a F\n", test.val); // Bad issue
+	prval = dprintf(10, "%a P\n", test.val);
+	frval = ft_dprintf(10, "%a F\n", test.val); // Bad issue
 	printf("prval = %d, frval = %d\n", prval, frval);
 	printf("pnts = %d, fnts = %d\n", pnts, fnts);
 	//printf(L"%C", wc); // Gives interesting compilation error

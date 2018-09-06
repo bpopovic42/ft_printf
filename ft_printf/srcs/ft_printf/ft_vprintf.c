@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:06:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/04 19:25:12 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/06 17:54:19 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 ** Returns 1 in case of success, -1 otherwise
 */
 
-static int				treat_arg_by_type(t_ptf *ptf, va_list ap)
+static int			treat_arg_by_type(t_ptf *ptf, va_list ap)
 {
 	char	spec;
 	int		ret;
@@ -53,7 +53,7 @@ static int				treat_arg_by_type(t_ptf *ptf, va_list ap)
 ** Returns 0 otherwise
 */
 
-static int				treat_arg(t_ptf *ptf, va_list ap)
+static int			treat_arg(t_ptf *ptf, va_list ap)
 {
 	int			i;
 	int			ret;
@@ -76,7 +76,7 @@ static int				treat_arg(t_ptf *ptf, va_list ap)
 ** Returns totabl nbr of characters written in case of success, -1 otherwise
 */
 
-static int				parse_fmt(t_ptf *ptf, va_list ap)
+static int			parse_fmt(t_ptf *ptf, va_list ap)
 {
 	int				ret;
 	const char		**fmt;
@@ -110,23 +110,26 @@ static int				parse_fmt(t_ptf *ptf, va_list ap)
 ** Returns total nbr of characters written in case of success, -1 otherwise
 */
 
-int						ft_vprintf(const char *restrict format, va_list ap)
+int					ft_vdprintf(int fd, const char *restrict fmt, va_list ap)
 {
 	int				ret;
 	t_ptf			ptf;
 
 	ptf.buff.pos = 0;
 	ptf.buff.read = 0;
-	ptf.fmt.format = format;
+	ptf.fmt.format = fmt;
 	ptf.fmt.i = 0;
+	ptf.fd = fd;
 	if ((ret = parse_fmt(&ptf, ap)) < 0)
 	{
-		write(1, ptf.buff.buff, ptf.buff.pos);
+		if (write(fd, ptf.buff.buff, ptf.buff.pos) < 0)
+			exit(-1);
 		return (-1);
 	}
 	if (ptf.buff.pos > 0)
 	{
-		write(1, ptf.buff.buff, ptf.buff.pos);
+		if (write(fd, ptf.buff.buff, ptf.buff.pos) < 0)
+			exit(-1);
 		ptf.buff.read += ptf.buff.pos;
 	}
 	return (ptf.buff.read);
