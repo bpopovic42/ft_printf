@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:03:18 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/06 19:15:18 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/06 19:45:51 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static void	init_flags(t_ptf *ptf)
 ** Returns index at which function stopped
 */
 
-uint64_t		ft_printf_get_flags(t_ptf *ptf, va_list ap, uint64_t i)
+uint64_t	ft_printf_get_flags(t_ptf *ptf, va_list ap, uint64_t i)
 {
 	const char	*fmt;
 	char		*flags;

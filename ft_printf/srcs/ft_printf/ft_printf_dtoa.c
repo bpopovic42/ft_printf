@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/06 19:37:08 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/06 19:45:14 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int		dtoa_base(double *val, char *buff, int i, char *bstr)
 		ret++;
 	}
 	*val /= base;
-	*val -= (int64_t)*val;
+	*val -= (int64_t)(*val);
 	return (ret);
 }
 

@@ -6,13 +6,13 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/06 19:38:55 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/06 19:47:19 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int				get_arg_unsigned(t_ptf *ptf, char *res, int64_t param)
+static int			get_arg_unsigned(t_ptf *ptf, char *res, int64_t param)
 {
 	if (ptf->spec == 'p')
 		return (ft_printf_lltoa_base(res, ptf->base, (uint64_t)param));
@@ -32,7 +32,7 @@ static int				get_arg_unsigned(t_ptf *ptf, char *res, int64_t param)
 		return (ft_printf_ulltoa_base(res, ptf->base, (unsigned)param));
 }
 
-static int				get_arg_signed(t_ptf *ptf, char *res, int64_t param)
+static int			get_arg_signed(t_ptf *ptf, char *res, int64_t param)
 {
 	if (ft_strchrn(ptf->flags, 'l') == 2)
 		return (ft_printf_lltoa_base(res, ptf->base, (int64_t)param));

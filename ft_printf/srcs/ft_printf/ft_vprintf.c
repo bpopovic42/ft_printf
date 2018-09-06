@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:06:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/06 19:23:08 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/06 19:46:47 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static int			treat_arg(t_ptf *ptf, va_list ap)
 ** Returns totabl nbr of characters written in case of success, -1 otherwise
 */
 
-static int64_t			parse_fmt(t_ptf *ptf, va_list ap)
+static int64_t		parse_fmt(t_ptf *ptf, va_list ap)
 {
 	int				ret;
 	const char		**fmt;

@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 16:27:54 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/06 18:52:20 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/06 19:40:38 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 
 typedef unsigned int	t_uint;
 typedef unsigned char	t_uchar;
-typedef unsigned long	t_ulong;
 
 typedef struct		s_list
 {
@@ -45,7 +44,7 @@ typedef union		u_dbl
 	double			val;
 	struct
 	{
-		t_ulong		mant: 52;
+		size_t		mant: 52;
 		t_uint		expn: 11;
 		t_uint		sign: 1;
 	}				bits;

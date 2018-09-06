@@ -6,7 +6,7 @@
 #    By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/03 08:42:00 by bopopovi          #+#    #+#              #
-#*   Updated: 2018/09/06 18:21:30 by bopopovi         ###   ########.fr       *#
+#*   Updated: 2018/09/06 19:41:14 by bopopovi         ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -111,7 +111,7 @@ OBJS		=	$(SRCS:.c=.o)
 
 CC			=	gcc
 
-CFLAGS		=	$(DEBUG) -Weverything
+CFLAGS		=	$(DEBUG) -Wall -Wextra -Werror
 
 ############################## RULES ###########################################
 
