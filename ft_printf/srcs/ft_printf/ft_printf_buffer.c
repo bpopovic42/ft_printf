@@ -6,11 +6,17 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:48:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/01 19:15:22 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/06 16:56:23 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+/*
+** Writes an int value to printf buffer in octal form
+** Resulting representation is prefixed by a '\'
+** Returns output's size
+*/
 
 static int	local_putnbr_octal(t_ptf *ptf, char value)
 {
@@ -41,6 +47,12 @@ static int	local_putnbr_octal(t_ptf *ptf, char value)
 	return (i);
 }
 
+/*
+** Write size input's characters from input to printf's buffer
+** If a non-printable character is encountered,
+** Then its octal representation is used
+*/
+
 void		ft_printf_buff_cat_npr(t_ptf *ptf, char *input, int size)
 {
 	int		i;
@@ -67,6 +79,11 @@ void		ft_printf_buff_cat_npr(t_ptf *ptf, char *input, int size)
 	}
 }
 
+/*
+** Writes size input's characters to printf's buffer
+** If buffer reach its max size, buffer is dumped
+*/
+
 void		ft_printf_buff_cat(t_ptf *ptf, char *input, int size)
 {
 	int		i;
@@ -90,6 +107,10 @@ void		ft_printf_buff_cat(t_ptf *ptf, char *input, int size)
 	}
 }
 
+/*
+** Concatenates input n times in printf's buffer
+*/
+
 void		ft_printf_buff_catn(t_ptf *ptf, char *input, long long n)
 {
 	int len;
@@ -98,6 +119,11 @@ void		ft_printf_buff_catn(t_ptf *ptf, char *input, long long n)
 	while (n--)
 		ft_printf_buff_cat(ptf, input, len);
 }
+
+/*
+** Writes previoulsy parsed format string part to output
+** Reset its index
+*/
 
 void		ft_printf_dump_fmt(t_ptf *ptf)
 {

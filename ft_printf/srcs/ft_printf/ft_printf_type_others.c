@@ -6,11 +6,15 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/30 17:05:27 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/04 19:04:52 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/06 16:27:18 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+/*
+** Write number of characters read into *n
+*/
 
 int		ft_printf_type_n(t_ptf *ptf, int *n)
 {
@@ -18,6 +22,10 @@ int		ft_printf_type_n(t_ptf *ptf, int *n)
 	*n = (int)(ptf->buff.read + ptf->buff.pos + ptf->fmt.i);
 	return (1);
 }
+
+/*
+** Print a formatted '%'
+*/
 
 int		ft_printf_type_mod(t_ptf *ptf)
 {

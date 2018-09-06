@@ -6,11 +6,16 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:03:18 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/04 16:20:02 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/06 16:46:10 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+/*
+** Determine which base will be used depending on a given specifier
+** Returns associated charset or NULL if specifier isn't recognized
+*/
 
 static char	*get_base(int spec)
 {
@@ -25,6 +30,13 @@ static char	*get_base(int spec)
 	else
 		return (NULL);
 }
+
+/*
+** Get width from either its ascii representation in fmt
+** Or from va_arg if fmt[i] == '*'
+** If width < 0 its absolute value is taken and the '-' flag is activated
+** Returns index at which function stopped
+*/
 
 static int	get_width(va_list ap, const char *fmt, int *width, char *flg)
 {
@@ -45,6 +57,12 @@ static int	get_width(va_list ap, const char *fmt, int *width, char *flg)
 	return (i);
 }
 
+/*
+** Get precision from either its ascii representation in fmt
+** Or from va_arg if fmt[i] == '*'
+** Returns index at which function stopped
+*/
+
 static int	get_precision(va_list ap, const char *fmt, int *precision)
 {
 	int i;
@@ -64,6 +82,12 @@ static void	init_flags(t_ptf *ptf)
 	ptf->spec = 0;
 	ft_bzero(ptf->flags, 11);
 }
+
+/*
+** Save and compute flags from format string to *flags
+** Stops at first non flag char encountered which is assumed to be the specifier
+** Returns index at which function stopped
+*/
 
 int			ft_printf_get_flags(t_ptf *ptf, va_list ap, int i)
 {

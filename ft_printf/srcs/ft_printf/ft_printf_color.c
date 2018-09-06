@@ -6,11 +6,17 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/30 17:04:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/03 19:49:40 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/06 16:48:24 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+/*
+** Parse and write a color code from format string
+** Returns 1 if the character sequence in between '{}' isn't recognized,
+** 0 otherwise
+*/
 
 int		ft_printf_color(t_ptf *ptf)
 {

@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/14 17:11:54 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/03 18:25:50 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/06 16:31:30 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,12 @@ int			ft_printf_is_spec(int c)
 						|| c == 'E' || c == 'g' || c == 'G' || c == 'n'
 							|| c == 'a' || c == 'A' || c == 'r');
 }
+
+/*
+** Convert integer ascii representation to int
+** If given representation exceeds INT_MAX resulting value is zero
+** Returns index at which the representation ends
+*/
 
 size_t		ft_printf_atoi(const char *str, int *res)
 {
@@ -55,6 +61,12 @@ size_t		ft_printf_atoi(const char *str, int *res)
 	return (i);
 }
 
+/*
+** Converts an int to its ascii representation in a given base
+** Base is computed from the length of its associated charset *chrst
+** Returns the conversion's ascii string length
+*/
+
 int			ft_printf_itoa_base(char *buff, char *chrst, long long nbr)
 {
 	int					base;
@@ -80,6 +92,12 @@ int			ft_printf_itoa_base(char *buff, char *chrst, long long nbr)
 	ptr = ft_strrev(ptr);
 	return (i);
 }
+
+/*
+** Converts an unsigned int to its ascii representation in a given base
+** Base is computed from the length of its associated charset *chrst
+** Returns the conversion's ascii string length
+*/
 
 int			ft_printf_uitoa_base(char *buff, char *chrst, uint64_t nbr)
 {

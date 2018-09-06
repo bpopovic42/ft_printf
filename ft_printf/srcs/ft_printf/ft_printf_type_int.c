@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/05 20:54:25 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/06 16:36:24 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,10 @@ int					get_arg_signed(t_ptf *ptf, char *res, long long param)
 		return (ft_printf_itoa_base(res, ptf->base, (int)param));
 }
 
+/*
+** Compute prefix specified by argument flags and specifier
+*/
+
 static int			get_prefix(t_ptf *ptf, char *ptr, char *prfx)
 {
 	if (ft_strchr("bBdDi", ptf->spec))
@@ -71,6 +75,12 @@ static int			get_prefix(t_ptf *ptf, char *ptr, char *prfx)
 	return (ft_strlen(prfx));
 }
 
+/*
+** Called if argument is valid
+** Format the argument in relation to it's flags and specifier
+** Then send it to the print_arg function
+*/
+
 void				local_format_arg(t_ptf *ptf, char *prfx, char *ptr, int siz)
 {
 	int		htag;
@@ -89,6 +99,10 @@ void				local_format_arg(t_ptf *ptf, char *prfx, char *ptr, int siz)
 		ptf->precision = 8 - (siz % 8 > 0 ? siz % 8 : 8);
 	ft_printf_print_arg(ptf, prfx, (ptr + 1), siz);
 }
+
+/*
+** Converts a given integer type param to its formatted representation
+*/
 
 int					ft_printf_type_int(t_ptf *ptf, long long param)
 {
