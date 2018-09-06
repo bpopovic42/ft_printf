@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:48:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/06 17:55:32 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/06 18:30:13 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	local_putnbr_octal(t_ptf *ptf, char value)
 ** Then its octal representation is used
 */
 
-void		ft_printf_buff_cat_npr(t_ptf *ptf, char *input, int size)
+void		ft_printf_buff_cat_npr(t_ptf *ptf, char *input, long long size)
 {
 	int		i;
 	char	*buff;
@@ -72,7 +72,7 @@ void		ft_printf_buff_cat_npr(t_ptf *ptf, char *input, int size)
 		if (input[i] > 31 && input[i] < 127)
 			buff[ptf->buff.pos] = input[i];
 		else
-			ptf->buff.pos += local_putnbr_octal(ptf, input[i]);
+			ptf->buff.pos += (unsigned long)local_putnbr_octal(ptf, input[i]);
 		ptf->buff.pos++;
 		size--;
 		i++;
@@ -84,7 +84,7 @@ void		ft_printf_buff_cat_npr(t_ptf *ptf, char *input, int size)
 ** If buffer reach its max size, buffer is dumped
 */
 
-void		ft_printf_buff_cat(t_ptf *ptf, char *input, int size)
+void		ft_printf_buff_cat(t_ptf *ptf, char *input, long long size)
 {
 	int		i;
 	char	*buff;
@@ -115,7 +115,7 @@ void		ft_printf_buff_catn(t_ptf *ptf, char *input, long long n)
 {
 	int len;
 
-	len = ft_strlen(input);
+	len = (int)ft_strlen(input);
 	while (n--)
 		ft_printf_buff_cat(ptf, input, len);
 }

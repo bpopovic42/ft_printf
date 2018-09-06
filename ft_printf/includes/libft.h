@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 16:27:54 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/01 18:35:44 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/06 18:32:01 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 typedef unsigned int	t_uint;
 typedef unsigned char	t_uchar;
 typedef unsigned long	t_ulong;
+typedef long long int	t_llint;
 
 typedef struct		s_list
 {
