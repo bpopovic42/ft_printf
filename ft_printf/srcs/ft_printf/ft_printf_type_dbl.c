@@ -6,11 +6,15 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/04 17:56:18 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/06 15:39:43 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+/*
+** Get argument prefix depending on its associated flags and specifier
+*/
 
 static void			get_prefix(t_ptf *ptf, char *ptr, char *prefix)
 {
@@ -21,6 +25,11 @@ static void			get_prefix(t_ptf *ptf, char *ptr, char *prefix)
 	if (ptf->spec == 'a' || ptf->spec == 'A')
 		ft_strcat(prefix, ptf->spec == 'A' ? "0X" : "0x");
 }
+
+/*
+** Converts the exponent to ascii representation for aAeE conversions
+** Returns 0 if converted double is invalid, 1 otherwise
+*/
 
 static int			get_suffix(char *buff, char *suffix, char spec, int expn)
 {
@@ -50,7 +59,12 @@ static int			get_suffix(char *buff, char *suffix, char spec, int expn)
 	return (0);
 }
 
-static int			get_arg_2(t_ptf *ptf, double param, char *tmp, int expn)
+/*
+** Does the dtoa conversion depending on the precision's and buffer's size
+** Returns the exponent computed from dtoa
+*/
+
+static int			get_conv(t_ptf *ptf, double param, char *tmp, int expn)
 {
 	if (ptf->precision > MAX_DBL_PRECISION)
 		expn = ft_printf_dtoa(param, MAX_DBL_PRECISION, tmp, ptf->spec);
@@ -60,9 +74,14 @@ static int			get_arg_2(t_ptf *ptf, double param, char *tmp, int expn)
 		expn = ft_printf_dtoa(param, 6, tmp, ptf->spec);
 	else
 		expn = ft_printf_dtoa(param, ptf->precision, tmp, ptf->spec);
-	tmp = !tmp[0] ? ft_strcpy(tmp, tmp + 1) : tmp;
 	return (expn);
 }
+
+/*
+** Converts param depending on its associated flags and specifier
+** Decides if a gG spec results in a eE or fF conversion depending on exponent
+** Trim trailing zeros depending on conversion type
+*/
 
 static void			get_arg(t_ptf *ptf, double param, char *tmp, char *suffix)
 {
@@ -71,7 +90,7 @@ static void			get_arg(t_ptf *ptf, double param, char *tmp, char *suffix)
 
 	if ((ft_strchr(ptf->flags, '#') || ft_strchr("gG", ptf->spec)))
 		ptf->precision = !ptf->precision ? 1 : ptf->precision;
-	expn = get_arg_2(ptf, param, tmp, 0);
+	expn = get_conv(ptf, param, tmp, 0);
 	i = ft_strlen(tmp) - 1;
 	while (tmp[i] == '0')
 		i--;
@@ -91,6 +110,10 @@ static void			get_arg(t_ptf *ptf, double param, char *tmp, char *suffix)
 	}
 	tmp[2] = ft_strchr(ptf->flags, '#') && ptf->precision == 0 ? '\0' : tmp[2];
 }
+
+/*
+** Convert a double to its ascii representation in tmp
+*/
 
 int					ft_printf_type_dbl(t_ptf *ptf, double param)
 {

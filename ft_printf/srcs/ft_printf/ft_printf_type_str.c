@@ -6,11 +6,17 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/04 17:56:07 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/06 14:39:33 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+/*
+** If param is NULL convert arg specifier to 's' and pass '(null)' as argument
+** Then compute param size in regard to the given precision
+** Returns -1 in case of error, 1 otherwise
+*/
 
 int			ft_printf_type_str(t_ptf *ptf, wchar_t *param)
 {
@@ -29,9 +35,7 @@ int			ft_printf_type_str(t_ptf *ptf, wchar_t *param)
 	{
 		if (ptf->precision > 0)
 			size = ft_wcsnlen((wchar_t*)param, ptf->precision);
-		else if (ptf->precision == 0)
-			size = 0;
-		else
+		else if (ptf->precision != 0)
 			size = ft_wcslen((wchar_t*)param);
 		if (size < 0)
 			return (-1);

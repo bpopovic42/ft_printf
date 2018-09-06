@@ -6,11 +6,15 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/04 15:45:24 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/06 15:39:21 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+/*
+** Round double's ascii representation from the last digit
+*/
 
 static void		round_dbl(char *buff)
 {
@@ -32,6 +36,10 @@ static void		round_dbl(char *buff)
 		i--;
 	}
 }
+
+/*
+** Converts double value to ascii base using *bstr charset
+*/
 
 static int		dtoa_base(double *val, char *buff, int i, char *bstr)
 {
@@ -59,6 +67,13 @@ static int		dtoa_base(double *val, char *buff, int i, char *bstr)
 	return (ret);
 }
 
+/*
+** Adjust given double to a 1 digit integer part by multiplying or dividing
+** Division and multiplication factor is defined by the spec associated base
+** If base is denary then decimal factor is used, else factor is binary
+** Returns the number of operations used to ajust the number
+*/
+
 static int		adjust(double *val, char spec)
 {
 	int i;
@@ -84,6 +99,14 @@ static int		adjust(double *val, char spec)
 	}
 	return (i);
 }
+
+/*
+** Gets converted integer part of the given double value
+** Begins by getting the absolute number value, then gets target base from spec
+** Computes the exponent by adjusting it to a 1 digit integer part
+** Adds a '.' if needed
+** Returns computed exponent
+*/
 
 static int		getint(t_dbl *dbl, int *prec, char *buff, char spec)
 {
@@ -114,6 +137,14 @@ static int		getint(t_dbl *dbl, int *prec, char *buff, char spec)
 	return (expn);
 }
 
+/*
+** Convert a double to ascii in either denary or hexa base up to prec digits
+** Base is instanciated depending on given spec
+** Inf and NaN numbers are handled
+** Conversion is written starting at (buff + 1) in case rounding would overflow
+** Returns converted double's exponent or 0 if double is either Nan or inf
+*/
+
 int				ft_printf_dtoa(double val, int prec, char *buff, char spec)
 {
 	t_dbl		dbl;
@@ -137,8 +168,8 @@ int				ft_printf_dtoa(double val, int prec, char *buff, char spec)
 	expn = getint(&dbl, &prec, buff + 1, spec);
 	dbl.val *= base;
 	dtoa_base(&dbl.val, buff + 1, prec, bstr);
-	dbl.val *= base;
-	if ((int)(dbl.val) > (base / 2))
+	if ((int)(dbl.val * base) > (base / 2))
 		round_dbl(buff);
+	buff = !buff[0] ? ft_strcpy(buff, buff + 1) : buff;
 	return (expn);
 }

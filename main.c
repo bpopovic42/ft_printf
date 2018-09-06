@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:05:25 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/04 18:07:48 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/06 15:39:04 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,13 @@ int		main()
 	t_dbl test;
 	//test.bits.mant = 955;
 	//test.bits.expn = 100;
-	test.val = 2;
+	test.val = 2.999999999999999;
 	//frval = ft_printf("%.201g\n%.201e\n%.201f F\n", test.val, test.val, test.val);
 	//prval = printf("%.201g\n%.201e\n%.201f P\n", test.val, test.val, test.val);
 	int fnts = 0;
 	int pnts = 0;
-	prval = printf("% Zoooo");
-	frval = ft_printf("% Zoooo"); // Bad issue
+	prval = printf("%a P\n", test.val);
+	frval = ft_printf("%a F\n", test.val); // Bad issue
 	printf("prval = %d, frval = %d\n", prval, frval);
 	printf("pnts = %d, fnts = %d\n", pnts, fnts);
 	//printf(L"%C", wc); // Gives interesting compilation error
