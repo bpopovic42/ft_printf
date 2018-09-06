@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:06:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/06 17:54:19 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/06 19:23:08 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ static int			treat_arg_by_type(t_ptf *ptf, va_list ap)
 			ret = ft_printf_type_char(ptf, (wchar_t)spec);
 	}
 	else if (ft_strchr("bBdDioOuUxXp", spec))
-		ret = ft_printf_type_int(ptf, va_arg(ap, long long));
+		ret = ft_printf_type_int(ptf, va_arg(ap, int64_t));
 	else if (spec == 'r' || spec == 's' || spec == 'S')
-		ret = ft_printf_type_str(ptf, (wchar_t*)va_arg(ap, long long));
+		ret = ft_printf_type_str(ptf, (wchar_t*)va_arg(ap, int64_t));
 	else if (spec == 'c' || spec == 'C')
-		ret = ft_printf_type_char(ptf, (wchar_t)va_arg(ap, long long));
+		ret = ft_printf_type_char(ptf, (wchar_t)va_arg(ap, int64_t));
 	else if (ft_strchr("aAeEfFgG", spec))
 		ret = ft_printf_type_dbl(ptf, va_arg(ap, double));
 	else if (spec == 'n')
@@ -55,7 +55,7 @@ static int			treat_arg_by_type(t_ptf *ptf, va_list ap)
 
 static int			treat_arg(t_ptf *ptf, va_list ap)
 {
-	int			i;
+	uint64_t	i;
 	int			ret;
 
 	i = 1;
@@ -76,11 +76,11 @@ static int			treat_arg(t_ptf *ptf, va_list ap)
 ** Returns totabl nbr of characters written in case of success, -1 otherwise
 */
 
-static int			parse_fmt(t_ptf *ptf, va_list ap)
+static int64_t			parse_fmt(t_ptf *ptf, va_list ap)
 {
 	int				ret;
 	const char		**fmt;
-	long long		*i;
+	uint64_t		*i;
 
 	ret = 0;
 	fmt = &(ptf->fmt.format);
@@ -97,11 +97,11 @@ static int			parse_fmt(t_ptf *ptf, va_list ap)
 				return (ret);
 		}
 		else if ((*fmt)[*i] == '{')
-			*i += ft_printf_color(ptf);
+			*i += (uint64_t)ft_printf_color(ptf);
 	}
 	if (**fmt)
 		ft_printf_buff_cat(ptf, (char*)*fmt, *i);
-	return (ptf->buff.read);
+	return ((int64_t)ptf->buff.read);
 }
 
 /*
@@ -120,7 +120,7 @@ int					ft_vdprintf(int fd, const char *restrict fmt, va_list ap)
 	ptf.fmt.format = fmt;
 	ptf.fmt.i = 0;
 	ptf.fd = fd;
-	if ((ret = parse_fmt(&ptf, ap)) < 0)
+	if ((ret = (int)parse_fmt(&ptf, ap)) < 0)
 	{
 		if (write(fd, ptf.buff.buff, ptf.buff.pos) < 0)
 			exit(-1);
@@ -132,5 +132,5 @@ int					ft_vdprintf(int fd, const char *restrict fmt, va_list ap)
 			exit(-1);
 		ptf.buff.read += ptf.buff.pos;
 	}
-	return (ptf.buff.read);
+	return ((int)ptf.buff.read);
 }

@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:48:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/06 18:30:13 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/06 19:03:13 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,14 @@ static int	local_putnbr_octal(t_ptf *ptf, char value)
 ** Then its octal representation is used
 */
 
-void		ft_printf_buff_cat_npr(t_ptf *ptf, char *input, long long size)
+void		ft_printf_buff_cat_npr(t_ptf *ptf, char *inp, uint64_t siz)
 {
 	int		i;
 	char	*buff;
 
 	i = 0;
 	buff = ptf->buff.buff;
-	while (size)
+	while (siz)
 	{
 		if (ptf->buff.pos == FT_PRINTF_BUFF_SIZE)
 		{
@@ -69,12 +69,12 @@ void		ft_printf_buff_cat_npr(t_ptf *ptf, char *input, long long size)
 			ptf->buff.read += ptf->buff.pos;
 			ptf->buff.pos = 0;
 		}
-		if (input[i] > 31 && input[i] < 127)
-			buff[ptf->buff.pos] = input[i];
+		if (inp[i] > 31 && inp[i] < 127)
+			buff[ptf->buff.pos] = inp[i];
 		else
-			ptf->buff.pos += (unsigned long)local_putnbr_octal(ptf, input[i]);
+			ptf->buff.pos += (unsigned long)local_putnbr_octal(ptf, inp[i]);
 		ptf->buff.pos++;
-		size--;
+		siz--;
 		i++;
 	}
 }
@@ -84,14 +84,14 @@ void		ft_printf_buff_cat_npr(t_ptf *ptf, char *input, long long size)
 ** If buffer reach its max size, buffer is dumped
 */
 
-void		ft_printf_buff_cat(t_ptf *ptf, char *input, long long size)
+void		ft_printf_buff_cat(t_ptf *ptf, char *inp, uint64_t siz)
 {
 	int		i;
 	char	*buff;
 
 	i = 0;
 	buff = ptf->buff.buff;
-	while (size)
+	while (siz)
 	{
 		if (ptf->buff.pos == FT_PRINTF_BUFF_SIZE)
 		{
@@ -100,9 +100,9 @@ void		ft_printf_buff_cat(t_ptf *ptf, char *input, long long size)
 			ptf->buff.read += ptf->buff.pos;
 			ptf->buff.pos = 0;
 		}
-		buff[ptf->buff.pos] = input[i];
+		buff[ptf->buff.pos] = inp[i];
 		ptf->buff.pos++;
-		size--;
+		siz--;
 		i++;
 	}
 }
@@ -111,13 +111,13 @@ void		ft_printf_buff_cat(t_ptf *ptf, char *input, long long size)
 ** Concatenates input n times in printf's buffer
 */
 
-void		ft_printf_buff_catn(t_ptf *ptf, char *input, long long n)
+void		ft_printf_buff_catn(t_ptf *ptf, char *inp, uint64_t n)
 {
 	int len;
 
-	len = (int)ft_strlen(input);
+	len = (int)ft_strlen(inp);
 	while (n--)
-		ft_printf_buff_cat(ptf, input, len);
+		ft_printf_buff_cat(ptf, inp, (uint64_t)len);
 }
 
 /*

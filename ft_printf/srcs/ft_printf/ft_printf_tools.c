@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/14 17:11:54 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/06 18:19:08 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/06 18:50:58 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,31 +62,31 @@ size_t		ft_printf_atoi(const char *str, int *res)
 }
 
 /*
-** Converts a long long int to its ascii representation in a given base
+** Converts a int64_t int to its ascii representation in a given base
 ** Base is computed from the length of its associated charset *chrst
 ** Returns the conversion's ascii string length
 */
 
-int			ft_printf_lltoa_base(char *buff, char *chrst, long long nb)
+int			ft_printf_lltoa_base(char *buff, char *chrst, int64_t nb)
 {
-	int					base;
+	t_uint				base;
 	int					i;
 	char				*ptr;
-	unsigned long long	tmp;
+	uint64_t			tmp;
 
 	i = 0;
 	ptr = buff;
-	base = ft_strlen(chrst);
+	base = (t_uint)ft_strlen(chrst);
 	if (base > 16 || base < 2 || !ptr)
 		return (-1);
 	*ptr = nb < 0 ? '-' : '+';
-	tmp = (unsigned long long)nb * (*ptr == '-' ? -1 : 1);
+	tmp = (uint64_t)(nb * (*ptr == '-' ? -1 : 1));
 	ptr++;
 	while (tmp || i < 1)
 	{
-		ptr[i] = chrst[tmp % base];
+		ptr[i] = chrst[tmp % (uint64_t)base];
 		i++;
-		tmp /= base;
+		tmp /= (uint64_t)base;
 	}
 	ptr[i] = '\0';
 	ptr = ft_strrev(ptr);
@@ -101,22 +101,22 @@ int			ft_printf_lltoa_base(char *buff, char *chrst, long long nb)
 
 int			ft_printf_ulltoa_base(char *buff, char *chrst, uint64_t nb)
 {
-	int		base;
+	t_uint	base;
 	int		i;
 	char	*ptr;
 
 	i = 0;
 	ptr = buff;
-	base = ft_strlen(chrst);
+	base = (t_uint)ft_strlen(chrst);
 	*ptr = '+';
 	ptr++;
 	if (base > 16 || base < 2)
 		return (-1);
 	while (nb || i < 1)
 	{
-		ptr[i] = chrst[nb % base];
+		ptr[i] = chrst[nb % (uint64_t)base];
 		i++;
-		nb /= base;
+		nb /= (uint64_t)base;
 	}
 	ptr[i] = '\0';
 	ptr = ft_strrev(ptr);

@@ -6,11 +6,11 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/06 15:39:21 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/06 19:37:08 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
 /*
 ** Round double's ascii representation from the last digit
@@ -18,7 +18,7 @@
 
 static void		round_dbl(char *buff)
 {
-	int i;
+	size_t i;
 
 	i = ft_strlen(buff + 1);
 	while (i)
@@ -49,11 +49,11 @@ static int		dtoa_base(double *val, char *buff, int i, char *bstr)
 
 	tmp = *val;
 	ret = 0;
-	base = ft_strlen(bstr);
+	base = (int)ft_strlen(bstr);
 	while (i)
 	{
-		ft_ccat(buff, bstr[(long long)(tmp)]);
-		tmp -= (long long)(tmp);
+		ft_ccat(buff, bstr[(int64_t)(tmp)]);
+		tmp -= (int64_t)(tmp);
 		tmp = tmp * base;
 		*val *= base;
 		if (i < 0)
@@ -63,7 +63,7 @@ static int		dtoa_base(double *val, char *buff, int i, char *bstr)
 		ret++;
 	}
 	*val /= base;
-	*val -= (long long)*val;
+	*val -= (int64_t)*val;
 	return (ret);
 }
 
@@ -156,7 +156,7 @@ int				ft_printf_dtoa(double val, int prec, char *buff, char spec)
 	bstr = BASE_DENARY;
 	if (spec == 'a' || spec == 'A')
 		bstr = spec == 'A' ? BASE_HEXA_UP : BASE_HEXA;
-	base = ft_strlen(bstr);
+	base = (int)ft_strlen(bstr);
 	if (dbl.bits.expn == 2047)
 	{
 		ft_strcat(buff, dbl.bits.mant ? "nan" : "\0");

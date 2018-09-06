@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/06 18:31:33 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/06 19:17:56 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@
 typedef struct		s_fmt
 {
 	const char		*format;
-	long long		i;
+	uint64_t		i;
 }					t_fmt;
 
 typedef struct		s_buff
 {
 	char			buff[FT_PRINTF_BUFF_SIZE + 1];
 	size_t			pos;
-	size_t			read;
+	uint64_t		read;
 }					t_buff;
 
 typedef struct		s_ptf
@@ -73,7 +73,7 @@ int					ft_vdprintf(int fd, const char *restrict fmt, va_list ap);
 ** FT_PRINTF_TYPE
 */
 
-int					ft_printf_type_int(t_ptf *ptf, long long param);
+int					ft_printf_type_int(t_ptf *ptf, int64_t param);
 int					ft_printf_type_str(t_ptf *ptf, wchar_t *param);
 int					ft_printf_type_char(t_ptf *ptf, wchar_t param);
 int					ft_printf_type_dbl(t_ptf *ptf, double param);
@@ -84,7 +84,7 @@ int					ft_printf_type_mod(t_ptf *ptf);
 ** FT_PRINTF_GET_FLAGS
 */
 
-int					ft_printf_get_flags(t_ptf *ptf, va_list ap, int i);
+uint64_t			ft_printf_get_flags(t_ptf *ptf, va_list ap, uint64_t i);
 
 /*
 ** FT_PRINTF_PRINT_ARG
@@ -97,9 +97,9 @@ void				ft_printf_print_wcs(t_ptf *ptf, wchar_t *input, int n);
 ** FT_PRINTF_BUFFER
 */
 
-void				ft_printf_buff_cat(t_ptf *ptf, char *input, long long size);
-void				ft_printf_buff_catn(t_ptf *ptf, char *input, long long n);
-void				ft_printf_buff_cat_npr(t_ptf *ptf, char *input, long long size);
+void				ft_printf_buff_cat(t_ptf *ptf, char *inp, uint64_t siz);
+void				ft_printf_buff_catn(t_ptf *ptf, char *inp, uint64_t n);
+void				ft_printf_buff_cat_npr(t_ptf *ptf, char *inp, uint64_t siz);
 void				ft_printf_dump_fmt(t_ptf *ptf);
 
 /*
@@ -109,7 +109,7 @@ void				ft_printf_dump_fmt(t_ptf *ptf);
 int					ft_printf_is_flag(int c);
 int					ft_printf_is_spec(int c);
 size_t				ft_printf_atoi(const char *str, int *res);
-int					ft_printf_lltoa_base(char *buff, char *chrst, long long nb);
+int					ft_printf_lltoa_base(char *buff, char *chrst, int64_t nb);
 int					ft_printf_ulltoa_base(char *buff, char *chrst, uint64_t nb);
 int					ft_printf_dtoa(double val, int prec, char *buff, char spec);
 

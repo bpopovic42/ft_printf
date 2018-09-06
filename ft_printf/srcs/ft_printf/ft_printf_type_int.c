@@ -6,16 +6,16 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/06 16:36:24 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/06 19:38:55 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int					get_arg_unsigned(t_ptf *ptf, char *res, long long param)
+static int				get_arg_unsigned(t_ptf *ptf, char *res, int64_t param)
 {
 	if (ptf->spec == 'p')
-		return (ft_printf_lltoa_base(res, ptf->base, (unsigned long long)param));
+		return (ft_printf_lltoa_base(res, ptf->base, (uint64_t)param));
 	else if (ft_strchrn(ptf->flags, 'l') == 2)
 		return (ft_printf_ulltoa_base(res, ptf->base, (uint64_t)param));
 	else if (ft_strchr(ptf->flags, 'l'))
@@ -32,10 +32,10 @@ int					get_arg_unsigned(t_ptf *ptf, char *res, long long param)
 		return (ft_printf_ulltoa_base(res, ptf->base, (unsigned)param));
 }
 
-int					get_arg_signed(t_ptf *ptf, char *res, long long param)
+static int				get_arg_signed(t_ptf *ptf, char *res, int64_t param)
 {
 	if (ft_strchrn(ptf->flags, 'l') == 2)
-		return (ft_printf_lltoa_base(res, ptf->base, (long long)param));
+		return (ft_printf_lltoa_base(res, ptf->base, (int64_t)param));
 	else if (ft_strchr(ptf->flags, 'l'))
 		return (ft_printf_lltoa_base(res, ptf->base, (long)param));
 	else if (ft_strchr(ptf->flags, 'j'))
@@ -72,7 +72,7 @@ static int			get_prefix(t_ptf *ptf, char *ptr, char *prfx)
 		ft_strcat(prfx, "0x");
 	else if (ptf->spec == 'b' || ptf->spec == 'B')
 		ft_strcat(prfx, ptf->spec == 'b' ? "0b" : "0B");
-	return (ft_strlen(prfx));
+	return ((int)ft_strlen(prfx));
 }
 
 /*
@@ -81,7 +81,7 @@ static int			get_prefix(t_ptf *ptf, char *ptr, char *prfx)
 ** Then send it to the print_arg function
 */
 
-void				local_format_arg(t_ptf *ptf, char *prfx, char *ptr, int siz)
+static void			local_format_arg(t_ptf *ptf, char *prfx, char *ptr, int siz)
 {
 	int		htag;
 
@@ -92,7 +92,7 @@ void				local_format_arg(t_ptf *ptf, char *prfx, char *ptr, int siz)
 		ptf->precision = ptf->precision < 0 ? -1 : 0;
 	if (ptf->precision < 1 && ft_toupper(ptf->spec) == 'O' && htag)
 		ft_strcat(prfx, ptr[1] == '0' ? "" : "0");
-	ptf->width -= (ptf->width > 0) ? ft_strlen(prfx) + siz : 0;
+	ptf->width -= (ptf->width > 0) ? ft_strlen(prfx) + (size_t)siz : 0;
 	if (ptf->width > 0 && ptf->precision > 0)
 		ptf->width -= ptf->precision;
 	if (ft_toupper(ptf->spec) == 'B' && ptf->precision < 0)
@@ -104,7 +104,7 @@ void				local_format_arg(t_ptf *ptf, char *prfx, char *ptr, int siz)
 ** Converts a given integer type param to its formatted representation
 */
 
-int					ft_printf_type_int(t_ptf *ptf, long long param)
+int					ft_printf_type_int(t_ptf *ptf, int64_t param)
 {
 	char	ptr[65];
 	char	prfx[5];

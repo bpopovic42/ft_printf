@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/06 15:39:43 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/06 19:34:20 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ static void			get_arg(t_ptf *ptf, double param, char *tmp, char *suffix)
 	if ((ft_strchr(ptf->flags, '#') || ft_strchr("gG", ptf->spec)))
 		ptf->precision = !ptf->precision ? 1 : ptf->precision;
 	expn = get_conv(ptf, param, tmp, 0);
-	i = ft_strlen(tmp) - 1;
+	i = (int)ft_strlen(tmp) - 1;
 	while (tmp[i] == '0')
 		i--;
 	if (ft_strchr("aA", ptf->spec) && ptf->precision < 0)
@@ -118,7 +118,7 @@ static void			get_arg(t_ptf *ptf, double param, char *tmp, char *suffix)
 int					ft_printf_type_dbl(t_ptf *ptf, double param)
 {
 	char	tmp[MAX_DBL_LEN + MAX_DBL_PRECISION + 1];
-	int		size;
+	size_t	size;
 	char	prefix[5];
 	char	suffix[7];
 	int		ret;
@@ -136,8 +136,8 @@ int					ft_printf_type_dbl(t_ptf *ptf, double param)
 		ptf->precision -= MAX_DBL_PRECISION;
 	else
 		ptf->precision = ptf->precision < 0 ? -1 : 0;
-	ptf->width -= size + ft_strlen(prefix) + ft_strlen(suffix);
-	ft_printf_print(ptf, prefix, tmp, size);
+	ptf->width -= (int)(size + ft_strlen(prefix) + ft_strlen(suffix));
+	ft_printf_print(ptf, prefix, tmp, (int)size);
 	ft_printf_buff_cat(ptf, suffix, ft_strlen(suffix));
 	return (1);
 }
