@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_print_arg.c                              :+:      :+:    :+:   */
+/*   ft_printf_print.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -51,7 +51,7 @@ void			ft_printf_print_wcs(t_ptf *ptf, wchar_t *input, int n)
 ** If the specifier is 'S' or 'r' args are send to their dedicated functions
 */
 
-void			ft_printf_print_arg(t_ptf *ptf, char *prfx, char *input, int n)
+void			ft_printf_print(t_ptf *ptf, char *prfx, char *input, int n)
 {
 	char *width;
 

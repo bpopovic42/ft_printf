@@ -41,6 +41,6 @@ int			ft_printf_type_str(t_ptf *ptf, wchar_t *param)
 			return (-1);
 	}
 	ptf->width -= size;
-	ft_printf_print_arg(ptf, "\0", (char*)param, size);
+	ft_printf_print(ptf, "\0", (char*)param, size);
 	return (1);
 }

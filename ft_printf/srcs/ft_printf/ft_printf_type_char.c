@@ -32,6 +32,6 @@ int			ft_printf_type_char(t_ptf *ptf, wchar_t param)
 	else
 		*mbs = (char)param;
 	ptf->width -= size;
-	ft_printf_print_arg(ptf, "\0", (char*)mbs, size);
+	ft_printf_print(ptf, "\0", (char*)mbs, size);
 	return (1);
 }

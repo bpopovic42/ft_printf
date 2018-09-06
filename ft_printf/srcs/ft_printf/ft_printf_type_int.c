@@ -15,39 +15,39 @@
 int					get_arg_unsigned(t_ptf *ptf, char *res, long long param)
 {
 	if (ptf->spec == 'p')
-		return (ft_printf_itoa_base(res, ptf->base, (unsigned long long)param));
+		return (ft_printf_lltoa_base(res, ptf->base, (unsigned long long)param));
 	else if (ft_strchrn(ptf->flags, 'l') == 2)
-		return (ft_printf_uitoa_base(res, ptf->base, (uint64_t)param));
+		return (ft_printf_ulltoa_base(res, ptf->base, (uint64_t)param));
 	else if (ft_strchr(ptf->flags, 'l'))
-		return (ft_printf_uitoa_base(res, ptf->base, (unsigned long)param));
+		return (ft_printf_ulltoa_base(res, ptf->base, (unsigned long)param));
 	else if (ft_strchr(ptf->flags, 'j'))
-		return (ft_printf_uitoa_base(res, ptf->base, (uintmax_t)param));
+		return (ft_printf_ulltoa_base(res, ptf->base, (uintmax_t)param));
 	else if (ft_strchr(ptf->flags, 'z'))
-		return (ft_printf_uitoa_base(res, ptf->base, (size_t)param));
+		return (ft_printf_ulltoa_base(res, ptf->base, (size_t)param));
 	else if (ft_strchrn(ptf->flags, 'h') == 2)
-		return (ft_printf_uitoa_base(res, ptf->base, (unsigned char)param));
+		return (ft_printf_ulltoa_base(res, ptf->base, (unsigned char)param));
 	else if (ft_strchr(ptf->flags, 'h'))
-		return (ft_printf_uitoa_base(res, ptf->base, (unsigned short)param));
+		return (ft_printf_ulltoa_base(res, ptf->base, (unsigned short)param));
 	else
-		return (ft_printf_uitoa_base(res, ptf->base, (unsigned)param));
+		return (ft_printf_ulltoa_base(res, ptf->base, (unsigned)param));
 }
 
 int					get_arg_signed(t_ptf *ptf, char *res, long long param)
 {
 	if (ft_strchrn(ptf->flags, 'l') == 2)
-		return (ft_printf_itoa_base(res, ptf->base, (long long)param));
+		return (ft_printf_lltoa_base(res, ptf->base, (long long)param));
 	else if (ft_strchr(ptf->flags, 'l'))
-		return (ft_printf_itoa_base(res, ptf->base, (long)param));
+		return (ft_printf_lltoa_base(res, ptf->base, (long)param));
 	else if (ft_strchr(ptf->flags, 'j'))
-		return (ft_printf_itoa_base(res, ptf->base, (intmax_t)param));
+		return (ft_printf_lltoa_base(res, ptf->base, (intmax_t)param));
 	else if (ft_strchr(ptf->flags, 'z'))
-		return (ft_printf_itoa_base(res, ptf->base, (signed long)param));
+		return (ft_printf_lltoa_base(res, ptf->base, (signed long)param));
 	else if (ft_strchrn(ptf->flags, 'h') == 2)
-		return (ft_printf_itoa_base(res, ptf->base, (char)param));
+		return (ft_printf_lltoa_base(res, ptf->base, (char)param));
 	else if (ft_strchr(ptf->flags, 'h'))
-		return (ft_printf_itoa_base(res, ptf->base, (short)param));
+		return (ft_printf_lltoa_base(res, ptf->base, (short)param));
 	else
-		return (ft_printf_itoa_base(res, ptf->base, (int)param));
+		return (ft_printf_lltoa_base(res, ptf->base, (int)param));
 }
 
 /*
@@ -97,7 +97,7 @@ void				local_format_arg(t_ptf *ptf, char *prfx, char *ptr, int siz)
 		ptf->width -= ptf->precision;
 	if (ft_toupper(ptf->spec) == 'B' && ptf->precision < 0)
 		ptf->precision = 8 - (siz % 8 > 0 ? siz % 8 : 8);
-	ft_printf_print_arg(ptf, prfx, (ptr + 1), siz);
+	ft_printf_print(ptf, prfx, (ptr + 1), siz);
 }
 
 /*
@@ -118,7 +118,7 @@ int					ft_printf_type_int(t_ptf *ptf, long long param)
 	get_prefix(ptf, ptr, prfx);
 	if (!(ft_toupper(ptf->spec) == 'O' && ft_strchr(ptf->flags, '#'))
 		&& !param && !ptf->precision)
-		ft_printf_print_arg(ptf, prfx, NULL, 0);
+		ft_printf_print(ptf, prfx, NULL, 0);
 	else
 		local_format_arg(ptf, prfx, ptr, siz);
 	return (1);

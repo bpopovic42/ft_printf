@@ -31,6 +31,6 @@ int		ft_printf_type_mod(t_ptf *ptf)
 {
 	ptf->width--;
 	ptf->precision = -1;
-	ft_printf_print_arg(ptf, "\0", "%", 1);
+	ft_printf_print(ptf, "\0", "%", 1);
 	return (1);
 }

@@ -137,7 +137,7 @@ int					ft_printf_type_dbl(t_ptf *ptf, double param)
 	else
 		ptf->precision = ptf->precision < 0 ? -1 : 0;
 	ptf->width -= size + ft_strlen(prefix) + ft_strlen(suffix);
-	ft_printf_print_arg(ptf, prefix, tmp, size);
+	ft_printf_print(ptf, prefix, tmp, size);
 	ft_printf_buff_cat(ptf, suffix, ft_strlen(suffix));
 	return (1);
 }
