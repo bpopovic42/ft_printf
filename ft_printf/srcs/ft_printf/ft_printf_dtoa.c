@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/08 23:50:08 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/09 00:44:19 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,16 +76,16 @@ static int		dtoa_base(double *val, char *buff, int i, char *bstr)
 
 static int		adjust(double *val, char spec)
 {
-	int i;
-	int base;
+	int		i;
+	int		base;
 
 	i = 0;
 	base = ft_toupper(spec) == 'A' ? 2 : 10;
-	if (*val > (ft_toupper(spec) == 'A' ? 1 : 9) || *val < 1)
+	if (*val > (base - 1) || *val < 1)
 	{
-		while ((int)*val > (ft_toupper(spec) == 'A' ? 1 : 9) || (int)*val < 1)
+		while ((int)*val > (base - 1) || (int)*val < 1)
 		{
-			if (*val > (ft_toupper(spec) == 'A' ? 1 : 9))
+			if (*val > (base - 1))
 			{
 				*val /= base;
 				i++;
@@ -126,7 +126,7 @@ static int		getint(t_dbl *dbl, int *prec, char *buff, char spec)
 	if ((spec == 'G' || spec == 'g') || (spec == 'a' || spec == 'A'))
 	{
 		if (expn > -4 && expn < *prec && expn != 0 && ft_toupper(spec) != 'A')
-			intpart_size = dtoa_base(&dbl->val, buff, expn, bstr);
+			intpart_size = dtoa_base(&dbl->val, buff, expn + 1, bstr);
 		else
 			intpart_size = dtoa_base(&dbl->val, buff, 1, bstr);
 		*prec -= (spec == 'G' || spec == 'g' ? intpart_size : 0);
