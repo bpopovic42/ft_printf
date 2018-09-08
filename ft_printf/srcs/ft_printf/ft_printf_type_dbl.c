@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/08 23:46:31 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/08 23:50:04 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,8 @@ static void			get_arg(t_ptf *ptf, double param, char *tmp, char *suffix)
 	{
 		if (expn < -4 || (expn >= ptf->precision && ptf->precision >= 0))
 			ptf->spec = ptf->spec == 'G' ? 'E' : 'e';
-		tmp[tmp[i] == '.' ? i : i + 1] = '\0';
+		if (!ft_strchr(ptf->flags, '#'))
+			tmp[tmp[i] == '.' ? i : i + 1] = '\0';
 		ptf->precision = 0;
 	}
 	if (ft_strchr("aAeE", ptf->spec))
