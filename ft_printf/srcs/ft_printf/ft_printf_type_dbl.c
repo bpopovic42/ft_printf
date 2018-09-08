@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/06 19:34:20 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/08 23:46:31 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ static int			get_conv(t_ptf *ptf, double param, char *tmp, int expn)
 		expn = ft_printf_dtoa(param, 6, tmp, ptf->spec);
 	else
 		expn = ft_printf_dtoa(param, ptf->precision, tmp, ptf->spec);
+	if (ft_strchr(ptf->flags, '#') && !ft_strchr(tmp, '.'))
+		tmp[ft_strlen(tmp)] = '.';
 	return (expn);
 }
 
@@ -88,7 +90,7 @@ static void			get_arg(t_ptf *ptf, double param, char *tmp, char *suffix)
 	int		expn;
 	int		i;
 
-	if ((ft_strchr(ptf->flags, '#') || ft_strchr("gG", ptf->spec)))
+	if (ft_strchr("gG", ptf->spec))
 		ptf->precision = !ptf->precision ? 1 : ptf->precision;
 	expn = get_conv(ptf, param, tmp, 0);
 	i = (int)ft_strlen(tmp) - 1;
@@ -108,7 +110,6 @@ static void			get_arg(t_ptf *ptf, double param, char *tmp, char *suffix)
 		if (!(get_suffix(tmp, suffix, ptf->spec, expn)))
 			ptf->precision = 0;
 	}
-	tmp[2] = ft_strchr(ptf->flags, '#') && ptf->precision == 0 ? '\0' : tmp[2];
 }
 
 /*
