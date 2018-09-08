@@ -6,7 +6,7 @@
 #    By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/03 08:42:00 by bopopovi          #+#    #+#              #
-#*   Updated: 2018/09/06 19:41:14 by bopopovi         ###   ########.fr       *#
+#*   Updated: 2018/09/08 22:46:59 by bopopovi         ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -116,7 +116,6 @@ CFLAGS		=	$(DEBUG) -Wall -Wextra -Werror
 ############################## RULES ###########################################
 
 all			:	$(NAME)
-			@echo > /dev/null
 
 $(NAME)		:	$(OBJ)
 			@ar rcs $(NAME) $(OBJ)
