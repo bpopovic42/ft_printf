@@ -1,7 +1,0 @@
-Run some further tests against potential crashes and re-check floats
-Make defines for array sizes
-Fix Makefile
-Merge to master properly
-run ft_printf.com
-
-did : aAeEfFgG, n, *, k (npr), color, b (binary), no malloc, ft_dprintf
