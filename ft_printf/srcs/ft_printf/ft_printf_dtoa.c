@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/09 00:44:19 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/09 22:09:12 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int		dtoa_base(double *val, char *buff, int i, char *bstr)
 	while (i)
 	{
 		ft_ccat(buff, bstr[(int64_t)(tmp)]);
-		tmp -= (int64_t)(tmp);
+		tmp -= (int64_t)tmp;
 		tmp = tmp * base;
 		*val *= base;
 		if (i < 0)
