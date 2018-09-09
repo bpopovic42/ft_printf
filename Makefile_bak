@@ -6,7 +6,7 @@
 #    By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/03 08:42:00 by bopopovi          #+#    #+#              #
-#*   Updated: 2018/09/09 22:32:36 by bopopovi         ###   ########.fr       *#
+#*   Updated: 2018/09/08 22:46:59 by bopopovi         ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -119,13 +119,25 @@ all			:	$(NAME)
 
 $(NAME)		:	$(OBJ)
 			@ar rcs $(NAME) $(OBJ)
+			@$(CLR)
+			@echo $(UP) $(CUT) $(UP)
+			@/bin/rm -f .cmp
+			@echo $(G)[$(B)LIBFT $(G)COMPILED]$(X)
 
 
 $(ODIR)/%.o	:	$(SDIR)/%.c $(LFT)
+			@$(CMP)
+			@$(MKODIR)
 			@$(CC) $(CFLAGS) $(INC) -c $< -o $@
+			@$(CLR)
+			@echo -n $@
 
 clean		:
+			@echo $(R)Cleaning $(X)the $(B)Libft $(X)files...
 			@/bin/rm -f $(OBJ)
+			@/bin/rm -rf $(ODIR)
+			@echo $(UP) $(CUT) $(UP)
+			@echo $(G)[$(B)LIBFT $(G)CLEANED]$(X)
 
 fclean		:	clean
 			@/bin/rm -f $(NAME)
@@ -155,3 +167,17 @@ X			=	"\033[0m"
 UP			=	"\033[A"
 CUT			=	"\033[K"
 CLR			=	printf "\r%40c\r" " "
+
+MKODIR		=	if [ ! -d $(ODIR) ]; then \
+			/bin/mkdir -p $(ODIR); \
+			/bin/mkdir -p objs/ft_io; \
+			/bin/mkdir -p objs/ft_lst; \
+			/bin/mkdir -p objs/ft_mem; \
+			/bin/mkdir -p objs/ft_str; \
+			/bin/mkdir -p objs/ft_hash; \
+			/bin/mkdir -p objs/ft_bin; \
+			/bin/mkdir -p objs/ft_printf; fi
+
+CMP			=	if [ ! -e .cmp ]; then \
+			echo $(Y)Compiling $(X)the $(B)Libft $(X)files...$(Y); \
+			touch .cmp; fi
