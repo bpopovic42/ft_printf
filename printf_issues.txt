@@ -1,0 +1,4 @@
+ft_printf de ft_printf
+floats tres longs (plein de zeros)
+n foireux (mauvais pointeur ?)
+0.25 = .25 on g conversions
