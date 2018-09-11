@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/11 18:35:51 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/11 18:36:39 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,6 @@ static void		round_dbl(char *buff)
 /*
 ** Converts double value to ascii base using *bstr charset
 */
-
-#include <stdio.h>
-#include <math.h>
 
 static int		dtoa_base(double *val, char *buff, int i, char *bstr)
 {
