@@ -1,4 +1,7 @@
-ft_printf de ft_printf
-floats tres longs (plein de zeros)
-n foireux (mauvais pointeur ?)
-0.25 = .25 on g conversions
+ft_printf de ft_printf DONE
+floats tres longs (plein de zeros) DONE
+n foireux (mauvais pointeur ?) DONE
+0.25 = .25 on g conversions DONE
+check bonuses for other potential timeouts and or crashes
+float conversion might still have issues
+float conversions aren't perfect
