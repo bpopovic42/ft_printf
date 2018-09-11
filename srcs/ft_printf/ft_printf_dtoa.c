@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/09 22:09:12 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/11 15:16:52 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ static int		adjust(double *val, char spec)
 				*val *= base;
 				i--;
 			}
+			if (i < -50)
+				return (0);
 		}
 	}
 	return (i);
