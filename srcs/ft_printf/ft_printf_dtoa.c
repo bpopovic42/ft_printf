@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/11 15:16:52 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/11 16:56:41 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,21 @@ static int		dtoa_base(double *val, char *buff, int i, char *bstr)
 	int		ret;
 	int		base;
 
-	tmp = *val;
 	ret = 0;
 	base = (int)ft_strlen(bstr);
+	while (i < 1)
+	{
+		*val /= base;
+		i++;
+	}
+	tmp = *val;
 	while (i)
 	{
-		ft_ccat(buff, bstr[(int64_t)(tmp)]);
+		ft_ccat(buff, bstr[(int64_t)(tmp) > 0 ? (int64_t)(tmp) % base : 0]);
 		tmp -= (int64_t)tmp;
 		tmp = tmp * base;
 		*val *= base;
-		if (i < 0)
-			i++;
-		else
-			i--;
+		i += i < 0 ? 1 : -1;
 		ret++;
 	}
 	*val /= base;
@@ -95,7 +97,7 @@ static int		adjust(double *val, char spec)
 				*val *= base;
 				i--;
 			}
-			if (i < -50)
+			if (i < -200)
 				return (0);
 		}
 	}
