@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/11 14:47:35 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/11 16:48:09 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/11 18:00:35 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int		main(void)
 	(void)ret;
 	ret = ft_printf("%.100g F\n", test);
 	printf("%.100g P\n\n", test);
+	exit(0);
 
 	ret = ft_printf("%.100e F\n", test);
 	printf("%.100e P\n\n", test);

@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/11 16:56:41 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/11 18:35:51 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,23 @@ static void		round_dbl(char *buff)
 {
 	size_t i;
 
-	i = ft_strlen(buff + 1);
-	while (i)
+	if (buff && *buff)
 	{
-		if (buff[i] == '9')
-			buff[i] = '0';
-		else if (buff[i] != '.')
+		i = ft_strlen(buff + 1);
+		while (i)
 		{
-			if (i == 0)
-				buff[i] = '1';
-			else
-				buff[i]++;
-			break ;
+			if (buff[i] == '9')
+				buff[i] = '0';
+			else if (buff[i] != '.')
+			{
+				if (i == 0)
+					buff[i] = '1';
+				else
+					buff[i]++;
+				break ;
+			}
+			i--;
 		}
-		i--;
 	}
 }
 
@@ -41,9 +44,12 @@ static void		round_dbl(char *buff)
 ** Converts double value to ascii base using *bstr charset
 */
 
+#include <stdio.h>
+#include <math.h>
+
 static int		dtoa_base(double *val, char *buff, int i, char *bstr)
 {
-	double	tmp;
+	t_dbl	tmp;
 	int		ret;
 	int		base;
 
@@ -54,12 +60,12 @@ static int		dtoa_base(double *val, char *buff, int i, char *bstr)
 		*val /= base;
 		i++;
 	}
-	tmp = *val;
+	tmp.val = *val;
 	while (i)
 	{
-		ft_ccat(buff, bstr[(int64_t)(tmp) > 0 ? (int64_t)(tmp) % base : 0]);
-		tmp -= (int64_t)tmp;
-		tmp = tmp * base;
+		ft_ccat(buff, bstr[(int)(tmp.val) > 0 ? (int)(tmp.val) % base : 0]);
+		tmp.val -= (int64_t)tmp.val;
+		tmp.val *= base;
 		*val *= base;
 		i += i < 0 ? 1 : -1;
 		ret++;
@@ -171,7 +177,7 @@ int				ft_printf_dtoa(double val, int prec, char *buff, char spec)
 	}
 	expn = getint(&dbl, &prec, buff + 1, spec);
 	dbl.val *= base;
-	dtoa_base(&dbl.val, buff + 1, prec, bstr);
+	//dtoa_base(&dbl.val, buff + 1, prec, bstr);
 	if ((int)(dbl.val * base) > (base / 2))
 		round_dbl(buff);
 	buff = !buff[0] ? ft_strcpy(buff, buff + 1) : buff;
