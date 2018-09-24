@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ $1 ] && [ $1 == "fsan" ]; then
+	make re DEBUG="-g -fsanitize=address"
+	gcc -g -fsanitize=address main.c libftprintf.a -I includes
+else
+		make re
+		gcc main.c libftprintf.a -I includes
+fi
+
+./a.out
