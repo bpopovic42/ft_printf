@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/26 17:40:35 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/26 17:43:16 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,7 @@ int				ft_printf_dtoa(double val, int prec, char *buff, char spec)
 	}
 	expn = getint(&dbl, &prec, buff + 1, spec);
 	dbl.val *= base;
-	dtoa_base(&dbl.val, buff + 1, prec + 1, bstr);
+	dtoa_base(&dbl.val, buff + 1, prec, bstr);
 	//if (buff && buff[ft_strlen(buff + 1)] - '0' > (base / 2))
 	//	round_dbl(buff);
 	buff = !buff[0] ? ft_strcpy(buff, buff + 1) : buff;
