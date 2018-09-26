@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/26 17:43:16 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/26 17:56:46 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void		round_dbl(char *buff)
 {
 	size_t i;
 
-	buff[ft_strlen(buff) - 1] = '\0';
+	//buff[ft_strlen(buff) - 1] = '\0';
 	if (buff && *(buff))
 	{
 		i = ft_strlen(buff) - 1;
@@ -36,6 +36,8 @@ static void		round_dbl(char *buff)
 					buff[i]++;
 				break ;
 			}
+			else
+				break ;
 			i--;
 		}
 	}
@@ -68,11 +70,21 @@ static int		dtoa_base(double *val, char *buff, int i, char *bstr)
 		i += i < 0 ? 1 : -1;
 		ret++;
 	}
-	if ((int)tmp.val % 10 > base / 2)
+	//tmp.val *= base;
+	/*ft_putstr("buff = ");
+	ft_putstr(buff);
+	ft_putchar(' ');
+	ft_putstr("*val = ");
+	ft_putnbr((int)*val);
+	ft_putchar(' ');
+	ft_putstr("tmp = ");
+	ft_putnbr((int)tmp.val);
+	ft_putchar(' ');*/
+	if ((int)tmp.val % base > base / 2)
 		round_dbl(buff);
-	buff[ft_strlen(buff)] = '\0';
+	//tmp.val /= base;
+	//buff[ft_strlen(buff)] = '\0';
 	*val /= base;
-	*val -= (int64_t)*val;
 	return (ret);
 }
 
