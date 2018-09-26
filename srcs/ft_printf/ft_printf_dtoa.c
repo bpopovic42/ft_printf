@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/26 16:37:39 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/26 16:51:07 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@ static void		round_dbl(char *buff)
 {
 	size_t i;
 
-	if (buff && *(buff + 1))
+	buff[ft_strlen(buff) - 1] = '\0';
+	if (buff && *(buff))
 	{
-		i = ft_strlen(buff + 1) - 1;
+		i = ft_strlen(buff) - 1;
 		while (i)
 		{
 			if (buff[i] == '9')
@@ -67,7 +68,11 @@ static int		dtoa_base(double *val, char *buff, int i, char *bstr)
 		i += i < 0 ? 1 : -1;
 		ret++;
 	}
+	if ((int)*val > base / 2)
+		round_dbl(buff);
 	*val /= base;
+	*val /= base;
+	*val -= (int)*val;
 	return (ret);
 }
 
@@ -129,6 +134,7 @@ static int		getint(t_dbl *dbl, int *prec, char *buff, char spec)
 	expn = 1;
 	if (!(ft_toupper(spec) == 'F' && (int)dbl->val == 0))
 		expn = adjust(&(dbl->val), spec) + (ft_strchr("fF", spec) ? 1 : 0);
+	expn = expn < 0 ? expn - 1 : expn + 1;
 	if ((spec == 'G' || spec == 'g') || (spec == 'a' || spec == 'A'))
 	{
 		if (expn > -4 && expn < *prec && expn != 0 && ft_toupper(spec) != 'A')
@@ -139,6 +145,7 @@ static int		getint(t_dbl *dbl, int *prec, char *buff, char spec)
 	}
 	else
 		dtoa_base(&dbl->val, buff, (ft_strchr("fF", spec) ? expn : 1), bstr);
+	expn = expn < 0 ? expn + 1 : expn - 1;
 	ft_ccat(buff, *prec ? '.' : '\0');
 	return (expn);
 }
@@ -174,9 +181,8 @@ int				ft_printf_dtoa(double val, int prec, char *buff, char spec)
 	expn = getint(&dbl, &prec, buff + 1, spec);
 	dbl.val *= base;
 	dtoa_base(&dbl.val, buff + 1, prec + 1, bstr);
-	if (buff && buff[ft_strlen(buff + 1)] - '0' > (base / 2))
-		round_dbl(buff);
-	buff[ft_strlen(buff + 1)] = '\0';
+	//if (buff && buff[ft_strlen(buff + 1)] - '0' > (base / 2))
+	//	round_dbl(buff);
 	buff = !buff[0] ? ft_strcpy(buff, buff + 1) : buff;
 	return (expn);
 }
