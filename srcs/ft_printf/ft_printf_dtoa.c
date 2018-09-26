@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/26 18:15:29 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/26 19:45:49 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ static void		round_dbl(char *buff)
 ** Converts double value to ascii base using *bstr charset
 */
 
+#include <stdio.h>
+
 static int		dtoa_base(double *val, char *buff, int i, char *bstr)
 {
 	t_dbl	tmp;
@@ -55,11 +57,11 @@ static int		dtoa_base(double *val, char *buff, int i, char *bstr)
 
 	ret = 0;
 	base = (int)ft_strlen(bstr);
-	while (i < 1)
+	/*while (i < 1)
 	{
 		*val /= base;
 		i++;
-	}
+	}*/
 	tmp.val = *val;
 	while (i)
 	{
@@ -70,22 +72,10 @@ static int		dtoa_base(double *val, char *buff, int i, char *bstr)
 		i += i < 0 ? 1 : -1;
 		ret++;
 	}
-	//tmp.val *= base;
-	/*ft_putstr("buff = ");
-	ft_putstr(buff);
-	ft_putchar(' ');
-	ft_putstr("*val = ");
-	ft_putnbr((int)*val);
-	ft_putchar(' ');
-	ft_putstr("tmp = ");
-	ft_putnbr((int)tmp.val);
-	ft_putchar(' ');*/
 	if ((int64_t)(tmp.val) % base > base / 2 && base == 10)
 		round_dbl(buff);
-	//tmp.val /= base;
-	//buff[ft_strlen(buff)] = '\0';
+	//*val -= (int64_t)*val;
 	*val /= base;
-	*val -= (int64_t)*val;
 	return (ret);
 }
 
@@ -138,14 +128,12 @@ static int		getint(t_dbl *dbl, int *prec, char *buff, char spec)
 	int		intpart_size;
 	char	*bstr;
 
-	buff[0] = dbl->bits.sign ? '-' : buff[0];
-	dbl->bits.sign = 0;
 	intpart_size = 0;
 	bstr = BASE_DENARY;
 	if (spec == 'a' || spec == 'A')
 		bstr = spec == 'A' ? BASE_HEXA_UP : BASE_HEXA;
 	expn = 1;
-	if (!(ft_toupper(spec) == 'F' && (int)dbl->val == 0))
+	if (!(ft_toupper(spec) == 'F'/* && (int)dbl->val == 0*/))
 		expn = adjust(&(dbl->val), spec) + (ft_strchr("fF", spec) ? 1 : 0);
 	if ((spec == 'G' || spec == 'g') || (spec == 'a' || spec == 'A'))
 	{
@@ -156,7 +144,12 @@ static int		getint(t_dbl *dbl, int *prec, char *buff, char spec)
 		*prec -= (spec == 'G' || spec == 'g' ? intpart_size : 0);
 	}
 	else
-		dtoa_base(&dbl->val, buff, (ft_strchr("fF", spec) ? expn : 1), bstr);
+		ft_printf_lltoa_base(buff + 1, BASE_DENARY, (int64_t)dbl->val);
+	if (ft_strchr("EF", ft_toupper(spec)))
+	{
+		ft_strcpy(buff, buff + 2);
+		buff[ft_strlen(buff) + 1] = '\0';
+	}
 	ft_ccat(buff, *prec ? '.' : '\0');
 	return (expn);
 }
@@ -189,6 +182,8 @@ int				ft_printf_dtoa(double val, int prec, char *buff, char spec)
 		buff = ft_isupper(spec) ? ft_strtoupper(buff) : buff;
 		return (0);
 	}
+	buff[0] = dbl.bits.sign ? '-' : buff[0];
+	dbl.bits.sign = 0;
 	expn = getint(&dbl, &prec, buff + 1, spec);
 	dbl.val *= base;
 	dtoa_base(&dbl.val, buff + 1, prec, bstr);
