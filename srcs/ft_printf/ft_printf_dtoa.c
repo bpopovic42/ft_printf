@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/26 19:45:49 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/26 20:46:29 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static void		round_dbl(char *buff)
 {
 	size_t i;
 
-	//buff[ft_strlen(buff) - 1] = '\0';
 	if (buff && *(buff))
 	{
 		i = ft_strlen(buff) - 1;
@@ -36,7 +35,7 @@ static void		round_dbl(char *buff)
 					buff[i]++;
 				break ;
 			}
-			else
+			else if (buff[i] == '.')
 				break ;
 			i--;
 		}
@@ -57,22 +56,17 @@ static int		dtoa_base(double *val, char *buff, int i, char *bstr)
 
 	ret = 0;
 	base = (int)ft_strlen(bstr);
-	/*while (i < 1)
-	{
-		*val /= base;
-		i++;
-	}*/
 	tmp.val = *val;
 	while (i)
 	{
-		ft_ccat(buff, bstr[(int)(tmp.val) > 0 ? (int)(tmp.val) % base : 0]);
+		ft_ccat(buff, bstr[(int64_t)(tmp.val) > 0 ? (int64_t)(tmp.val) % base : 0]);
 		tmp.val -= (int64_t)tmp.val;
 		tmp.val *= base;
 		*val *= base;
 		i += i < 0 ? 1 : -1;
 		ret++;
 	}
-	if ((int64_t)(tmp.val) % base > base / 2 && base == 10)
+	if (((int64_t)(tmp.val * base) % base) > (base / 2) && base == 10)
 		round_dbl(buff);
 	//*val -= (int64_t)*val;
 	*val /= base;
