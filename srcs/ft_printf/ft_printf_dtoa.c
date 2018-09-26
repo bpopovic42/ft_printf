@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/26 20:57:13 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/26 21:11:07 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,13 +119,13 @@ static int		getint(t_dbl *dbl, int *prec, char *buff, char spec)
 	int		intpart_size;
 	char	*bstr;
 
-	bstr = BASE_DENARY;
-	if (spec == 'a' || spec == 'A')
-		bstr = spec == 'A' ? BASE_HEXA_UP : BASE_HEXA;
+	bstr = spec == 'A' ? BASE_HEXA_UP : BASE_HEXA;
+	bstr = ft_toupper(spec) == 'A' ? bstr : BASE_DENARY;
 	expn = ft_toupper(spec) == 'F' ? 1 : adjust(&(dbl->val), spec);
 	if ((spec == 'G' || spec == 'g') || (spec == 'a' || spec == 'A'))
 	{
-		if (expn > -4 && expn < *prec && expn != 0 && ft_toupper(spec) != 'A')
+		if (ft_toupper(spec != 65) && expn > -4 && ((*prec >= 0 && expn < *prec)
+			|| (*prec < 0 && expn < 6)) && expn != 0 && ft_toupper(spec) != 65)
 			intpart_size = dtoa_base(&dbl->val, buff, expn + 1, bstr);
 		else
 			intpart_size = dtoa_base(&dbl->val, buff, 1, bstr);
