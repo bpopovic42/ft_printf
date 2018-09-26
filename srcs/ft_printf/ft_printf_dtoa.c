@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/26 20:46:29 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/26 20:57:13 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ static void		round_dbl(char *buff)
 ** Converts double value to ascii base using *bstr charset
 */
 
-#include <stdio.h>
-
 static int		dtoa_base(double *val, char *buff, int i, char *bstr)
 {
 	t_dbl	tmp;
@@ -59,16 +57,15 @@ static int		dtoa_base(double *val, char *buff, int i, char *bstr)
 	tmp.val = *val;
 	while (i)
 	{
-		ft_ccat(buff, bstr[(int64_t)(tmp.val) > 0 ? (int64_t)(tmp.val) % base : 0]);
+		ft_ccat(buff, bstr[(int64_t)tmp.val > 0 ? (int64_t)tmp.val % base : 0]);
 		tmp.val -= (int64_t)tmp.val;
 		tmp.val *= base;
 		*val *= base;
 		i += i < 0 ? 1 : -1;
 		ret++;
 	}
-	if (((int64_t)(tmp.val * base) % base) > (base / 2) && base == 10)
+	if (((int64_t)(tmp.val) % base) > (base / 2) && base == 10)
 		round_dbl(buff);
-	//*val -= (int64_t)*val;
 	*val /= base;
 	return (ret);
 }
@@ -122,13 +119,10 @@ static int		getint(t_dbl *dbl, int *prec, char *buff, char spec)
 	int		intpart_size;
 	char	*bstr;
 
-	intpart_size = 0;
 	bstr = BASE_DENARY;
 	if (spec == 'a' || spec == 'A')
 		bstr = spec == 'A' ? BASE_HEXA_UP : BASE_HEXA;
-	expn = 1;
-	if (!(ft_toupper(spec) == 'F'/* && (int)dbl->val == 0*/))
-		expn = adjust(&(dbl->val), spec) + (ft_strchr("fF", spec) ? 1 : 0);
+	expn = ft_toupper(spec) == 'F' ? 1 : adjust(&(dbl->val), spec);
 	if ((spec == 'G' || spec == 'g') || (spec == 'a' || spec == 'A'))
 	{
 		if (expn > -4 && expn < *prec && expn != 0 && ft_toupper(spec) != 'A')
@@ -181,8 +175,6 @@ int				ft_printf_dtoa(double val, int prec, char *buff, char spec)
 	expn = getint(&dbl, &prec, buff + 1, spec);
 	dbl.val *= base;
 	dtoa_base(&dbl.val, buff + 1, prec, bstr);
-	//if (buff && buff[ft_strlen(buff + 1)] - '0' > (base / 2))
-	//	round_dbl(buff);
 	buff = !buff[0] ? ft_strcpy(buff, buff + 1) : buff;
 	return (expn);
 }

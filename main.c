@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 16:49:07 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/24 20:04:09 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/26 20:48:56 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,18 @@ void	test_bonuses(void)
 
 int		main(void)
 {
-	test_bonuses();
+	ft_printf("%e\n", (double)INT_MIN);
+	printf("%e\n", (double)INT_MIN);
+	ft_printf("%f\n", 42.42);
+	ft_printf("%.2e\n", 42.42);
+	ft_printf("%f\n", 34.0);
+	ft_printf("%a\n", -8000.0);
+	ft_printf("%f\n", 1001.0);
+	ft_printf("%.7f\n", (double)INT_MIN);
+	printf("%.7f\n", (double)INT_MIN);
+	ft_printf("%.24f\n", 1.741365050940952841074250);
+	printf("%.24f\n", 1.741365050940952841074250);
+	ft_printf("%f\n", 1444565444646.6465424242242);
+	printf("%f\n", 1444565444646.6465424242242);
 	return (0);
 }
