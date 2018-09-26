@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:44:17 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/08 23:50:04 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/26 15:54:49 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,14 @@ static void			get_prefix(t_ptf *ptf, char *ptr, char *prefix)
 	else if (ft_strchr(ptf->flags, ' '))
 		ft_strcat(prefix, " ");
 	if (ptf->spec == 'a' || ptf->spec == 'A')
+	{
+		if (*ptr == '-' || *ptr == '+')
+		{
+			ft_strncat(prefix, ptr, 1);
+			ptr = ft_strcpy(ptr, ptr + 1);
+		}
 		ft_strcat(prefix, ptf->spec == 'A' ? "0X" : "0x");
+	}
 }
 
 /*
