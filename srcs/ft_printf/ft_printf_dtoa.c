@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/26 16:09:35 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/26 16:15:29 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void		round_dbl(char *buff)
 
 	if (buff && *(buff + 1))
 	{
-		i = ft_strlen(buff + 1);
+		i = ft_strlen(buff + 1) - 1;
 		while (i)
 		{
 			if (buff[i] == '9')
