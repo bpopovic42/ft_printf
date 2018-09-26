@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/26 17:56:46 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/26 18:00:36 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,11 @@ static int		dtoa_base(double *val, char *buff, int i, char *bstr)
 	ft_putstr("tmp = ");
 	ft_putnbr((int)tmp.val);
 	ft_putchar(' ');*/
-	if ((int)tmp.val % base > base / 2)
+	if ((int64_t)tmp.val % base > base / 2)
 		round_dbl(buff);
 	//tmp.val /= base;
 	//buff[ft_strlen(buff)] = '\0';
+	*val /= base;
 	*val /= base;
 	return (ret);
 }
