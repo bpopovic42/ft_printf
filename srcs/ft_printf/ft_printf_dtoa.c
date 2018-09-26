@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/26 16:24:14 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/26 16:27:08 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ static int		getint(t_dbl *dbl, int *prec, char *buff, char spec)
 	{
 		round_dbl(buff);
 		buff[ft_strlen(buff + 1)] = '\0';
+		expn -= 1;
 	}
 	ft_ccat(buff, *prec ? '.' : '\0');
 	return (expn);
