@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/26 16:51:07 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/26 17:40:35 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,11 @@ static int		dtoa_base(double *val, char *buff, int i, char *bstr)
 		i += i < 0 ? 1 : -1;
 		ret++;
 	}
-	if ((int)*val > base / 2)
+	if ((int)tmp.val % 10 > base / 2)
 		round_dbl(buff);
+	buff[ft_strlen(buff)] = '\0';
 	*val /= base;
-	*val /= base;
-	*val -= (int)*val;
+	*val -= (int64_t)*val;
 	return (ret);
 }
 
@@ -134,7 +134,6 @@ static int		getint(t_dbl *dbl, int *prec, char *buff, char spec)
 	expn = 1;
 	if (!(ft_toupper(spec) == 'F' && (int)dbl->val == 0))
 		expn = adjust(&(dbl->val), spec) + (ft_strchr("fF", spec) ? 1 : 0);
-	expn = expn < 0 ? expn - 1 : expn + 1;
 	if ((spec == 'G' || spec == 'g') || (spec == 'a' || spec == 'A'))
 	{
 		if (expn > -4 && expn < *prec && expn != 0 && ft_toupper(spec) != 'A')
@@ -145,7 +144,6 @@ static int		getint(t_dbl *dbl, int *prec, char *buff, char spec)
 	}
 	else
 		dtoa_base(&dbl->val, buff, (ft_strchr("fF", spec) ? expn : 1), bstr);
-	expn = expn < 0 ? expn + 1 : expn - 1;
 	ft_ccat(buff, *prec ? '.' : '\0');
 	return (expn);
 }
