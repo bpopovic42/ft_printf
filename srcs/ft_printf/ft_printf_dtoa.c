@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/13 19:10:37 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/26 16:15:29 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/26 16:24:14 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ static int		getint(t_dbl *dbl, int *prec, char *buff, char spec)
 	expn = 1;
 	if (!(ft_toupper(spec) == 'F' && (int)dbl->val == 0))
 		expn = adjust(&(dbl->val), spec) + (ft_strchr("fF", spec) ? 1 : 0);
+	expn += expn < 0 ? -1 : 1;
 	if ((spec == 'G' || spec == 'g') || (spec == 'a' || spec == 'A'))
 	{
 		if (expn > -4 && expn < *prec && expn != 0 && ft_toupper(spec) != 'A')
@@ -139,7 +140,12 @@ static int		getint(t_dbl *dbl, int *prec, char *buff, char spec)
 		*prec -= (spec == 'G' || spec == 'g' ? intpart_size : 0);
 	}
 	else
-		dtoa_base(&dbl->val, buff, ft_strchr("fF", spec) ? expn : 1, bstr);
+		dtoa_base(&dbl->val, buff, (ft_strchr("fF", spec) ? expn : 1), bstr);
+	if (ft_strchr("fF", spec) && buff[ft_strlen(buff + 1)] - '0' > 5)
+	{
+		round_dbl(buff);
+		buff[ft_strlen(buff + 1)] = '\0';
+	}
 	ft_ccat(buff, *prec ? '.' : '\0');
 	return (expn);
 }
