@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 16:27:54 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/06 19:40:38 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/27 15:51:56 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 
 typedef unsigned int	t_uint;
 typedef unsigned char	t_uchar;
+typedef long double		t_ldbl;
 
 typedef struct		s_list
 {
@@ -39,7 +40,7 @@ typedef struct		s_hash
 	struct s_hash	*next;
 }					t_hash;
 
-typedef union		u_dbl
+typedef union		u_udbl
 {
 	double			val;
 	struct
@@ -48,7 +49,18 @@ typedef union		u_dbl
 		t_uint		expn: 11;
 		t_uint		sign: 1;
 	}				bits;
-}					t_dbl;
+}					t_udbl;
+
+typedef union		u_uldbl
+{
+	long double		val;
+	struct
+	{
+		size_t		mant: 52;
+		t_uint		expn: 11;
+		t_uint		sign: 1;
+	}				bits;
+}					t_uldbl;
 
 /*
 ** IO FUNCTIONS

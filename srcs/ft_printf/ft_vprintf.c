@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:06:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/06 19:46:47 by bopopovi         ###   ########.fr       */
+/*   Updated: 2018/09/27 15:48:02 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ static int			treat_arg_by_type(t_ptf *ptf, va_list ap)
 		ret = ft_printf_type_str(ptf, (wchar_t*)va_arg(ap, int64_t));
 	else if (spec == 'c' || spec == 'C')
 		ret = ft_printf_type_char(ptf, (wchar_t)va_arg(ap, int64_t));
+	else if (ft_strchr("aAeEfFgG", spec) && ft_strchr(ptf->flags, 'L'))
+		ret = ft_printf_type_ldbl(ptf, va_arg(ap, long double));
 	else if (ft_strchr("aAeEfFgG", spec))
 		ret = ft_printf_type_dbl(ptf, va_arg(ap, double));
 	else if (spec == 'n')
