@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:28:14 by bopopovi          #+#    #+#             */
-/*   Updated: 2018/09/27 15:55:44 by bopopovi         ###   ########.fr       */
+/*   Updated: 2019/08/29 16:45:53 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct		s_ptf
 	char			spec;
 	char			flags[11];
 	char			*base;
+	int				error;
 }					t_ptf;
 
 /*
@@ -68,6 +69,7 @@ typedef struct		s_ptf
 int					ft_printf(const char *restrict format, ...);
 int					ft_dprintf(int fd, const char *restrict format, ...);
 int					ft_vdprintf(int fd, const char *restrict fmt, va_list ap);
+int					write_wrapper(t_ptf *ptf, int fd, char *buff, size_t size);
 
 /*
 ** FT_PRINTF_TYPE
