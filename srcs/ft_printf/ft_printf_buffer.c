@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 18:48:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2019/08/29 16:47:51 by bopopovi         ###   ########.fr       */
+/*   Updated: 2019/09/03 14:29:34 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	local_putnbr_octal(t_ptf *ptf, char value)
 		if (ptf->buff.pos == FT_PRINTF_BUFF_SIZE)
 		{
 			if (write_wrapper(ptf, ptf->fd, ptf->buff.buff, ptf->buff.pos) < 0)
-				return(-1);
+				return (-1);
 			ptf->buff.read += ptf->buff.pos;
 			ptf->buff.pos = 0;
 		}
