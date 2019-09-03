@@ -6,7 +6,7 @@
 /*   By: bopopovi <bopopovi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 19:06:52 by bopopovi          #+#    #+#             */
-/*   Updated: 2019/08/29 16:53:15 by bopopovi         ###   ########.fr       */
+/*   Updated: 2019/09/03 14:26:30 by bopopovi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,8 +137,6 @@ int					ft_vdprintf(int fd, const char *restrict fmt, va_list ap)
 	ptf.error = 0;
 	if ((ret = (int)parse_fmt(&ptf, ap)) < 0)
 	{
-		//if (write(fd, ptf.buff.buff, ptf.buff.pos) < 0)
-		//	exit(-1);
 		write_wrapper(&ptf, fd, ptf.buff.buff, ptf.buff.pos);
 		return (-1);
 	}
